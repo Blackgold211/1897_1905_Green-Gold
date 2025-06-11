@@ -167,81 +167,97 @@ data = [
     }
 ];
 
-// Only run D3 code if elements exist and D3 is loaded
-if (window && window.d3 && document.getElementById('folkshus')) {
-    var width = 500;
-    var height = 250; // Half of width for semi-circle shape
+if (window && d3) {
+    var width = 500; 
+    var height = 500;
     var screenWidth = document.getElementById('content').offsetWidth;
-    
-    // Make responsive if screen is narrow
-    if (screenWidth < width) {
-        width = screenWidth - 30; // Slightly more padding
-        height = width / 2; // Maintain aspect ratio
-        document.getElementById("folkshus").style.height = height + "px";
-    }
+    if (screenWidth < width - 50) {
+        width = screenWidth - 50; 
+        height = width;
+        document.getElementById("folkshus").style.height = screenWidth/2 + "px";
+    } 
 
-    // Create and configure parliament
-    var parliament = d3.parliament()
-        .width(width)
-        .height(height)
-        .innerRadiusCoef(0.4)
-        .enter.fromCenter(true).smallToBig(true)
-        .exit.toCenter(false).bigToSmall(true);
-    
-    // Render visualization
-    d3.select("#folkshus").datum([data]).call(parliament);
+    var parliament = d3.parliament();
+    parliament.width(width).height(height).innerRadiusCoef(0.4);
+    parliament.enter.fromCenter(true).smallToBig(true);
+    parliament.exit.toCenter(false).bigToSmall(true);
+    d3.select("#folkshus").datum(data).call(parliament);
 }
 !}
+go-to: coalition_menu
 
 = Election results
 
-<svg id="folkshus" style="width: 500px; height: 250px;"></svg>
+{!<svg id="folkshus" style="width: 500px; height: 250px;"> </svg>!}
 
-<table>
-  <tr><td>Party</td><td>Seats Won</td><td>Change</td></tr>
+{!<table>!} 
+{!<tr><td>Party</td><td>Vote share</td><td>% Change</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'> </div> !} **SPD:** {!</td><td>!} **[+ spd_r +]%** {!</td><td>!} **[+ str_change_spd +]** {!</td></tr>!}
 
-  <tr>
+[? if sapd_formed : {!<tr><td><div class="box" style='background-color:#C40000'> </div> !}SAPD: {!</td><td>!} [+ sapd_r +]% {!</td><td>!} [+ str_change_sapd +] {!</td></tr>!} ?]
+
+{!<tr><td><div class="box" style='background-color:#8B0000'> </div> !}KPD: {!</td><td>!} [+ kpd_r +]% {!</td><td>!} [+ str_change_kpd +] {!</td></tr>!}
+
+{!<tr><td><div class="box" style='background-color:#DCCA4A'> </div> !} [+ ddp_name +]: {!</td><td>!} [+ ddp_r +]% {!</td><td>!} [+ str_change_ddp +] {!</td></tr>!}
+
+{!<tr><td><div class="box" style='background-color:#000'> </div> !} Z: {!</td><td>!} [+ z_minus_bvp_r +]% {!</td><td>!} [+ str_change_z +] {!</td></tr>!}
+
+{!<tr><td><div class="box" style='background-color:#69A2BE'> </div> !} BVP: {!</td><td>!} 3% {!</td><td>!} 0 {!</td></tr>!}
+
+{!<tr><td><div class="box" style='background-color:#D5AC27'> </div> !} DVP: {!</td><td>!} [+ dvp_r +]% {!</td><td>!} [+ str_change_dvp +] {!</td></tr>!}
+ 
+{!<tr><td><div class="box" style='background-color:#a0a0a0'> </div> !} Others: {!</td><td>!} [+ other_r +] % {!</td><td>!} [+ str_change_other +] {!</td></tr>!}
+
+{!<tr><td><div class="box" style='background-color:#3f7bc1'> </div> !} DNVP: {!</td><td>!} [+ dnvp_r +]% {!</td><td>!} [+ str_change_dnvp +] {!</td></tr>!}
+
+{!<tr><td><div class="box" style='background-color:#954B00'> </div> !} NSDAP: {!</td><td>!} [+ nsdap_r +]% {!</td><td>!} [+ str_change_nsdap +] {!</td></tr>!}
+{!</table>!}
+
+{!<table>!}
+  {!<tr><td>Party</td><td>Seats Won</td><td>Change</td></tr>!}
+
+  {!<tr>
     <td><div class="box" style='background-color:#F37934'></div> Socialist Workers:</td>
     <td>[+ socs_seats +]</td>
     <td>[+ str_change_socs_seats +]</td>
-  </tr>
+  </tr>!}
 
-  <tr>
+  {!<tr>
     <td><div class="box" style='background-color:#9365B8; outline: 2px solid;'></div> <strong>Populists:</strong></td>
     <td><strong>[+ pop_seats +]</strong></td>
     <td><strong>[+ str_change_pop_seats +]</strong></td>
-  </tr>
+  </tr>!}
 
-  <tr>
+  {!<tr>
     <td><div class="box" style='background-color:#2969B0'></div> Progress:</td>
     <td>[+ prog_seats +]</td>
     <td>[+ str_change_prog_seats +]</td>
-  </tr>
+  </tr>!}
 
-  <tr>
+  {!<tr>
     <td><div class="box" style='background-color:#1ABC9C'></div> Rustiks:</td>
     <td>[+ rust_seats +]</td>
     <td>[+ str_change_rust_seats +]</td>
-  </tr>
+  </tr>!}
 
-  <tr>
+  {!<tr>
     <td><div class="box" style='background-color:#a0a0a0'></div> Others:</td>
     <td>[+ other_seats +]</td>
     <td>[+ str_change_other_seats +]</td>
-  </tr>
+  </tr>!}
 
-  <tr>
+  {!<tr>
     <td><div class="box" style='background-color:#B8312F'></div> Paternalists:</td>
     <td>[+ pat_seats +]</td>
     <td>[+ str_change_pat_seats +]</td>
-  </tr>
+  </tr>!}
 
-  <tr>
+  {!<tr>
     <td><div class="box" style='background-color:#475577'></div> Statists:</td>
     <td>[+ stats_seats +]</td>
     <td>[+ str_change_stats_seats +]</td>
-  </tr>
-</table>
+  </tr>!}
+{!</table>!}
 
 
 **Potential coalitions:**
