@@ -28,7 +28,6 @@ d3.parliament = function() {
         "touchmove", "touchstart");
 
     function parliament(data) {
-        console.log(data);
         data.each(function(d) {
 
             // if user did not provide, fill the svg:
@@ -125,8 +124,6 @@ d3.parliament = function() {
             };
             var seatX = function(d) { return d.cartesian.x; };
             var seatY = function(d) { return d.cartesian.y; };
-            var seatColor = function(d) { return d.party.color; };
-            var seatOutline = function(d) { return d.party.outline; };
             var seatRadius = function(d) {
                 var r = 0.4 * rowWidth;
                 if (d.data && typeof d.data.size === 'number') {
@@ -156,8 +153,6 @@ d3.parliament = function() {
             circlesEnter.attr("cx", enter.fromCenter ? 0 : seatX);
             circlesEnter.attr("cy", enter.fromCenter ? 0 : seatY);
             circlesEnter.attr("r", enter.smallToBig ? 0 : seatRadius);
-            circlesEnter.attr("fill", seatColor);
-            circlesEnter.attr("stroke", seatOutline);
             if (enter.fromCenter || enter.smallToBig) {
                 var t = circlesEnter.transition().duration(function() { return 1000 + Math.random()*800; });
                 if (enter.fromCenter) {
@@ -184,9 +179,7 @@ d3.parliament = function() {
             }
               circlesUpdate.attr("cx", seatX)
                 .attr("cy", seatY)
-                .attr("r", seatRadius)
-                .attr("fill", seatColor)
-                .attr("stroke", seatOutline);
+                .attr("r", seatRadius);
 
             /* animation removing seats from the parliament */
             if (exit.toCenter || exit.bigToSmall) {

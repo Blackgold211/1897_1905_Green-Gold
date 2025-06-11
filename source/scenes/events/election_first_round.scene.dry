@@ -1,0 +1,187 @@
+title: Folkshus Elections - First Round
+new-page: true
+tags: event
+priority: -1
+view-if: (year = next_election_year and month >= next_election_month) or (year > next_election_year)
+on-departure: month_actions += 1; in_election = 1;
+set-jump: post_first_round_results
+face-image: img/Rothe_Wahlen_1903.jpg
+
+# the low priority means that this event is only seen after all other events are resolved for the month.
+
+= Elections - First Round Results, [+ month : month +] [+ year +]
+
+The first round of the Folkshus elections is about to begin. 
+
+- @election_first_round_algorithm: Continue to results...
+
+@post_first_round_results
+on-arrival: {! 
+// Calculate changes from last election's first round results
+for (var party of Q.parties) {
+    if (Q['old_' + party + '_seats_first'] !== undefined) {
+        Q['change_' + party + '_seats_first'] = Q[party + '_seats_first'] - Q['old_' + party + '_seats_first'];
+    } else {
+        Q['change_' + party + '_seats_first'] = Q[party + '_seats_first']; // First election
+    }
+    
+    var sign = Q['change_' + party + '_seats_first'] > 0 ? '+' : '';
+    Q['str_change_' + party + '_seats_first'] = sign + Q['change_' + party + '_seats_first'];
+    
+    // Store current results as "old" for next election
+    Q['old_' + party + '_seats_first'] = Q[party + '_seats_first'];
+}
+Q.first_round_complete = 0;
+!}
+
+= First Round Results
+
+<table>
+  <tr><td>Party</td><td>Seats Won (First Round)</td><td>Change from Last Election</td></tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#F37934'></div> Socialist Workers:</td>
+    <td>[+ socs_seats_first +]</td>
+    <td>[+ str_change_socs_seats_first +]</td>
+  </tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#9365B8; outline: 2px solid;'></div> <strong>Populists:</strong></td>
+    <td><strong>[+ pop_seats_first +]</strong></td>
+    <td><strong>[+ str_change_pop_seats_first +]</strong></td>
+  </tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#2969B0'></div> Progress:</td>
+    <td>[+ prog_seats_first +]</td>
+    <td>[+ str_change_prog_seats_first +]</td>
+  </tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#1ABC9C'></div> Rustiks:</td>
+    <td>[+ rust_seats_first +]</td>
+    <td>[+ str_change_rust_seats_first +]</td>
+  </tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#a0a0a0'></div> Others:</td>
+    <td>[+ other_seats_first +]</td>
+    <td>[+ str_change_other_seats_first +]</td>
+  </tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#B8312F'></div> Paternalists:</td>
+    <td>[+ pat_seats_first +]</td>
+    <td>[+ str_change_pat_seats_first +]</td>
+  </tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#475577'></div> Statists:</td>
+    <td>[+ stats_seats_first +]</td>
+    <td>[+ str_change_stats_first +]</td>
+  </tr>
+</table>
+
+**Total seats decided in first round:** [+ seats_decided_first_round +] out of 600
+**Seats going to second round:** [+ seats_to_second_round +]
+
+With [+ seats_to_second_round +] seats still undecided, the campaign for the second round begins. What is our strategy?
+
+- @campaign_rural: Focus our campaign on rural constituencies.
+- @campaign_urban: Concentrate on urban working-class seats.
+- @campaign_suburban: Target suburban middle-class areas.
+- @reach_out_parties: Reach out to other parties for tactical arrangements.
+- @promise_reforms: Make bold promises about future reforms.
+- @defend_strongholds: Focus on defending seats where we're competitive.
+- @national_campaign: Run a broad national campaign.
+
+@campaign_rural
+title: Focus on rural constituencies
+subtitle: Appeal to rural voters and agricultural interests
+on-arrival: rural_pop += 3; rural_prog += 2; rural_socs += 1; resources -= 1; workers_prog -= 1; new_middle_prog -= 1; first_round_complete = 1
+
+We redirect our campaign resources toward rural areas, emphasizing agricultural policy and rural development. This helps us connect with rural voters but may cost us some support in urban areas.
+
+- @election_second_round: Wait for the second round...
+
+@campaign_urban
+title: Concentrate on urban working-class seats
+subtitle: Double down on our working-class base
+on-arrival: workers_pop += 4; unemployed_pop += 3; workers_prog += 3; unemployed_prog += 2; resources -= 1; rural_prog -= 1; old_middle_prog -= 1; first_round_complete = 1
+
+We focus our efforts on urban constituencies, emphasizing jobs, worker rights, and social welfare. This energizes our base but may alienate some rural and conservative voters.
+
+- @election_second_round: Wait for the second round...
+
+@campaign_suburban
+title: Target suburban middle-class areas
+subtitle: Appeal to professional and middle-class voters
+on-arrival: new_middle_pop += 3; old_middle_pop += 2; new_middle_prog += 3; old_middle_prog += 2; resources -= 1; workers_prog -= 1; unemployed_prog -= 1; first_round_complete = 1
+
+We craft our message for suburban professionals and the middle class, emphasizing economic stability and progressive social policies. This broadens our appeal but may weaken our working-class support.
+
+- @election_second_round: Wait for the second round...
+
+@reach_out_parties
+title: Reach out to other parties for tactical arrangements
+subtitle: Negotiate with potential allies for the second round
+on-arrival: {!
+if (Q.socs_relation >= 50) {
+    Q.socs_relation += 5;
+    Q.workers_prog += 2;
+    Q.unemployed_prog += 2;
+}
+if (Q.rust_relation >= 45) {
+    Q.rust_relation += 3;
+    Q.rural_prog += 2;
+}
+Q.resources -= 2;
+Q.first_round_complete = 1;
+!}
+
+We reach out to parties with whom we have decent relations, exploring possibilities for tactical cooperation in the second round. This diplomatic effort costs resources but could pay dividends.
+
+- @election_second_round: Wait for the second round...
+
+@promise_reforms
+title: Make bold promises about future reforms
+subtitle: Promise significant policy changes if elected
+on-arrival: workers_prog += 3; unemployed_prog += 3; new_middle_prog += 2; workers_pop += 2; unemployed_pop += 2; old_middle_prog -= 2; pat_relation -= 3; resources -= 1; first_round_complete = 1
+
+We make ambitious promises about labor rights, social welfare, and democratic reforms. This energizes our progressive base but alarms conservatives and costs us credibility with some moderate voters.
+
+- @election_second_round: Wait for the second round...
+
+@defend_strongholds
+title: Focus on defending seats where we're competitive
+subtitle: Consolidate our position in winnable constituencies
+on-arrival: {!
+// Boost all our demographics moderately
+for (var demo of Q.classes) {
+    if (Q[demo + '_prog'] > 20) { // Only boost where we already have decent support
+        Q[demo + '_prog'] += 2;
+    }
+}
+Q.resources -= 1;
+Q.first_round_complete = 1;
+!}
+
+We focus our limited resources on seats where we have the best chance of winning, ensuring we don't spread ourselves too thin. This defensive strategy helps consolidate our position.
+
+- @election_second_round: Wait for the second round...
+
+@national_campaign
+title: Run a broad national campaign
+subtitle: Appeal to all voters with a unified message
+on-arrival: {!
+// Small boost to all demographics
+for (var demo of Q.classes) {
+    Q[demo + '_prog'] += 1;
+}
+Q.resources -= 2;
+Q.first_round_complete = 1;
+!}
+
+We run a comprehensive national campaign with a broad appeal, trying to win over voters from all backgrounds. This expensive approach provides modest gains across all demographics.
+
+- @election_second_round: Continue to the second round...
