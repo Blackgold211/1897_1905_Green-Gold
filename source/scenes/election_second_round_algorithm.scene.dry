@@ -68,11 +68,14 @@ on-arrival: {!
         secondRoundResults[party] = 0;
     }
 
+    // Process each seat profile separately
     for (const [profileName, seatsRemaining] of Object.entries(remainingSeats)) {
         if (seatsRemaining <= 0) continue;
+        
         const profile = seatProfiles[profileName];
         const totalWeight = Object.values(profile.weights).reduce((a, b) => a + b, 0);
 
+        // Calculate party strengths for this profile
         const partyStrengths = {};
         for (const party of Q.parties) {
             let strength = 0;
@@ -82,16 +85,26 @@ on-arrival: {!
             partyStrengths[party] = strength;
         }
 
+        // Sort parties by strength for this profile
         const sortedParties = [...Q.parties].sort((a, b) => partyStrengths[b] - partyStrengths[a]);
 
-        for (let i = 0; i < seatsRemaining && i < sortedParties.length - 1; i++) {
-            const partyA = sortedParties[i];
-            const partyB = sortedParties[i + 1];
-
+        // Allocate remaining seats for this profile
+        for (let seat = 0; seat < seatsRemaining; seat++) {
+            if (sortedParties.length <= 1) {
+                // If only one party left, give them all remaining seats
+                secondRoundResults[sortedParties[0]] += (seatsRemaining - seat);
+                break;
+            }
+            
+            // Take top two parties
+            const partyA = sortedParties[0];
+            const partyB = sortedParties[1];
+            
             let strengthA = partyStrengths[partyA];
             let strengthB = partyStrengths[partyB];
-
-            for (let j = i + 2; j < sortedParties.length; j++) {
+            
+            // Transfer votes from eliminated parties
+            for (let j = 2; j < sortedParties.length; j++) {
                 const eliminated = sortedParties[j];
                 const elimStrength = partyStrengths[eliminated];
                 const relToA = relationshipMatrix[eliminated]?.[partyA] || 50;
@@ -100,19 +113,25 @@ on-arrival: {!
                 strengthA += elimStrength * 0.25 * transferRatio;
                 strengthB += elimStrength * 0.25 * (1 - transferRatio);
             }
-
+            
+            // Add small random factor
             const randomFactor = 1 + (Math.random() * 0.04 - 0.02);
             const finalA = strengthA * randomFactor;
             const finalB = strengthB * (2 - randomFactor);
-
+            
+            // Award seat to winner
             if (finalA > finalB) {
                 secondRoundResults[partyA]++;
             } else {
                 secondRoundResults[partyB]++;
             }
+            
+            // Remove the losing party from consideration for next seat
+            sortedParties.splice(finalA > finalB ? 1 : 0, 1);
         }
     }
 
+    // Update final seat counts
     for (const party of Q.parties) {
         const totalSeats = (Q[`${party}_seats_first`] || 0) + (secondRoundResults[party] || 0);
         Q[`${party}_votes`] = totalSeats;
