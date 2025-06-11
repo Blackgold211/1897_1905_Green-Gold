@@ -22,17 +22,17 @@ The Folkshus elections are to be held now.
 on-arrival: {! 
 var new_party_sum = 0;
 for (var party of Q.parties) {
-    Q['old_' + party + '_f'] = Q[party + '_f'];  // keep old vote share for reference
+    Q['old_' + party + '_f'] = Q[party + '_f'];  // keep old seat count for reference
     
     if (Q.constitutional_reform > 0) {
         if ((Q.electoral_threshold > 1 && party == 'other') || Q[party + '_banned']) {
             Q[party + '_f'] = 0;
         } else {
-            Q[party + '_f'] = Q[party + '_votes'];
+            Q[party + '_f'] = Q[party + '_votes'];  // _votes now contains seat counts
         }
         new_party_sum += Q[party + '_f'];
     } else {
-        Q[party + '_f'] = Q[party + '_votes'];
+        Q[party + '_f'] = Q[party + '_votes'];  // _votes now contains seat counts
     }
     
     if (Q.use_decimals) {
@@ -41,13 +41,12 @@ for (var party of Q.parties) {
         Q[party + '_f_disp'] = Q[party+'_f'];
     }
     
-    // Calculate seats: vote share * 6 (since 100% -> 600 seats)
-    Q[party + '_seats'] = Math.round(Q[party + '_f'] * 6);
+    // Since *_f now contains seat counts, we can use them directly
+    Q[party + '_seats'] = Q[party + '_f'];
 
-    // Calculate change in seats from old seats (which we assume is stored in old_*_f)
+    // Calculate change in seats from old seats
     if (Q['old_' + party + '_f'] !== undefined) {
-        var old_seats = Math.round(Q['old_' + party + '_f']);
-        Q['change_' + party + '_seats'] = Q[party + '_seats'] - old_seats;
+        Q['change_' + party + '_seats'] = Q[party + '_seats'] - Q['old_' + party + '_f'];
     } else {
         Q['change_' + party + '_seats'] = 0; // no old data
     }
@@ -56,33 +55,25 @@ for (var party of Q.parties) {
     Q['str_change_' + party + '_seats'] = sign + Q['change_' + party + '_seats'];
 }
 
-// Left-wing coalitions
-Q.left_coalition = Q.socs_f + Q.pop_f;
+// Calculate coalition percentages based on seat counts out of 600
+Q.left_coalition = ((Q.socs_f + Q.pop_f) / 600) * 100;
+Q.populist_right_coalition = ((Q.pop_f + Q.rust_f) / 600) * 100;
+Q.progressive_coalition = ((Q.prog_f + Q.rust_f) / 600) * 100;
+Q.conservative_coalition = ((Q.pat_f + Q.rust_f) / 600) * 100;
+Q.authoritarian_coalition = ((Q.pat_f + Q.rust_f + Q.stats_f) / 600) * 100;
+Q.broad_center_right_coalition = ((Q.prog_f + Q.pat_f + Q.rust_f + Q.stats_f) / 600) * 100;
+Q.grand_coalition = ((Q.pop_f + Q.socs_f + Q.prog_f + Q.pat_f + Q.rust_f + Q.stats_f + Q.other_f) / 600) * 100;
 
-// Populist coalitions
-Q.populist_right_coalition = Q.pop_f + Q.rust_f;
+// Other coalitions
+Q.left_centre_coalition = ((Q.pop_f + Q.prog_f) / 600) * 100;
+Q.broad_left_centre_coalition = ((Q.pop_f + Q.prog_f + Q.rust_f) / 600) * 100;
+Q.center_coalition = ((Q.prog_f + Q.pat_f) / 600) * 100;
+Q.centre_right_coalition = ((Q.prog_f + Q.pat_f + Q.rust_f) / 600) * 100;
 
-// Progressive coalitions
-Q.progressive_coalition = Q.prog_f + Q.rust_f;
+Q.leverage = (Q.pop_f / 600) * 100;
 
-// Conservative coalitions
-Q.conservative_coalition = Q.pat_f + Q.rust_f;
-Q.authoritarian_coalition = Q.pat_f + Q.rust_f + Q.stats_f;
-Q.broad_center_right_coalition = Q.prog_f + Q.pat_f + Q.rust_f + Q.stats_f;
-
-// Grand coalition (all major parties)
-Q.grand_coalition = Q.pop_f + Q.socs_f + Q.prog_f + Q.pat_f + Q.rust_f + Q.stats_f + Q.other_f;
-
-//Coalitions which lead can flip between
-Q.left_centre_coalition = Q.pop_f + Q.prog_f;
-Q.broad_left_centre_coalition = Q.pop_f + Q.prog_f + Q.rust_f;
-Q.center_coalition = Q.prog_f + Q.pat_f;
-Q.centre_right_coalition = Q.prog_f + Q.pat_f + Q.rust_f;
-
-Q.leverage = Q.pop_f;
-
+// Reset government variables
 Q.grand_coalition_failed = 0;
-// Reset government and ministers... Based on current govt
 Q.coalition_dissent = 0;
 Q.socs_coalition_dissent = 0;
 Q.pop_in_government = 0;
@@ -108,61 +99,62 @@ Q.strike_term_seen = 0;
 
 var election_result = {'date': new Date(Q.year, Q.month - 1)};
 for (var party of Q.parties) {  
-    election_result[party] = Q[party + '_f'];
+    election_result[party] = Q[party + '_f'];  // Now storing seat counts
 }
 Q.election_records.push(election_result);
 Q.first_round_complete = 0;
 !}
-on-departure:
+
+// Fixed parliament visualization data
 on-display: {!
 data = [
     {
         "id": "socs",
         "legend": "Socialist Workers", 
         "name": "Socialist Workers",
-        "seats": Q.socs_f,
+        "seats": Q.socs_f,  // Now contains seat count directly
         "color": "#F37934"
     },
     {
         "id": "pop",
         "legend": "Populists",
         "name": "Populists", 
-        "seats": Q.pop_f, 
+        "seats": Q.pop_f,   // Now contains seat count directly
         "color": "#9365B8"
     },
     {
         "id": "prog",
         "legend": "Progress",
         "name": "Progress",
-        "seats": Q.prog_f,
+        "seats": Q.prog_f,  // Now contains seat count directly
         "color": "#2969B0"
     },
     {
         "id": "rust", 
         "legend": "Rustiks",
         "name": "Rustiks",
-        "seats": Q.rust_f,
+        "seats": Q.rust_f,  // Now contains seat count directly
         "color": "#1ABC9C"
     },
     {
         "id": "other",
         "legend": "Others",
         "name": "Others", 
-        "seats": Q.other_f,
+        "seats": Q.other_f, // Now contains seat count directly
         "color": "#a0a0a0"
     },
     {
         "id": "pat",
         "legend": "Paternalists",
         "name": "Paternalists",
-        "seats": Q.pat_f,
+        "seats": Q.pat_f,   // Now contains seat count directly
         "color": "#B8312F"
     },
     {
         "id": "stats",
         "legend": "Statists", 
         "name": "Statists",
-        "seats": Q.stats_f,
+        "seats": Q.stats_f, // Now contains seat count directly
         "color": "#475577"
     }
 ];
@@ -178,11 +170,12 @@ if (window && d3) {
     } 
 
     var parliament = d3.parliament();
-    parliament.width(width).innerRadiusCoef(0.4); // Remove .height(height)
+    parliament.width(width).innerRadiusCoef(0.4);
     parliament.enter.fromCenter(true).smallToBig(true);
     parliament.exit.toCenter(false).bigToSmall(true);
     d3.select("#folkshus").datum(data).call(parliament);
-}!}
+}
+!}
 go-to: coalition_menu
 
 = Election results
