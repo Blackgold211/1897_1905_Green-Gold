@@ -1,141 +1,105 @@
 title: Election Second Round
 on-arrival: {!
-    var seatProfiles = {
-        'rural_stronghold': {
-            weights: {
-                rural: Math.min(100, Q.rural * 3.5),
-                workers: Q.workers * 0.25,
-                old_middle: Q.old_middle * 1.5,
-                new_middle: Q.new_middle * 0.35,
-                unemployed: Q.unemployed * 1.5
-            },
-            seats: 120
-        },
-        'urban_working': {
-            weights: {
-                workers: Q.workers * 1.8,
-                unemployed: Q.unemployed * 3.5,
-                new_middle: Q.new_middle * 0.15,
-                old_middle: Q.old_middle * 0.05,
-                rural: Q.rural * 0.05
-            },
-            seats: 150
-        },
-        'suburban_mixed': {
-            weights: {
-                new_middle: Q.new_middle * 3.0,
-                old_middle: Q.old_middle * 2.5,
-                workers: Q.workers * 0.5,
-                unemployed: Q.unemployed * 0.3,
-                rural: Q.rural * 0.3
-            },
-            seats: 120
-        },
-        'industrial': {
-            weights: {
-                workers: Q.workers * 1.5,
-                unemployed: Q.unemployed * 3.0,
-                new_middle: Q.new_middle * 0.7,
-                old_middle: Q.old_middle * 0.3,
-                rural: Q.rural * 0.1
-            },
-            seats: 210
-        }
-    };
+// Second Round Election Algorithm - Calculations only
+// Outputs party_f values corresponding to seat counts
 
-    const relationshipMatrix = {
-        'pat': { 'prog': 60, 'pop': Q.pat_relation, 'rust': 75, 'stats': 30, 'socs': 5 },
-        'prog': { 'pat': 60, 'pop': Q.prog_relation, 'rust': 65, 'stats': 10, 'socs': 15 },
-        'pop': { 'pat': Q.pat_relation, 'prog': Q.prog_relation, 'rust': Q.rust_relation, 'socs': Q.socs_relation, 'stats': Q.stats_relation },
-        'rust': { 'pat': 75, 'prog': 65, 'pop': Q.rust_relation, 'stats': 20, 'socs': 10 },
-        'stats': { 'pat': 30, 'prog': 10, 'pop': Q.stats_relation, 'rust': 20, 'socs': 0 },
-        'socs': { 'pat': 15, 'prog': 40, 'pop': Q.socs_relation, 'rust': 25, 'stats': 0 }
-    };
+// Initialize second round data structures
+var seats_remaining_by_profile = {};
+var second_round_contests = {};
 
-    const remainingSeats = {};
-    for (const profileName in seatProfiles) {
-        const profile = seatProfiles[profileName];
-        const profileResults = Q['first_round_profile_' + profileName] || {};
-        let seatsWon = 0;
-        for (const party of Q.parties) {
-            seatsWon += profileResults[party] || 0;
-        }
-        remainingSeats[profileName] = Math.max(0, profile.seats - seatsWon);
+// Define party relationships (0-100 scale)
+var party_relationships = {
+    'pat': {'prog':60, 'pop':Q.pat_relation, 'rust':75, 'stats':30, 'socs':5},
+    'prog': {'pat':60, 'pop':Q.prog_relation, 'rust':65, 'stats':10, 'socs':15},
+    'pop': {
+        'pat':Q.pat_relation, 'prog':Q.prog_relation, 'rust':Q.rust_relation,
+        'socs':Q.socs_relation, 'stats':Q.stats_relation
+    },
+    'rust': {'pat':75, 'prog':65, 'pop':Q.rust_relation, 'stats':20, 'socs':10},
+    'stats': {'pat':30, 'prog':10, 'pop':Q.stats_relation, 'rust':20, 'socs':0},
+    'socs': {'pat':15, 'prog':40, 'pop':Q.socs_relation, 'rust':25, 'stats':0}
+};
+
+// Calculate remaining seats per profile
+for (var profile_name in Q.seat_profiles) {
+    var profile = Q.seat_profiles[profile_name];
+    var total_won_first = 0;
+    
+    for (var party of Q.parties) {
+        total_won_first += Q.seats_won_first_round[profile_name][party];
     }
+    seats_remaining_by_profile[profile_name] = profile.seats - total_won_first;
+}
 
-    const secondRoundResults = {};
-    for (const party of Q.parties) {
-        secondRoundResults[party] = 0;
+// Create second round contests
+for (var profile_name in seats_remaining_by_profile) {
+    if (seats_remaining_by_profile[profile_name] <= 0) continue;
+    
+    var profile = Q.seat_profiles[profile_name];
+    var strength_pairs = [];
+    
+    // Calculate party strengths
+    for (var party of Q.parties) {
+        var weighted_support = 0;
+        for (var demo_class of Q.classes) {
+            if (profile[demo_class]) {
+                weighted_support += (profile[demo_class]/100) * Q[demo_class+'_'+party+'_normalized'];
+            }
+        }
+        strength_pairs.push({party:party, strength:weighted_support});
     }
-
-    // Process each seat profile separately
-    for (const [profileName, seatsRemaining] of Object.entries(remainingSeats)) {
-        if (seatsRemaining <= 0) continue;
+    
+    strength_pairs.sort((a,b) => b.strength - a.strength);
+    second_round_contests[profile_name] = [];
+    
+    // Create runoff contests
+    for (var i=0; i<seats_remaining_by_profile[profile_name] && i<strength_pairs.length-1; i++) {
+        var contest = {
+            party_a: strength_pairs[i].party,
+            party_b: strength_pairs[i+1].party,
+            party_a_base: strength_pairs[i].strength,
+            party_b_base: strength_pairs[i+1].strength
+        };
         
-        const profile = seatProfiles[profileName];
-        const totalWeight = Object.values(profile.weights).reduce((a, b) => a + b, 0);
-
-        // Calculate party strengths for this profile
-        const partyStrengths = {};
-        for (const party of Q.parties) {
-            let strength = 0;
-            for (const [demoClass, weight] of Object.entries(profile.weights)) {
-                strength += (weight / totalWeight) * (Q[`${demoClass}_${party}_normalized`] || 0);
+        // Calculate tactical voting
+        var party_a_boost = 0, party_b_boost = 0;
+        for (var j=i+2; j<strength_pairs.length; j++) {
+            var eliminated_party = strength_pairs[j].party;
+            var rel_to_a = party_relationships[eliminated_party] ? 
+                         (party_relationships[eliminated_party][contest.party_a] || 50) : 50;
+            var rel_to_b = party_relationships[eliminated_party] ? 
+                         (party_relationships[eliminated_party][contest.party_b] || 50) : 50;
+            
+            var transfer = strength_pairs[j].strength * 0.3;
+            if (rel_to_a > rel_to_b) {
+                party_a_boost += transfer * (rel_to_a-rel_to_b)/100;
+            } else if (rel_to_b > rel_to_a) {
+                party_b_boost += transfer * (rel_to_b-rel_to_a)/100;
             }
-            partyStrengths[party] = strength;
         }
-
-        // Sort parties by strength for this profile
-        const sortedParties = [...Q.parties].sort((a, b) => partyStrengths[b] - partyStrengths[a]);
-
-        // Allocate remaining seats for this profile
-        for (let seat = 0; seat < seatsRemaining; seat++) {
-            if (sortedParties.length <= 1) {
-                // If only one party left, give them all remaining seats
-                secondRoundResults[sortedParties[0]] += (seatsRemaining - seat);
-                break;
-            }
-            
-            // Take top two parties
-            const partyA = sortedParties[0];
-            const partyB = sortedParties[1];
-            
-            let strengthA = partyStrengths[partyA];
-            let strengthB = partyStrengths[partyB];
-            
-            // Transfer votes from eliminated parties
-            for (let j = 2; j < sortedParties.length; j++) {
-                const eliminated = sortedParties[j];
-                const elimStrength = partyStrengths[eliminated];
-                const relToA = relationshipMatrix[eliminated]?.[partyA] || 50;
-                const relToB = relationshipMatrix[eliminated]?.[partyB] || 50;
-                const transferRatio = relToA / (relToA + relToB);
-                strengthA += elimStrength * 0.25 * transferRatio;
-                strengthB += elimStrength * 0.25 * (1 - transferRatio);
-            }
-            
-            // Add small random factor
-            const randomFactor = 1 + (Math.random() * 0.04 - 0.02);
-            const finalA = strengthA * randomFactor;
-            const finalB = strengthB * (2 - randomFactor);
-            
-            // Award seat to winner
-            if (finalA > finalB) {
-                secondRoundResults[partyA]++;
-            } else {
-                secondRoundResults[partyB]++;
-            }
-            
-            // Remove the losing party from consideration for next seat
-            sortedParties.splice(finalA > finalB ? 1 : 0, 1);
-        }
+        
+        // Determine winner with randomness
+        contest.winner = (contest.party_a_base + party_a_boost + (Math.random()-0.5)*5) > 
+                         (contest.party_b_base + party_b_boost + (Math.random()-0.5)*5)
+                         ? contest.party_a : contest.party_b;
+        
+        second_round_contests[profile_name].push(contest);
     }
+}
 
-    // Update final seat counts
-    for (const party of Q.parties) {
-        const totalSeats = (Q[`${party}_seats_first`] || 0) + (secondRoundResults[party] || 0);
-        Q[`${party}_votes`] = totalSeats;
-        Q[`${party}_f`] = totalSeats;
+// Calculate final seat allocations
+var seats_won_second_round = {};
+for (var party of Q.parties) seats_won_second_round[party] = 0;
+
+for (var profile_name in second_round_contests) {
+    for (var contest of second_round_contests[profile_name]) {
+        seats_won_second_round[contest.winner]++;
     }
+}
+
+// Set final party_f values (seat counts)
+for (var party of Q.parties) {
+    Q[party+'_f'] = (Q[party+'_seats_first'] || 0) + (seats_won_second_round[party] || 0);
+}
 !}
 go-to: election_second_round.post_second_round_results
