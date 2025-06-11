@@ -47,8 +47,6 @@ for (var party of Q.parties) {
     // Calculate change in seats from old seats
     if (Q['old_' + party + '_f'] !== undefined) {
         Q['change_' + party + '_seats'] = Q[party + '_seats'] - Q['old_' + party + '_f'];
-    } else {
-        Q['change_' + party + '_seats'] = 0; // no old data
     }
 
     var sign = Q['change_' + party + '_seats'] > 0 ? '+' : '';
@@ -182,7 +180,7 @@ go-to: coalition_menu
 {!<svg id="folkshus" style="width: 500px; height: 250px;"> </svg>!}
 
 <table>
-  <tr><td>Party</td><td>Seats Won</td><td>Change</td></tr>!}
+  <tr><td>Party</td><td>Seats Won</td><td>Change</td></tr>
 
   <tr>
     <td><div class="box" style='background-color:#F37934'></div> Socialist Workers:</td>

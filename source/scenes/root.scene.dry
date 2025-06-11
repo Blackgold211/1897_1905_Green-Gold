@@ -281,7 +281,7 @@ Q.old_pat_f = 298;
 Q.old_prog_f = 182;
 Q.old_pop_f = 57;
 Q.old_rust_f = 44;
-Q.old_stat_f = 14;
+Q.old_stats_f = 14;
 Q.old_socs_f = 1;
 Q.old_other_f = 5;
 
