@@ -536,8 +536,6 @@ table {
 /* Styles for your political parties */
 .seat.socs {
     fill: #F37934;
-    stroke: var(--border-color);
-    stroke-width: 1.5px;
 }
 .seat.pop {
     fill: #9365B8;
@@ -546,28 +544,18 @@ table {
 }
 .seat.prog {
     fill: #2969B0;
-    stroke: var(--border-color);
-    stroke-width: 1.5px;
 }
 .seat.rust {
     fill: #1ABC9C;
-    stroke: var(--border-color);
-    stroke-width: 1.5px;
 }
 .seat.other {
     fill: #a0a0a0;
-    stroke: var(--border-color);
-    stroke-width: 1.5px;
 }
 .seat.pat {
     fill: #B8312F;
-    stroke: var(--border-color);
-    stroke-width: 1.5px;
 }
 .seat.stats {
     fill: #475577;
-    stroke: var(--border-color);
-    stroke-width: 1.5px;
 }
 
 .tooltip-text {
