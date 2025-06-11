@@ -105,7 +105,6 @@ Q.election_records.push(election_result);
 Q.first_round_complete = 0;
 !}
 
-// Fixed parliament visualization data
 on-display: {!
 data = [
     {
