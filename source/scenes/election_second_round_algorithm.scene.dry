@@ -43,31 +43,26 @@ on-arrival: {!
         }
     };
 
-    // Relationship matrix with deterministic transfers
     const relationshipMatrix = {
         'pat': { 'prog': 60, 'pop': Q.pat_relation, 'rust': 75, 'stats': 30, 'socs': 5 },
         'prog': { 'pat': 60, 'pop': Q.prog_relation, 'rust': 65, 'stats': 10, 'socs': 15 },
-        'pop': { 'pat': Q.pat_relation, 'prog': Q.prog_relation, 'rust': Q.rust_relation, 
-                'socs': Q.socs_relation, 'stats': Q.stats_relation },
+        'pop': { 'pat': Q.pat_relation, 'prog': Q.prog_relation, 'rust': Q.rust_relation, 'socs': Q.socs_relation, 'stats': Q.stats_relation },
         'rust': { 'pat': 75, 'prog': 65, 'pop': Q.rust_relation, 'stats': 20, 'socs': 10 },
         'stats': { 'pat': 30, 'prog': 10, 'pop': Q.stats_relation, 'rust': 20, 'socs': 0 },
         'socs': { 'pat': 15, 'prog': 40, 'pop': Q.socs_relation, 'rust': 25, 'stats': 0 }
     };
 
-    // Calculate remaining seats
     const remainingSeats = {};
     for (const profileName in seatProfiles) {
         const profile = seatProfiles[profileName];
+        const profileResults = Q['first_round_profile_' + profileName] || {};
         let seatsWon = 0;
-        
         for (const party of Q.parties) {
-            seatsWon += Q[`${party}_seats_first`] || 0;
+            seatsWon += profileResults[party] || 0;
         }
-        
         remainingSeats[profileName] = Math.max(0, profile.seats - seatsWon);
     }
 
-    // Process runoff elections
     const secondRoundResults = {};
     for (const party of Q.parties) {
         secondRoundResults[party] = 0;
@@ -75,12 +70,10 @@ on-arrival: {!
 
     for (const [profileName, seatsRemaining] of Object.entries(remainingSeats)) {
         if (seatsRemaining <= 0) continue;
-
-        // Calculate party strengths (same as first round)
         const profile = seatProfiles[profileName];
         const totalWeight = Object.values(profile.weights).reduce((a, b) => a + b, 0);
+
         const partyStrengths = {};
-        
         for (const party of Q.parties) {
             let strength = 0;
             for (const [demoClass, weight] of Object.entries(profile.weights)) {
@@ -89,37 +82,29 @@ on-arrival: {!
             partyStrengths[party] = strength;
         }
 
-        // Sort parties by strength
-        const sortedParties = Q.parties.sort((a, b) => partyStrengths[b] - partyStrengths[a]);
+        const sortedParties = [...Q.parties].sort((a, b) => partyStrengths[b] - partyStrengths[a]);
 
-        // Allocate remaining seats through runoffs
         for (let i = 0; i < seatsRemaining && i < sortedParties.length - 1; i++) {
             const partyA = sortedParties[i];
             const partyB = sortedParties[i + 1];
-            
-            // Base strengths
+
             let strengthA = partyStrengths[partyA];
             let strengthB = partyStrengths[partyB];
-            
-            // Apply relationship-based transfers from eliminated parties
+
             for (let j = i + 2; j < sortedParties.length; j++) {
-                const eliminatedParty = sortedParties[j];
-                const eliminatedStrength = partyStrengths[eliminatedParty];
-                
-                const relToA = relationshipMatrix[eliminatedParty][partyA] || 50;
-                const relToB = relationshipMatrix[eliminatedParty][partyB] || 50;
-                
-                // Transfer 25% of eliminated strength based on relationships
+                const eliminated = sortedParties[j];
+                const elimStrength = partyStrengths[eliminated];
+                const relToA = relationshipMatrix[eliminated]?.[partyA] || 50;
+                const relToB = relationshipMatrix[eliminated]?.[partyB] || 50;
                 const transferRatio = relToA / (relToA + relToB);
-                strengthA += eliminatedStrength * 0.25 * transferRatio;
-                strengthB += eliminatedStrength * 0.25 * (1 - transferRatio);
+                strengthA += elimStrength * 0.25 * transferRatio;
+                strengthB += elimStrength * 0.25 * (1 - transferRatio);
             }
-            
-            // Determine winner with minimal randomness (±2% max)
+
             const randomFactor = 1 + (Math.random() * 0.04 - 0.02);
             const finalA = strengthA * randomFactor;
-            const finalB = strengthB * (2 - randomFactor); // Maintain total
-            
+            const finalB = strengthB * (2 - randomFactor);
+
             if (finalA > finalB) {
                 secondRoundResults[partyA]++;
             } else {
@@ -130,8 +115,8 @@ on-arrival: {!
 
     for (const party of Q.parties) {
         const totalSeats = (Q[`${party}_seats_first`] || 0) + (secondRoundResults[party] || 0);
-        Q[`${party}_votes`] = totalSeats;  // Store actual seat count
-        Q[`${party}_f`] = totalSeats;      // *_f now contains seat count, not vote share
+        Q[`${party}_votes`] = totalSeats;
+        Q[`${party}_f`] = totalSeats;
     }
 !}
 go-to: election_second_round.post_second_round_results
