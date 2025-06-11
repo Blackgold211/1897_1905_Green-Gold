@@ -1,7 +1,7 @@
 title: Election First Round
 on-arrival: {!
     // 1. Define seat profiles with demographic weights
-    Q.seatProfiles = {
+    var seatProfiles = {
         'rural_stronghold': {
             weights: {
                 rural: Math.min(100, Q.rural * 3.5),

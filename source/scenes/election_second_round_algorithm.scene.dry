@@ -3,6 +3,49 @@ on-arrival: {!
 // Second Round Election Algorithm - Calculations only
 // Outputs party_f values corresponding to seat counts
 
+var seatProfiles = {
+        'rural_stronghold': {
+            weights: {
+                rural: Math.min(100, Q.rural * 3.5),
+                workers: Q.workers * 0.25,
+                old_middle: Q.old_middle * 1.5,
+                new_middle: Q.new_middle * 0.35,
+                unemployed: Q.unemployed * 1.5
+            },
+            seats: 120
+        },
+        'urban_working': {
+            weights: {
+                workers: Q.workers * 1.8,
+                unemployed: Q.unemployed * 3.5,
+                new_middle: Q.new_middle * 0.15,
+                old_middle: Q.old_middle * 0.05,
+                rural: Q.rural * 0.05
+            },
+            seats: 150
+        },
+        'suburban_mixed': {
+            weights: {
+                new_middle: Q.new_middle * 3.0,
+                old_middle: Q.old_middle * 2.5,
+                workers: Q.workers * 0.5,
+                unemployed: Q.unemployed * 0.3,
+                rural: Q.rural * 0.3
+            },
+            seats: 120
+        },
+        'industrial': {
+            weights: {
+                workers: Q.workers * 1.5,
+                unemployed: Q.unemployed * 3.0,
+                new_middle: Q.new_middle * 0.7,
+                old_middle: Q.old_middle * 0.3,
+                rural: Q.rural * 0.1
+            },
+            seats: 210
+        }
+    };
+
 // Initialize second round data structures
 var seats_remaining_by_profile = {};
 var second_round_contests = {};
