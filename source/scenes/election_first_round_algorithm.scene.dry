@@ -93,10 +93,10 @@ on-arrival: {!
             
             // Determine win probability
             var winProbability;
-            if (weightedSupport >= 45) winProbability = 0.95;
-            else if (weightedSupport >= 35) winProbability = 0.75;
-            else if (weightedSupport >= 25) winProbability = 0.40;
-            else if (weightedSupport >= 15) winProbability = 0.15;
+            if (weightedSupport >= 45) winProbability = 0.75;
+            else if (weightedSupport >= 35) winProbability = 0.55;
+            else if (weightedSupport >= 25) winProbability = 0.30;
+            else if (weightedSupport >= 15) winProbability = 0.10;
             else winProbability = 0.005;
             
             // Calculate seats with minimal randomness
