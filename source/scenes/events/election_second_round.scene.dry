@@ -104,56 +104,56 @@ for (var party of Q.parties) {
 Q.election_records.push(election_result);
 Q.first_round_complete = 0;
 !}
-
+on-departure:
 on-display: {!
 data = [
     {
         "id": "socs",
         "legend": "Socialist Workers", 
         "name": "Socialist Workers",
-        "seats": Q.socs_f,  // Now contains seat count directly
+        "seats": Q.socs_f,
         "color": "#F37934"
     },
     {
         "id": "pop",
         "legend": "Populists",
         "name": "Populists", 
-        "seats": Q.pop_f,   // Now contains seat count directly
+        "seats": Q.pop_f,
         "color": "#9365B8"
     },
     {
         "id": "prog",
         "legend": "Progress",
         "name": "Progress",
-        "seats": Q.prog_f,  // Now contains seat count directly
+        "seats": Q.prog_f,
         "color": "#2969B0"
     },
     {
         "id": "rust", 
         "legend": "Rustiks",
         "name": "Rustiks",
-        "seats": Q.rust_f,  // Now contains seat count directly
+        "seats": Q.rust_f,
         "color": "#1ABC9C"
     },
     {
         "id": "other",
         "legend": "Others",
         "name": "Others", 
-        "seats": Q.other_f, // Now contains seat count directly
+        "seats": Q.other_f,
         "color": "#a0a0a0"
     },
     {
         "id": "pat",
         "legend": "Paternalists",
         "name": "Paternalists",
-        "seats": Q.pat_f,   // Now contains seat count directly
+        "seats": Q.pat_f,
         "color": "#B8312F"
     },
     {
         "id": "stats",
         "legend": "Statists", 
         "name": "Statists",
-        "seats": Q.stats_f, // Now contains seat count directly
+        "seats": Q.stats_f,
         "color": "#475577"
     }
 ];
