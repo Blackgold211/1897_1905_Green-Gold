@@ -27,8 +27,10 @@ on-arrival: {!
             var multiplier = concentrationMultipliers[demo];
             var demoSize = Q[demo] || 0;
             
-            weightedSupport += (demoSupport * multiplier * demoSize);
-            totalWeight += (demoSize * multiplier);
+            // Weight by demographic size but don't let it completely dominate
+            var demoWeight = Math.sqrt(demoSize) * multiplier;
+            weightedSupport += (demoSupport * demoWeight);
+            totalWeight += demoWeight;
         }
         
         // Normalize to get effective support percentage
@@ -43,15 +45,15 @@ on-arrival: {!
         var party = Q.parties[i];
         var support = partySupport[party];
         
-        // Calculate base seats this party contests (proportional to their support)
-        var baseSeats = Math.max(1, Math.floor(totalSeats * (support / 100)));
+        // Calculate base seats this party contests based on their overall strength
+        var baseSeats = Math.max(5, Math.floor(totalSeats * Math.min(0.4, support / 100)));
         
         // For each seat, check if party wins outright (40% threshold)
         var firstRoundWins = 0;
         
         for (var seat = 0; seat < baseSeats; seat++) {
             // Add some randomization to simulate local variation
-            var localSupport = support + (Math.random() - 0.5) * 15; // ±7.5% variation
+            var localSupport = support + (Math.random() - 0.5) * 20; // ±10% variation
             
             // If local support >= 40%, they win in first round
             if (localSupport >= 40) {
