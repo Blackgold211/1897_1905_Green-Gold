@@ -3,6 +3,60 @@ on-arrival: {!
 // Calculate remaining seats to allocate
 var total_remaining = 600 - (Q.seats_decided_first_round || 0);
 
+var seatProfiles = {
+    'rural_stronghold': {
+        weights: {
+            rural: 65,      // Rural-dominated constituencies
+            workers: 20,    // Some industrial workers
+            old_middle: 8,  // Traditional elites
+            new_middle: 5,  // Few professionals
+            unemployed: 2   // Low unemployment
+        },
+        seats: 108  // 18% of 600 seats (matches rural population %)
+    },
+    'urban_working': {
+        weights: {
+            workers: 70,     // Heavy working class
+            unemployed: 12,  // Higher unemployment in urban areas
+            new_middle: 10,  // Some professionals
+            old_middle: 5,   // Few wealthy
+            rural: 3         // Minimal rural
+        },
+        seats: 180  // 30% of 600 seats (major working class areas)
+    },
+    'suburban_mixed': {
+        weights: {
+            new_middle: 45,  // Professional class dominant
+            old_middle: 25,  // Affluent suburbs
+            workers: 22,     // Some workers
+            unemployed: 5,   // Low unemployment
+            rural: 3         // Minimal rural
+        },
+        seats: 120  // 20% of 600 seats (new middle class areas)
+    },
+    'industrial': {
+        weights: {
+            workers: 60,     // Industrial workers dominant
+            unemployed: 8,   // Some unemployment
+            new_middle: 15,  // Skilled professionals
+            old_middle: 12,  // Management class
+            rural: 5         // Some rural outskirts
+        },
+        seats: 132  // 22% of 600 seats (heavy industry areas)
+    },
+    'elite_districts': {
+        weights: {
+            old_middle: 50,  // Wealthy elites
+            new_middle: 35,  // High-end professionals
+            workers: 10,     // Service workers
+            unemployed: 3,   // Very low unemployment
+            rural: 2         // Minimal rural
+        },
+        seats: 60   // 10% of 600 seats (concentrated wealth areas)
+    }
+};
+
+
 // Initialize second round seats
 var second_round_seats = {};
 for (var party of Q.parties) {
