@@ -108,7 +108,7 @@ on-arrival: {!
             if (weightedSupport >= 55) winProbability = 0.80;
             else if (weightedSupport >= 45) winProbability = 0.60;
             else if (weightedSupport >= 35) winProbability = 0.40;
-            else if (weightedSupport >= 25) winProbability = 0.20;
+            else if (weightedSupport >= 25) winProbability = 0.18;
             else if (weightedSupport >= 10) winProbability = 0.04;
             else winProbability = 0.002;
 
@@ -147,15 +147,5 @@ on-arrival: {!
     // 7. Store summary statistics
     Q.seats_decided_first_round = totalFirstRoundWins;
     Q.seats_to_second_round = 600 - totalFirstRoundWins;
-    
-    // 8. Store national demographic verification (for debugging)
-    Q.calculated_national_demographics = nationalWeights;
-    Q.target_demographics = {
-        workers: 48,
-        old_middle: 11,
-        new_middle: 20,
-        rural: 18,
-        unemployed: 3
-    };
 !}
 go-to: election_first_round.post_first_round_results
