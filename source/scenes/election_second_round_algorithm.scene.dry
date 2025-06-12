@@ -38,14 +38,14 @@ var seatProfiles = {
 
 // Party relationship matrix for tactical voting
 var party_relationships = {
-    'pat': {'prog': 60, 'pop': Q.pat_relation, 'rust': 75, 'stats': 30, 'socs': 5, 'other': 40},
-    'prog': {'pat': 60, 'pop': Q.prog_relation, 'rust': 65, 'stats': 10, 'socs': 15, 'other': 50},
+    'pat': {'prog': 40, 'pop': Q.pat_relation, 'rust': 75, 'stats': 30, 'socs': 5, 'other': 40},
+    'prog': {'pat': 40, 'pop': Q.prog_relation, 'rust': 65, 'stats': 10, 'socs': 15, 'other': 50},
     'pop': {
         'pat': Q.pat_relation, 'prog': Q.prog_relation, 'rust': Q.rust_relation,
         'socs': Q.socs_relation, 'stats': Q.stats_relation, 'other': 45
     },
     'rust': {'pat': 75, 'prog': 65, 'pop': Q.rust_relation, 'stats': 20, 'socs': 10, 'other': 55},
-    'stats': {'pat': 30, 'prog': 10, 'pop': Q.stats_relation, 'rust': 20, 'socs': 0, 'other': 25},
+    'stats': {'pat': 60, 'prog': 10, 'pop': Q.stats_relation, 'rust': 35, 'socs': 0, 'other': 25},
     'socs': {'pat': 5, 'prog': 15, 'pop': Q.socs_relation, 'rust': 10, 'stats': 0, 'other': 30},
     'other': {'pat': 40, 'prog': 50, 'pop': 45, 'rust': 55, 'stats': 25, 'socs': 30}
 };
@@ -151,7 +151,6 @@ if (total_allocated != 600) {
 // Set final results
 for (var party of Q.parties) {
     Q[party+'_f'] = (Q[party+'_seats_first'] || 0) + (second_round_seats[party] || 0);
-    Q[party+'_votes'] = Q[party+'_f'];
 }
 !}
 go-to: election_second_round.post_second_round_results

@@ -20,7 +20,7 @@ if (Q.economic_growth) {
 
 Resources available: [+ resources +]
 
-POP position: [? if pop_toleration : toleration ?][? if pop_in_government : in government - ?][? if pop_toleration == 0 and pop_in_government == 0 : opposition ?]
+Populists position: [? if pop_toleration : toleration ?][? if pop_in_government : in government - ?][? if pop_toleration == 0 and pop_in_government == 0 : opposition ?]
 [? if in_pop_prog_coalition and pop_in_government: POP-PROG Coalition ?][? if in_pop_rust_coalition and pop_in_government: POP-RUST Coalition ?][? if in_pop_prog_rust_coalition and pop_in_government: POP-PROG-RUST Coalition ?][? if in_pop_socs_coalition and pop_in_government: POP-SOCS Coalition ?][? if in_pop_majority and pop_in_government: POP majority ?][? if in_minority_government and pop_in_government: minority government ?][? if in_emergency_government and pop_in_government: emergency government ?][? if in_national_unity_government and pop_in_government: national unity government ?]
 
 Internal dissent: [+ dissent_percent : dissent +]
@@ -59,7 +59,7 @@ Economic growth: [+ economic_growth_2 +]%
 
 = Public Opinion
 
-Support for the Republic: [+ pro_republic +]%
+Support for the Republic: [+ pro_democracy +]%
 
 Nationalism: [+ nationalism +]%
 
@@ -161,9 +161,7 @@ Cynnred Gangs: [+ cynnred_gangs_strength +] thousand members.
 
 @polls
 on-arrival: {!
-Q.pro_republic_disp = Math.round(Q.pro_republic);
-Q.nationalism_disp = Math.round(Q.nationalism);
-Q.socialism_disp = Math.round(Q.socialism);
+
 !}
 
 = Projected election results
@@ -186,17 +184,17 @@ Others: [+ other_votes +]%
 
 **Detailed results for each demographic**
 
-Workers: Populists: [+ workers_pop_display +]%, Paternalists: [+ workers_pat_display +]%, Progress: [+ workers_prog_display +]%, Statists: [+ workers_stats_display +]%, Rustiks: [+ workers_rust_display +]%, Socialists: [+ workers_socs_display +]%, Others: [+ workers_other_display +]%
+Among workers, we are [+ workers_pop_display : poll +]
 
-New Middle Class: Populists: [+ new_middle_pop_display +]%, Paternalists: [+ new_middle_pat_display +]%, Progress: [+ new_middle_prog_display +]%, Statists: [+ new_middle_stats_display +]%, Rustiks: [+ new_middle_rust_display +]%, Socialists: [+ new_middle_socs_display +]%, Others: [+ new_middle_other_display +]%
+Among new middle class, we are [+ new_middle_pop_display : poll +]
 
-Old Middle Class: Populists: [+ old_middle_pop_display +]%, Paternalists: [+ old_middle_pat_display +]%, Progress: [+ old_middle_prog_display +]%, Statists: [+ old_middle_stats_display +]%, Rustiks: [+ old_middle_rust_display +]%, Socialists: [+ old_middle_socs_display +]%, Others: [+ old_middle_other_display +]%
+Among upper and old middle classes, we are [+ old_middle_pop_display : poll +]
 
-Rural: Populists: [+ rural_pop_display +]%, Paternalists: [+ rural_pat_display +]%, Progress: [+ rural_prog_display +]%, Statists: [+ rural_stats_display +]%, Rustiks: [+ rural_rust_display +]%, Socialists: [+ rural_socs_display +]%, Others: [+ rural_other_display +]%
+Among rural voters, we are [+ rural_pop_display : poll +]
 
-Unemployed: Populists: [+ unemployed_pop_display +]%, Paternalists: [+ unemployed_pat_display +]%, Progress: [+ unemployed_prog_display +]%, Statists: [+ unemployed_stats_display +]%, Rustiks: [+ unemployed_rust_display +]%, Socialists: [+ unemployed_socs_display +]%, Others: [+ unemployed_other_display +]%
+Among the unemployed, we are [+ unemployed_pop_display : poll +]
 
-Support for the Republic: [+ pro_republic_disp +]%
+Support for democracy: [+ pro_democracy_disp +]%
 
 Nationalism: [+ nationalism_disp +]%
 

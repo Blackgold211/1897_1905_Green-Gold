@@ -1,0 +1,14 @@
+title: 1929
+subtitle: A new year
+on-arrival: {!
+// see post_event.scene.dry for changes.
+Q.economic_growth -= 0;
+
+!}
+tags: event
+view-if: year = 1898 and month = 1
+priority: 2
+max-visits: 1
+
+A new year begins. The economy is steady and a new election is on the horizon; it will take a lot to unseat the Paternalists at this point.
+

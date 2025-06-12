@@ -173,13 +173,13 @@ Q.union_council_loyalty = 1;
 // popular opinion
 // national ideology - on a binary scale
 //public opinion on the government.
-Q.public_opinion_on_gov = 0;
+Q.public_opinion_on_gov = 60;
 // nationalism vs internationalism or pacifism or non-nationalism
 Q.nationalism = 60;
 // socialism vs capitalism
 Q.socialism = 40;
 // pro-republic vs anti-republic
-Q.pro_republic = 59;
+Q.pro_democracy = 65;
 
 Q.emergency_rule = 0;
 

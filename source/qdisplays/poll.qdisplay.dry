@@ -1,0 +1,8 @@
+
+# polling popularity
+(0..5) extremely unpopular
+(06..15) unpopular
+(16..25) middlingly popular
+(26..35) popular
+(36..50) very popular
+(51..99) completely dominant
