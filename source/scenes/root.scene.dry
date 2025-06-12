@@ -229,8 +229,8 @@ Q.economic_expansion = 0;
 Q.workers_pop = 35;      
 Q.workers_pat = 24;      
 Q.workers_prog = 29;
-Q.workers_rust = 2;      
-Q.workers_stats = 9;     
+Q.workers_rust = 4;      
+Q.workers_stats = 7;     
 Q.workers_socs = 1;      
 Q.workers_other = 0;     
 
@@ -250,11 +250,11 @@ Q.new_middle_stats = 11;
 Q.new_middle_socs = 2;  
 Q.new_middle_other = 0;  
 
-Q.rural_pop = 2;      
-Q.rural_pat = 36;
-Q.rural_prog = 3;       
-Q.rural_rust = 51;   
-Q.rural_stats = 6;       
+Q.rural_pop = 1;      
+Q.rural_pat = 37;
+Q.rural_prog = 2;       
+Q.rural_rust = 57;   
+Q.rural_stats = 3;       
 Q.rural_socs = 0;        
 Q.rural_other = 0;       
 
