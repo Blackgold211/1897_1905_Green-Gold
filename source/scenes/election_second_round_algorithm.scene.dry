@@ -154,3 +154,4 @@ for (var party of Q.parties) {
     Q[party+'_votes'] = Q[party+'_f'];
 }
 !}
+go-to: election_second_round.post_second_round_results
