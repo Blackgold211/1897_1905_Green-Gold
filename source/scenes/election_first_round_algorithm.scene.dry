@@ -106,9 +106,9 @@ on-arrival: {!
             // More aggressive probabilities for higher first-round wins
             var winProbability;
             if (weightedSupport >= 55) winProbability = 0.90;
-            else if (weightedSupport >= 40) winProbability = 0.70;
-            else if (weightedSupport >= 30) winProbability = 0.50;
-            else if (weightedSupport >= 20) winProbability = 0.25;
+            else if (weightedSupport >= 45) winProbability = 0.70;
+            else if (weightedSupport >= 35) winProbability = 0.50;
+            else if (weightedSupport >= 25) winProbability = 0.25;
             else if (weightedSupport >= 10) winProbability = 0.08;
             else winProbability = 0.002;
 
