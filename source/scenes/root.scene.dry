@@ -226,9 +226,9 @@ Q.economic_expansion = 0;
 // Support for party by social group
 // Adjusted support values to match target first-round results
 // Rebalanced support values for target: Pat 197, Prog 92, Pop 56, Rust 30, Stat 11, Soc 1
-Q.workers_pop = 33;      
-Q.workers_pat = 27;      
-Q.workers_prog = 28;
+Q.workers_pop = 35;      
+Q.workers_pat = 24;      
+Q.workers_prog = 29;
 Q.workers_rust = 2;      
 Q.workers_stats = 9;     
 Q.workers_socs = 1;      
@@ -242,28 +242,28 @@ Q.old_middle_stats = 15;
 Q.old_middle_socs = 0;   
 Q.old_middle_other = 0;  
 
-Q.new_middle_pop = 10;    
+Q.new_middle_pop = 20;    
 Q.new_middle_pat = 23;   
-Q.new_middle_prog = 48;  
+Q.new_middle_prog = 38;  
 Q.new_middle_rust = 2;   
 Q.new_middle_stats = 11; 
 Q.new_middle_socs = 2;  
 Q.new_middle_other = 0;  
 
 Q.rural_pop = 2;      
-Q.rural_pat = 32;
+Q.rural_pat = 36;
 Q.rural_prog = 3;       
-Q.rural_rust = 55;   
+Q.rural_rust = 51;   
 Q.rural_stats = 6;       
 Q.rural_socs = 0;        
 Q.rural_other = 0;       
 
-Q.unemployed_pop = 35;   
-Q.unemployed_pat = 10;   
+Q.unemployed_pop = 20;   
+Q.unemployed_pat = 20;   
 Q.unemployed_prog = 10; 
 Q.unemployed_rust = 3;   
 Q.unemployed_stats = 33; 
-Q.unemployed_socs = 9;   
+Q.unemployed_socs = 14;   
 Q.unemployed_other = 0;  
 
 // Current Folkshus composition
