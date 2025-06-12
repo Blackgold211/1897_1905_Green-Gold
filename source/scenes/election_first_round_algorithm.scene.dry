@@ -105,11 +105,11 @@ on-arrival: {!
 
             // More aggressive probabilities for higher first-round wins
             var winProbability;
-            if (weightedSupport >= 55) winProbability = 0.90;
-            else if (weightedSupport >= 45) winProbability = 0.70;
-            else if (weightedSupport >= 35) winProbability = 0.50;
-            else if (weightedSupport >= 25) winProbability = 0.25;
-            else if (weightedSupport >= 10) winProbability = 0.08;
+            if (weightedSupport >= 55) winProbability = 0.80;
+            else if (weightedSupport >= 45) winProbability = 0.60;
+            else if (weightedSupport >= 35) winProbability = 0.40;
+            else if (weightedSupport >= 25) winProbability = 0.20;
+            else if (weightedSupport >= 10) winProbability = 0.04;
             else winProbability = 0.002;
 
             var exactSeats = profile.seats * winProbability;
