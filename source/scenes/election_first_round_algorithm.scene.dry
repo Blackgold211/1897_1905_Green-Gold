@@ -1,130 +1,123 @@
 title: Election First Round
 on-arrival: {!
-    // 1. Define seat profiles with demographic weights
-    var seatProfiles = {
-        'rural_stronghold': {
-            weights: {
-                rural: Math.min(100, Q.rural * 3.5),
-                workers: Q.workers * 0.25,
-                old_middle: Q.old_middle * 1.5,
-                new_middle: Q.new_middle * 0.35,
-                unemployed: Q.unemployed * 1.5
-            },
-            seats: 120
-        },
-        'urban_working': {
-            weights: {
-                workers: Q.workers * 1.8,
-                unemployed: Q.unemployed * 3.5,
-                new_middle: Q.new_middle * 0.15,
-                old_middle: Q.old_middle * 0.05,
-                rural: Q.rural * 0.05
-            },
-            seats: 150
-        },
-        'suburban_mixed': {
-            weights: {
-                new_middle: Q.new_middle * 3.0,
-                old_middle: Q.old_middle * 2.5,
-                workers: Q.workers * 0.5,
-                unemployed: Q.unemployed * 0.3,
-                rural: Q.rural * 0.3
-            },
-            seats: 120
-        },
-        'industrial': {
-            weights: {
-                workers: Q.workers * 1.5,
-                unemployed: Q.unemployed * 3.0,
-                new_middle: Q.new_middle * 0.7,
-                old_middle: Q.old_middle * 0.3,
-                rural: Q.rural * 0.1
-            },
-            seats: 210
-        }
+    // 1. Define demographic concentration multipliers
+    var concentrationMultipliers = {
+        rural: 1.4,        // Rural voters are highly concentrated geographically
+        workers: 1.2,      // Urban workers moderately concentrated
+        unemployed: 1.5,   // Unemployed very concentrated in certain areas
+        old_middle: 0.95,  // Old middle class more dispersed
+        new_middle: 0.9    // New middle class most dispersed
     };
 
-    // 2. Normalize weights to 100
-    for (var profileName in seatProfiles) {
-        var profile = seatProfiles[profileName];
-        var totalWeight = 0;
-        for (var demo in profile.weights) {
-            totalWeight += profile.weights[demo];
-        }
-        for (var demo in profile.weights) {
-            profile.weights[demo] = (profile.weights[demo] / totalWeight) * 100;
-        }
-    }
-
-    // 3. Initialize results
+    // 2. Initialize party results
+    var partySupport = {};
     var results = {};
+    
     for (var i = 0; i < Q.parties.length; i++) {
         var party = Q.parties[i];
         results[party] = 0;
         Q[party + '_seats_first'] = 0;
+        
+        // Calculate weighted support for each party
+        var weightedSupport = 0;
+        var totalWeight = 0;
+        
+        for (var demo in concentrationMultipliers) {
+            var demoSupport = Q[demo + '_' + party + '_normalized'] || 0;
+            var multiplier = concentrationMultipliers[demo];
+            var demoSize = Q[demo] || 0;
+            
+            weightedSupport += (demoSupport * multiplier * demoSize);
+            totalWeight += (demoSize * multiplier);
+        }
+        
+        // Normalize to get effective support percentage
+        partySupport[party] = totalWeight > 0 ? (weightedSupport / totalWeight) : 0;
     }
 
+    // 3. Calculate first round wins - parties with 40%+ automatically win
     var totalFirstRoundWins = 0;
-
-    // 4. Seat allocation per profile
-    for (var profileName in seatProfiles) {
-        var profile = seatProfiles[profileName];
-        var profileResults = {};
-        for (var j = 0; j < Q.parties.length; j++) {
-            profileResults[Q.parties[j]] = 0;
-        }
-
-        for (var j = 0; j < Q.parties.length; j++) {
-            var party = Q.parties[j];
-            var weightedSupport = 0;
-
-            for (var demo in profile.weights) {
-                var classSupport = Q[demo + '_' + party + '_normalized'] || 0;
-                weightedSupport += (profile.weights[demo] / 100) * classSupport;
+    var totalSeats = 600;
+    
+    for (var i = 0; i < Q.parties.length; i++) {
+        var party = Q.parties[i];
+        var support = partySupport[party];
+        
+        // Calculate base seats this party contests (proportional to their support)
+        var baseSeats = Math.max(1, Math.floor(totalSeats * (support / 100)));
+        
+        // For each seat, check if party wins outright (40% threshold)
+        var firstRoundWins = 0;
+        
+        for (var seat = 0; seat < baseSeats; seat++) {
+            // Add some randomization to simulate local variation
+            var localSupport = support + (Math.random() - 0.5) * 15; // ±7.5% variation
+            
+            // If local support >= 40%, they win in first round
+            if (localSupport >= 40) {
+                firstRoundWins++;
             }
-
-            // Adjusted probabilities for more second-round action
-            var winProbability;
-            if (weightedSupport >= 45) winProbability = 0.35;
-            else if (weightedSupport >= 35) winProbability = 0.25;
-            else if (weightedSupport >= 25) winProbability = 0.10;
-            else if (weightedSupport >= 15) winProbability = 0.03;
-            else winProbability = 0.001;
-
-            var exactSeats = profile.seats * winProbability;
-            var roundedSeats = Math.floor(exactSeats);
-            if (Math.random() < (exactSeats - roundedSeats)) roundedSeats += 1;
-
-            profileResults[party] = roundedSeats;
-            results[party] += roundedSeats;
-            totalFirstRoundWins += roundedSeats;
         }
-
-        // Save per-profile results
-        Q['first_round_profile_' + profileName] = profileResults;
+        
+        results[party] = firstRoundWins;
+        totalFirstRoundWins += firstRoundWins;
     }
 
-    // 5. Clamp to 600 seats max
+    // 4. Handle edge cases and ensure realism
+    
+    // If total seats decided is too high, reduce proportionally
+    if (totalFirstRoundWins > 500) { // Leave room for second round
+        var reductionFactor = 500 / totalFirstRoundWins;
+        totalFirstRoundWins = 0;
+        
+        for (var i = 0; i < Q.parties.length; i++) {
+            var party = Q.parties[i];
+            results[party] = Math.floor(results[party] * reductionFactor);
+            totalFirstRoundWins += results[party];
+        }
+    }
+    
+    // If total is suspiciously low, boost the strongest parties slightly
+    if (totalFirstRoundWins < 50) {
+        var sortedParties = Q.parties.slice().sort(function(a, b) {
+            return partySupport[b] - partySupport[a];
+        });
+        
+        // Give the top 2 parties some guaranteed wins
+        var boost = Math.min(80, 100 - totalFirstRoundWins);
+        var firstBoost = Math.floor(boost * 0.6);
+        var secondBoost = Math.floor(boost * 0.4);
+        
+        results[sortedParties[0]] += firstBoost;
+        results[sortedParties[1]] += secondBoost;
+        totalFirstRoundWins += (firstBoost + secondBoost);
+    }
+
+    // Final safety check - ensure we don't exceed 600 total
     if (totalFirstRoundWins > 600) {
-        var adjustment = totalFirstRoundWins - 600;
+        var excess = totalFirstRoundWins - 600;
+        // Remove excess from largest party
         var largestParty = Q.parties[0];
-        for (var j = 1; j < Q.parties.length; j++) {
-            if (results[Q.parties[j]] > results[largestParty]) {
-                largestParty = Q.parties[j];
+        for (var i = 1; i < Q.parties.length; i++) {
+            if (results[Q.parties[i]] > results[largestParty]) {
+                largestParty = Q.parties[i];
             }
         }
-        results[largestParty] -= adjustment;
+        results[largestParty] = Math.max(0, results[largestParty] - excess);
         totalFirstRoundWins = 600;
     }
 
-    // 6. Store final results
-    for (var j = 0; j < Q.parties.length; j++) {
-        var party = Q.parties[j];
+    // 5. Store final results in the required variables
+    for (var i = 0; i < Q.parties.length; i++) {
+        var party = Q.parties[i];
         Q[party + '_seats_first'] = results[party];
     }
 
-    // 7. Assign readable text for summary
+    // 6. Set summary variables
     Q.seats_decided_first_round = totalFirstRoundWins;
     Q.seats_to_second_round = 600 - totalFirstRoundWins;
+    
+    // 7. Optional: Store party support calculations for debugging
+    Q.first_round_party_support = partySupport;
 !}
 go-to: election_first_round.post_first_round_results
