@@ -226,35 +226,35 @@ Q.economic_expansion = 0;
 // Support for party by social group
 // Adjusted support values to match target first-round results
 // Rebalanced support values for target: Pat 197, Prog 92, Pop 56, Rust 30, Stat 11, Soc 1
-Q.workers_pop = 38;      
+Q.workers_pop = 37;      
 Q.workers_pat = 28;      
-Q.workers_prog = 30;
+Q.workers_prog = 29;
 Q.workers_rust = 2;      
-Q.workers_stats = 1;     
+Q.workers_stats = 3;     
 Q.workers_socs = 1;      
 Q.workers_other = 0;     
 
 Q.old_middle_pop = 1;    
-Q.old_middle_pat = 82;  
+Q.old_middle_pat = 75;  
 Q.old_middle_prog = 12; 
 Q.old_middle_rust = 3;   
-Q.old_middle_stats = 2;  
+Q.old_middle_stats = 9;  
 Q.old_middle_socs = 0;   
 Q.old_middle_other = 0;  
 
-Q.new_middle_pop = 6;    
-Q.new_middle_pat = 30;   
-Q.new_middle_prog = 55;  
+Q.new_middle_pop = 10;    
+Q.new_middle_pat = 22;   
+Q.new_middle_prog = 50;  
 Q.new_middle_rust = 2;   
-Q.new_middle_stats = 5; 
+Q.new_middle_stats = 10; 
 Q.new_middle_socs = 2;  
 Q.new_middle_other = 0;  
 
 Q.rural_pop = 8;      
-Q.rural_pat = 38;
+Q.rural_pat = 35;
 Q.rural_prog = 4;       
-Q.rural_rust = 48;   
-Q.rural_stats = 2;       
+Q.rural_rust = 43;   
+Q.rural_stats = 8;       
 Q.rural_socs = 0;        
 Q.rural_other = 0;       
 
