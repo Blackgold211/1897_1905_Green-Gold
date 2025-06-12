@@ -1,74 +1,151 @@
-title: Election Second Round
+title: Election First Round
 on-arrival: {!
-// Calculate remaining seats to allocate
-var total_remaining = 600 - (Q.seats_decided_first_round || 0);
-
-// Initialize second round seats
-var second_round_seats = {};
-for (var party of Q.parties) {
-    second_round_seats[party] = 0;
-}
-
-// Process each seat profile
-for (var profileName in seatProfiles) {
-    var profile = seatProfiles[profileName];
+    // National demographics (as percentages):
+    // Workers: 48%, Old Middle: 11%, New Middle: 20%, Rural: 18%, Unemployed: 3%
     
-    // Calculate seats already won in first round for this profile
-    var profile_first_round = Math.round((profile.seats / 600) * (Q.seats_decided_first_round || 0));
-    var seats_remaining = profile.seats - profile_first_round;
-    
-    if (seats_remaining <= 0) continue;
-    
-    // Calculate party strengths
-    var strengths = {};
-    for (var party of Q.parties) {
-        var weighted = 0;
-        for (var demo in profile.weights) {
-            weighted += (profile.weights[demo]/100) * (Q[demo+'_'+party+'_normalized'] || 0);
+    // 1. Define seat profiles with realistic demographic compositions
+    var seatProfiles = {
+        'rural_stronghold': {
+            weights: {
+                rural: 65,      // Rural-dominated constituencies
+                workers: 20,    // Some industrial workers
+                old_middle: 8,  // Traditional elites
+                new_middle: 5,  // Few professionals
+                unemployed: 2   // Low unemployment
+            },
+            seats: 108  // 18% of 600 seats (matches rural population %)
+        },
+        'urban_working': {
+            weights: {
+                workers: 70,     // Heavy working class
+                unemployed: 12,  // Higher unemployment in urban areas
+                new_middle: 10,  // Some professionals
+                old_middle: 5,   // Few wealthy
+                rural: 3         // Minimal rural
+            },
+            seats: 180  // 30% of 600 seats (major working class areas)
+        },
+        'suburban_mixed': {
+            weights: {
+                new_middle: 45,  // Professional class dominant
+                old_middle: 25,  // Affluent suburbs
+                workers: 22,     // Some workers
+                unemployed: 5,   // Low unemployment
+                rural: 3         // Minimal rural
+            },
+            seats: 120  // 20% of 600 seats (new middle class areas)
+        },
+        'industrial': {
+            weights: {
+                workers: 60,     // Industrial workers dominant
+                unemployed: 8,   // Some unemployment
+                new_middle: 15,  // Skilled professionals
+                old_middle: 12,  // Management class
+                rural: 5         // Some rural outskirts
+            },
+            seats: 132  // 22% of 600 seats (heavy industry areas)
+        },
+        'elite_districts': {
+            weights: {
+                old_middle: 50,  // Wealthy elites
+                new_middle: 35,  // High-end professionals
+                workers: 10,     // Service workers
+                unemployed: 3,   // Very low unemployment
+                rural: 2         // Minimal rural
+            },
+            seats: 60   // 10% of 600 seats (concentrated wealth areas)
         }
-        strengths[party] = weighted;
+    };
+
+    // Verify total seats = 600
+    var totalSeats = 0;
+    for (var profileName in seatProfiles) {
+        totalSeats += seatProfiles[profileName].seats;
     }
     
-    // Allocate remaining seats using D'Hondt method
-    for (var i = 0; i < seats_remaining; i++) {
-        var max_score = 0;
-        var winner = null;
+    // 2. Calculate weighted national demographics to verify balance
+    var nationalWeights = {rural: 0, workers: 0, old_middle: 0, new_middle: 0, unemployed: 0};
+    
+    for (var profileName in seatProfiles) {
+        var profile = seatProfiles[profileName];
+        var seatProportion = profile.seats / 600;
         
-        for (var party of Q.parties) {
-            var score = strengths[party] / ((second_round_seats[party] || 0) + 1);
-            if (score > max_score) {
-                max_score = score;
-                winner = party;
+        for (var demo in profile.weights) {
+            nationalWeights[demo] += (profile.weights[demo] / 100) * seatProportion * 100;
+        }
+    }
+
+    // 3. Initialize results
+    var results = {};
+    for (var i = 0; i < Q.parties.length; i++) {
+        var party = Q.parties[i];
+        results[party] = 0;
+        Q[party + '_seats_first'] = 0;
+    }
+
+    var totalFirstRoundWins = 0;
+
+    // 4. Seat allocation per profile
+    for (var profileName in seatProfiles) {
+        var profile = seatProfiles[profileName];
+        var profileResults = {};
+        for (var j = 0; j < Q.parties.length; j++) {
+            profileResults[Q.parties[j]] = 0;
+        }
+
+        for (var j = 0; j < Q.parties.length; j++) {
+            var party = Q.parties[j];
+            var weightedSupport = 0;
+
+            // Calculate weighted support across demographics
+            for (var demo in profile.weights) {
+                var classSupport = Q[demo + '_' + party + '_normalized'] || 0;
+                weightedSupport += (profile.weights[demo] / 100) * classSupport;
+            }
+
+            // More aggressive probabilities for higher first-round wins
+            var winProbability;
+            if (weightedSupport >= 55) winProbability = 0.80;
+            else if (weightedSupport >= 45) winProbability = 0.60;
+            else if (weightedSupport >= 35) winProbability = 0.40;
+            else if (weightedSupport >= 25) winProbability = 0.18;
+            else if (weightedSupport >= 10) winProbability = 0.04;
+            else winProbability = 0.002;
+
+            var exactSeats = profile.seats * winProbability;
+            var roundedSeats = Math.floor(exactSeats);
+            if (Math.random() < (exactSeats - roundedSeats)) roundedSeats += 1;
+
+            profileResults[party] = roundedSeats;
+            results[party] += roundedSeats;
+            totalFirstRoundWins += roundedSeats;
+        }
+
+        // Save per-profile results for debugging
+        Q['first_round_profile_' + profileName] = profileResults;
+    }
+
+    // 5. Clamp to 600 seats max (safety check)
+    if (totalFirstRoundWins > 600) {
+        var adjustment = totalFirstRoundWins - 600;
+        var largestParty = Q.parties[0];
+        for (var j = 1; j < Q.parties.length; j++) {
+            if (results[Q.parties[j]] > results[largestParty]) {
+                largestParty = Q.parties[j];
             }
         }
-        
-        if (winner) {
-            second_round_seats[winner]++;
-        }
+        results[largestParty] -= adjustment;
+        totalFirstRoundWins = 600;
     }
-}
 
-// Verify totals
-var total_allocated = Q.seats_decided_first_round || 0;
-for (var party in second_round_seats) {
-    total_allocated += second_round_seats[party];
-}
-
-// Handle any rounding errors by adjusting largest party
-if (total_allocated != 600) {
-    var diff = 600 - total_allocated;
-    var largest = Q.parties[0];
-    for (var party of Q.parties) {
-        if ((second_round_seats[party] || 0) > (second_round_seats[largest] || 0)) {
-            largest = party;
-        }
+    // 6. Store final results
+    for (var j = 0; j < Q.parties.length; j++) {
+        var party = Q.parties[j];
+        Q[party + '_seats_first'] = results[party];
     }
-    second_round_seats[largest] += diff;
-}
 
-// Set final results
-for (var party of Q.parties) {
-    Q[party+'_f'] = (Q[party+'_seats_first'] || 0) + (second_round_seats[party] || 0);
-    Q[party+'_votes'] = Q[party+'_f'];
-}
+    // 7. Store summary statistics
+    Q.seats_decided_first_round = totalFirstRoundWins;
+    Q.seats_to_second_round = 600 - totalFirstRoundWins;
 !}
+go-to: election_first_round.post_first_round_results
