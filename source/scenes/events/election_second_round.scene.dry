@@ -22,26 +22,6 @@ The Folkshus elections are to be held now.
 on-arrival: {! 
 var new_party_sum = 0;
 for (var party of Q.parties) {
-    // DON'T save old seats here - they should already be saved from first round
-    // Q['old_' + party + '_f'] = Q[party + '_f'];  // REMOVE THIS LINE
-    
-    if (Q.constitutional_reform > 0) {
-        if ((Q.electoral_threshold > 1 && party == 'other') || Q[party + '_banned']) {
-            Q[party + '_f'] = 0;
-        } else {
-            Q[party + '_f'] = Q[party + '_votes'];  // _votes now contains seat counts
-        }
-        new_party_sum += Q[party + '_f'];
-    } else {
-        Q[party + '_f'] = Q[party + '_votes'];  // _votes now contains seat counts
-    }
-    
-    if (Q.use_decimals) {
-        Q[party + '_f_disp'] = Q[party+'_f'].toFixed(1);
-    } else {
-        Q[party + '_f_disp'] = Q[party+'_f'];
-    }
-    
     // Since *_f now contains seat counts, we can use them directly
     Q[party + '_seats'] = Q[party + '_f'];
 

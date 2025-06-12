@@ -6,56 +6,49 @@ var total_remaining = 600 - (Q.seats_decided_first_round || 0);
 var seatProfiles = {
     'rural_stronghold': {
         weights: {
-            rural: 65,      // Rural-dominated constituencies
-            workers: 20,    // Some industrial workers
-            old_middle: 8,  // Traditional elites
-            new_middle: 5,  // Few professionals
-            unemployed: 2   // Low unemployment
+            rural: 65, workers: 20, old_middle: 8, new_middle: 5, unemployed: 2
         },
-        seats: 108  // 18% of 600 seats (matches rural population %)
+        seats: 108
     },
     'urban_working': {
         weights: {
-            workers: 70,     // Heavy working class
-            unemployed: 12,  // Higher unemployment in urban areas
-            new_middle: 10,  // Some professionals
-            old_middle: 5,   // Few wealthy
-            rural: 3         // Minimal rural
+            workers: 70, unemployed: 12, new_middle: 10, old_middle: 5, rural: 3
         },
-        seats: 180  // 30% of 600 seats (major working class areas)
+        seats: 180
     },
     'suburban_mixed': {
         weights: {
-            new_middle: 45,  // Professional class dominant
-            old_middle: 25,  // Affluent suburbs
-            workers: 22,     // Some workers
-            unemployed: 5,   // Low unemployment
-            rural: 3         // Minimal rural
+            new_middle: 45, old_middle: 25, workers: 22, unemployed: 5, rural: 3
         },
-        seats: 120  // 20% of 600 seats (new middle class areas)
+        seats: 120
     },
     'industrial': {
         weights: {
-            workers: 60,     // Industrial workers dominant
-            unemployed: 8,   // Some unemployment
-            new_middle: 15,  // Skilled professionals
-            old_middle: 12,  // Management class
-            rural: 5         // Some rural outskirts
+            workers: 60, unemployed: 8, new_middle: 15, old_middle: 12, rural: 5
         },
-        seats: 132  // 22% of 600 seats (heavy industry areas)
+        seats: 132
     },
     'elite_districts': {
         weights: {
-            old_middle: 50,  // Wealthy elites
-            new_middle: 35,  // High-end professionals
-            workers: 10,     // Service workers
-            unemployed: 3,   // Very low unemployment
-            rural: 2         // Minimal rural
+            old_middle: 50, new_middle: 35, workers: 10, unemployed: 3, rural: 2
         },
-        seats: 60   // 10% of 600 seats (concentrated wealth areas)
+        seats: 60
     }
 };
 
+// Party relationship matrix for tactical voting
+var party_relationships = {
+    'pat': {'prog': 60, 'pop': Q.pat_relation, 'rust': 75, 'stats': 30, 'socs': 5, 'other': 40},
+    'prog': {'pat': 60, 'pop': Q.prog_relation, 'rust': 65, 'stats': 10, 'socs': 15, 'other': 50},
+    'pop': {
+        'pat': Q.pat_relation, 'prog': Q.prog_relation, 'rust': Q.rust_relation,
+        'socs': Q.socs_relation, 'stats': Q.stats_relation, 'other': 45
+    },
+    'rust': {'pat': 75, 'prog': 65, 'pop': Q.rust_relation, 'stats': 20, 'socs': 10, 'other': 55},
+    'stats': {'pat': 30, 'prog': 10, 'pop': Q.stats_relation, 'rust': 20, 'socs': 0, 'other': 25},
+    'socs': {'pat': 5, 'prog': 15, 'pop': Q.socs_relation, 'rust': 10, 'stats': 0, 'other': 30},
+    'other': {'pat': 40, 'prog': 50, 'pop': 45, 'rust': 55, 'stats': 25, 'socs': 30}
+};
 
 // Initialize second round seats
 var second_round_seats = {};
@@ -73,42 +66,77 @@ for (var profileName in seatProfiles) {
     
     if (seats_remaining <= 0) continue;
     
-    // Calculate party strengths
-    var strengths = {};
+    // Calculate initial party strengths
+    var party_strengths = [];
     for (var party of Q.parties) {
         var weighted = 0;
         for (var demo in profile.weights) {
             weighted += (profile.weights[demo]/100) * (Q[demo+'_'+party+'_normalized'] || 0);
         }
-        strengths[party] = weighted;
+        party_strengths.push({party: party, strength: weighted});
     }
     
-    // Allocate remaining seats using D'Hondt method
+    // Sort by strength (strongest first)
+    party_strengths.sort((a, b) => b.strength - a.strength);
+    
+    // Create runoff contests for remaining seats
     for (var i = 0; i < seats_remaining; i++) {
-        var max_score = 0;
-        var winner = null;
+        // Take top 3 parties for runoff
+        var runoff_parties = party_strengths.slice(0, 3).filter(p => p.strength > 0);
+        if (runoff_parties.length === 0) continue;
         
-        for (var party of Q.parties) {
-            var score = strengths[party] / ((second_round_seats[party] || 0) + 1);
-            if (score > max_score) {
-                max_score = score;
-                winner = party;
+        // Calculate tactical voting transfers from eliminated parties
+        var final_scores = {};
+        for (var p of runoff_parties) {
+            final_scores[p.party] = p.strength;
+        }
+        
+        // Transfer votes from eliminated parties (4th place and below)
+        for (var j = 3; j < party_strengths.length; j++) {
+            var eliminated = party_strengths[j];
+            if (eliminated.strength <= 0) continue;
+            
+            var total_transfer = eliminated.strength * 0.4; // 40% of votes transfer
+            var total_affinity = 0;
+            
+            // Calculate total affinity to runoff parties
+            for (var p of runoff_parties) {
+                total_affinity += party_relationships[eliminated.party][p.party] || 50;
+            }
+            
+            // Distribute transfers proportionally to relationships
+            for (var p of runoff_parties) {
+                var affinity = party_relationships[eliminated.party][p.party] || 50;
+                var transfer = total_transfer * (affinity / total_affinity);
+                final_scores[p.party] += transfer;
             }
         }
         
-        if (winner) {
-            second_round_seats[winner]++;
+        // Add small random factor (±3%)
+        for (var p in final_scores) {
+            final_scores[p] *= 1 + (Math.random() * 0.06 - 0.03);
+        }
+        
+        // Determine winner
+        var winner = Object.keys(final_scores).reduce((a, b) => 
+            final_scores[a] > final_scores[b] ? a : b);
+        second_round_seats[winner]++;
+        
+        // Reduce winner's strength for next seat to prevent monopoly
+        var winner_index = party_strengths.findIndex(p => p.party === winner);
+        if (winner_index >= 0) {
+            party_strengths[winner_index].strength *= 0.9;
+            party_strengths.sort((a, b) => b.strength - a.strength);
         }
     }
 }
 
-// Verify totals
+// Verify totals and handle rounding errors
 var total_allocated = Q.seats_decided_first_round || 0;
 for (var party in second_round_seats) {
     total_allocated += second_round_seats[party];
 }
 
-// Handle any rounding errors by adjusting largest party
 if (total_allocated != 600) {
     var diff = 600 - total_allocated;
     var largest = Q.parties[0];
@@ -126,4 +154,3 @@ for (var party of Q.parties) {
     Q[party+'_votes'] = Q[party+'_f'];
 }
 !}
-go-to: election_second_round.post_second_round_results
