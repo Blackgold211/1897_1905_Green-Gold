@@ -103,12 +103,13 @@ on-arrival: {!
                 weightedSupport += (profile.weights[demo] / 100) * classSupport;
             }
 
-            // Adjusted probabilities for more second-round action
+            // Adjusted probabilities for more first-round wins
             var winProbability;
-            if (weightedSupport >= 45) winProbability = 0.35;
-            else if (weightedSupport >= 35) winProbability = 0.25;
-            else if (weightedSupport >= 25) winProbability = 0.10;
-            else if (weightedSupport >= 15) winProbability = 0.03;
+            if (weightedSupport >= 50) winProbability = 0.95;
+            else if (weightedSupport >= 40) winProbability = 0.75;
+            else if (weightedSupport >= 30) winProbability = 0.45;
+            else if (weightedSupport >= 20) winProbability = 0.20;
+            else if (weightedSupport >= 10) winProbability = 0.05;
             else winProbability = 0.001;
 
             var exactSeats = profile.seats * winProbability;

@@ -224,47 +224,46 @@ Q.economic_expansion = 0;
 
 
 // Support for party by social group
-// they don't have to sum to 100 since the electoral calculations will be normalized.
-Q.workers_pop = 30;
-Q.workers_pat = 34;
-Q.workers_prog = 26;
-Q.workers_rust = 2;
-Q.workers_stats = 2;
-Q.workers_socs = 1;
-Q.workers_other = 0;
+// Adjusted support values to match target first-round results
+Q.workers_pop = 33;      // +5 (Populists need more worker support)
+Q.workers_pat = 31;      // -2 (Reduce Paternalist dominance slightly)
+Q.workers_prog = 28;     // +2 (Boost Progress slightly)
+Q.workers_rust = 2;      
+Q.workers_stats = 4;     
+Q.workers_socs = 2;      
+Q.workers_other = 1;     
 
-Q.old_middle_pop = 3;
-Q.old_middle_pat = 75;
-Q.old_middle_prog = 12;
-Q.old_middle_rust = 8;
-Q.old_middle_stats = 2;
-Q.old_middle_socs = 0;
-Q.old_middle_other = 1;
+Q.old_middle_pop = 2;    // -1 (Reduce Populist elite support)
+Q.old_middle_pat = 78;   // +3 (Boost Paternalist elite support)
+Q.old_middle_prog = 15;  // +3 (Boost Progress elite support)
+Q.old_middle_rust = 3;   // -5 (Reduce Rustik elite support)
+Q.old_middle_stats = 2;  
+Q.old_middle_socs = 0;   
+Q.old_middle_other = 0; 
 
-Q.new_middle_pop = 7;
-Q.new_middle_pat = 42;
-Q.new_middle_prog = 43;
-Q.new_middle_rust = 2;
-Q.new_middle_stats = 3;
-Q.new_middle_socs = 0;
-Q.new_middle_other = 2;
+Q.new_middle_pop = 8;    // +1 (Slight boost)
+Q.new_middle_pat = 35;   // -7 (Reduce Paternalist professional support)
+Q.new_middle_prog = 50;  // +7 (Major boost to Progress professional support)
+Q.new_middle_rust = 2;   
+Q.new_middle_stats = 4;  // +1 (Slight boost to Statists)
+Q.new_middle_socs = 1;   // +1 (Give Socialist Workers some professional support)
+Q.new_middle_other = 0;  // -2
 
-Q.rural_pop = 3;
-Q.rural_pat = 50;
-Q.rural_prog = 8;
-Q.rural_rust = 35;
-Q.rural_stats = 2;
-Q.rural_socs = 0;
-Q.rural_other = 0;
+Q.rural_pop = 5;         // +2 (Boost rural Populist support)
+Q.rural_pat = 45;        // -5 (Reduce rural Paternalist dominance)
+Q.rural_prog = 6;        // -2 (Reduce rural Progress support)
+Q.rural_rust = 42;       // +7 (Major boost to rural Rustik support)
+Q.rural_stats = 2;       
+Q.rural_socs = 0;        
+Q.rural_other = 0;       
 
-Q.unemployed_pop = 27;
-Q.unemployed_pat = 18;
-Q.unemployed_prog = 24;
-Q.unemployed_rust = 0;
-Q.unemployed_stats = 21;
-Q.unemployed_socs = 0;
-Q.unemployed_other = 2;
-
+Q.unemployed_pop = 30;   // +3 (Boost Populist unemployed support)
+Q.unemployed_pat = 15;   // -3 (Reduce Paternalist unemployed support)
+Q.unemployed_prog = 20;  // -4 (Reduce Progress unemployed support)
+Q.unemployed_rust = 2;   // +2 (Give Rustiks some unemployed support)
+Q.unemployed_stats = 25; // +4 (Boost Statist unemployed support)
+Q.unemployed_socs = 5;   // +5 (Give Socialist Workers unemployed support)
+Q.unemployed_other = 3;  // +1
 
 // Current Folkshus composition
 // Seats in Folkshus in Jan 1897
