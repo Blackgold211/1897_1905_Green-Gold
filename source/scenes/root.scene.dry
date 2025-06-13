@@ -37,13 +37,13 @@ Q.dissent_percent = 5;
 Q.factions = ['left', 'center', 'young aenglunders', 'reformist'];
 // should this be normalized to 100%?
 Q.left_strength = 15;
-Q.left_dissent = 20;
+Q.left_dissent = 10;
 Q.center_strength = 35;
-Q.center_dissent = 0;
+Q.center_dissent = 5;
 Q.aenglunders_strength = 25;
-Q.aenglunders_dissent = 20;
+Q.aenglunders_dissent = 10;
 Q.reformist_strength = 20;
-Q.reformist_dissent = 5;
+Q.reformist_dissent = 10;
 
 
 // State of the government
@@ -55,7 +55,7 @@ Q.pop_in_government = 0;
 Q.pat_in_government = 1;
 Q.prog_in_government = 0;
 Q.stats_in_government = 0;
-Q.rust_in_government = 0;
+Q.rust_in_government = 1;
 Q.socs_in_government = 0;
 
 //possible coaltiions
@@ -103,6 +103,9 @@ Q.rust_relation = 50;
 Q.socs_relation = 65;
 // Statists are invariably hostile
 Q.stats_relation = 0;
+
+Q.home_rule_movements_relations = 0;
+Q.young_scotland_electoral_accepted = 0;
 
 Q.stats_styriande_influence = 95;
 Q.prog_styriande_influence = 20;
@@ -183,17 +186,6 @@ Q.pro_democracy = 65;
 
 Q.emergency_rule = 0;
 
-// minimum percentage of votes to be represented in the Reichstag
-Q.electoral_threshold = 0;
-// constitutional reform level
-Q.constitutional_reform = 0;
-// constructive vote of no confidence
-Q.constructive_vonc = 0;
-// reduction in presidential powers
-Q.presidential_powers = 0;
-// allows banning of non-constitutional parties
-Q.constitutional_protection = 0;
-
 // coups and capital strikes happen when you upset the right or the capitalists too much with your policies. they're an additional check on your policies, when purely electoral checks don't suffice.
 // when coup_progress reaches 10 or capital_strike_progress reaches 10, there's a special event that launches the coup.
 Q.coup_progress = 0;
@@ -226,8 +218,8 @@ Q.economic_expansion = 0;
 // Support for party by social group
 // Adjusted support values to match target first-round results
 // Rebalanced support values for target: Pat 197, Prog 92, Pop 56, Rust 30, Stat 11, Soc 1
-Q.workers_pop = 36;      
-Q.workers_pat = 25;      
+Q.workers_pop = 34;      
+Q.workers_pat = 27;      
 Q.workers_prog = 32;
 Q.workers_rust = 1;      
 Q.workers_stats = 5;     

@@ -1,0 +1,60 @@
+title: Colloquium Dismissed  
+subtitle: Workers are seeing their purchasing power decline.  
+view-if: year = 1897 and month = 2  
+new-page: true  
+on-arrival: new_middle_pat -= 3; old_middle_pat += 4; rural_pat -= 3; rural_rust += 3; new_middle_prog += 3;
+
+tags: event  
+
+= Ceaserin Dismisses the Scottish Colloquium  
+
+The Scottish Colloquium, the archaic and practically defunct old Scottish legislature, has—since the election of Eumann Ruadh MacDomhnaill (husband of Lúca MacDomhnaill)—become the mouthpiece of the Young Scotland movement. Railing against the newly passed and upcoming Amtmoot regional councils, it has passed bills and petitioned for the restoration of its powers. However, this brief resurgence has now ended abruptly, with the Colloquium unilaterally appointing Eumann Ruadh MacDomhnaill as "First Earl of Scotland," granting him the authority to "negotiate directly with the imperial government for Scotch autonomy." The Ceaserin has responded by dismissing the Colloquium, declaring it will remain uncalled "until necessary"—de facto, indefinitely.  
+
+While the Populists theoretically support Home Rule across the Isles, we have struggled to expand this beyond the Young AEnglunders. This could be our opportunity—though the conservative nature of the Young Scotland movement may complicate cooperation.  
+
+- @praise  
+- @condemn  
+- @make_deal  
+- @no_comment  
+
+@praise  
+title: Praise the dismissal.  
+subtitle: This will confuse our base and strain ties with the Young AEnglunders but improve relations with rightist parties.  
+on-arrival: new_middle_pop -= 6; workers_pop -= 2; pat_relation += 6; prog_relation += 3; rust_relation += 3; socs_relation -= 5; aenglunders_strength -= 10; aenglunders_dissent += 25;
+
+We've publicly supported the Ceaserin's move along with all the other parties excepting the Socialists. The Young AEnglunders call this as a betrayal of Populist principals with some walking out, while this has improved relations with the other parties, it's hard to say it was worth it.
+
+@condemn  
+title: Condemn the dismissal.  
+subtitle: Expected from us—pleases our base and the Young AEnglunders but will anger the rightist parties.  
+on-arrival: new_middle_pop += 1.5; pat_relation -= 6; prog_relation -= 3; rust_relation -= 3; socs_relation += 5; aenglunders_strength += 3; aenglunders_dissent -= 5;
+
+We condemn the dismissal in the Folkshus and in the papers. While expected perhaps this will galvanise some Scottish support, though the other parties to our right are annoyed at our antics.  
+
+@make_deal  
+title: Explore cooperation with the Young Scotland movement.  
+unavailable-subtitle: We lack sufficient rapport with the Young Scotland movement.  
+choose-if: home_rule_movements_relations >= 1 
+
+A proposal has reached us: the Young Scotlanders want our support in the upcoming Amtmoot elections (at the expense of our own candidates) while backing their leadership in the Scottish Amtmoots unconditionally in exchange for backing some of our Thingmen in the upcoming general election—where they deem their own victory unlikely.  
+
+The deal in it's current state is appalling to much of our membership, as we share little in common beyond Home Rule.  
+
+- @make_deal_2: Accept the deal.  
+- @no_deal: Reject the deal.  
+
+@make_deal_2  
+on-arrival: young_scotland_electoral_accepted += 1; new_middle_pop += 0.5; workers_pop -= 2; pat_relation -= 6; prog_relation -= 3; rust_relation -= 3; socs_relation += 2;
+
+We’ve accepted the deal. Let us hope the cost proves worthwhile.  
+
+@no_deal  
+on-arrival: Q.home_rule_movements_relations -= 1; new_middle_pop += 0.5; pat_relation -= 4; prog_relation -= 3; rust_relation -= 3; socs_relation += 2;
+
+While disappointed, they are not surprised. Given how this turned out, perhaps it would've been best had we not approached them at all.  
+
+@no_comment  
+title: Remain silent.  
+on-arrival: new_middle_pop -= 1; socs_relation -= 2; aenglunders_dissent += 5;
+
+We refuse to comment, even when pressed. While strange this won’t be making any headlines though Young AEnglunder's find our silencing disquieting.  

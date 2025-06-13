@@ -35,15 +35,18 @@ Internal dissent: [+ dissent_percent : dissent +]
 
 Grand Executor: [+ executor +] ([+ executor_party +])
 
-Folkshus composition (300 for Majority):
+Folkshus composition (300 needed for Majority):
+{!<span class="tooltip-text" title="Socialist Party">Socialists</span>!}: [+ socs_f +] Seats
 
-{!<span class="tooltip-text" title="Populist Party">POP</span>!}: [+ pop_f +] Seats
-{!<span class="tooltip-text" title="Patriotic Party">PAT</span>!}: [+ pat_f +] Seats
-{!<span class="tooltip-text" title="Progressive Party">PROG</span>!}: [+ prog_f +] Seats
-{!<span class="tooltip-text" title="Statist Party">STATS</span>!}: [+ stat_f +] Seats
-{!<span class="tooltip-text" title="Rust Party">RUST</span>!}: [+ rust_f +] Seats
-{!<span class="tooltip-text" title="Socialist Party">SOCS</span>!}: [+ socs_f +] Seats
-Others: [+ other_f +]%
+{!<span class="tooltip-text" title="Progressive Party">Progress</span>!}: [+ prog_f +] Seats
+
+{!<span class="tooltip-text" title="Socialist Party">Others</span>!}: [+ other_f +] Seats
+
+{!<span class="tooltip-text" title="Rust Party">Rustiks</span>!}: [+ rust_f +] Seats
+
+{!<span class="tooltip-text" title="Patriotic Party">Paternalists</span>!}: [+ pat_f +] Seats
+
+{!<span class="tooltip-text" title="Statist Party">Statists</span>!}: [+ stat_f +] Seats
 
 [? if pop_in_government = 1 : Budget: [+ budget +] ?]
 
@@ -71,15 +74,15 @@ Public opinion on government: [+ public_opinion_on_gov +]
 
 = Inter-party Relations
 
-{!<span class="tooltip-text" title="Paternalist Party"> The main centre right Brytisk party </span>!}: [+ pat_relation : relationships +]
+{!<span class="tooltip-text" title="The main centre right Brytisk party."> Paternalist Party </span>!}: [+ pat_relation : relationships +]
 
-{!<span class="tooltip-text" title="Progressive Party"> The middle of Brytisk politics, traditionally in competition with the Paternalists </span>!}: [+ prog_relation : relationships +]
+{!<span class="tooltip-text" title="The middle of Brytisk politics, traditionally in competition with the Paternalists."> Progress Party  </span>!}: [+ prog_relation : relationships +]
 
-{!<span class="tooltip-text" title="Rustiks Party"> The greens splitter from the old order party, rural interests </span>!}: [+ rust_relation : relationships +]
+{!<span class="tooltip-text" title="The greens splitter from the old order party, rural interests."> Rustiks Party  </span>!}: [+ rust_relation : relationships +]
 
-{!<span class="tooltip-text" title="Socialist Party"> Currently do not exist </span>!}: [+ socs_relation : relationships +]
+{!<span class="tooltip-text" title="Populist splitters from our left flank."> Socialist Worker's Party </span>!}: [+ socs_relation : relationships +]
 
-{!<span class="tooltip-text" title="Statist Party"> The political arm of the Styriande </span>!}: [+ stats_relation : relationships +]
+{!<span class="tooltip-text" title="The political arm of the far-right Styriande,"> Statist Party </span>!}: [+ stats_relation : relationships +]
 
 = Regional Control
 
@@ -168,31 +171,19 @@ on-arrival: {!
 
 (if the election were to be held now):
 
-Populists: [+ pop_votes +]%
-
-Paternalists: [+ pat_votes +]%
-
-Progress: [+ prog_votes +]%
-
-Statists: [+ stats_votes +]%
-
-Rustiks: [+ rust_votes +]%
-
-Socialists: [+ socs_votes +]%
-
-Others: [+ other_votes +]%
+Among the General Population, we are [+ pop_votes : poll +]
 
 **Detailed results for each demographic**
 
-Among workers, we are [+ workers_pop_display : poll +]
+Among Workers, we are [+ workers_pop_display : poll +]
 
-Among new middle class, we are [+ new_middle_pop_display : poll +]
+Among the New Middle Class, we are [+ new_middle_pop_display : poll +]
 
-Among upper and old middle classes, we are [+ old_middle_pop_display : poll +]
+Among the Upper and Old Middle Classes, we are [+ old_middle_pop_display : poll +]
 
-Among rural voters, we are [+ rural_pop_display : poll +]
+Among Rural Voters, we are [+ rural_pop_display : poll +]
 
-Among the unemployed, we are [+ unemployed_pop_display : poll +]
+Among The Unemployed, we are [+ unemployed_pop_display : poll +]
 
 Support for democracy: [+ pro_democracy_disp +]%
 

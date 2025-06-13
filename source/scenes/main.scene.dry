@@ -14,7 +14,7 @@ max-cards: 3
 
 #Here, the main deck will be displayed. Clicking on the deck draws a card into your hand. Clicking on a card activates that card.
 
-[? if year = 1897 and month = 10 : The Paternalists five year term is up. New elections have been scheduled for January of next year. ?]
+[? if year = 1897 and month = 10 : The Paternalists five year term is nearly up. New elections will most like take place in January of next year. ?]
 
 - @party
 - @govt
@@ -31,7 +31,7 @@ is-deck: true
 
 @govt
 title: Government Affairs
-view-if: time >= 6
+view-if: time >= 5
 card-image: img/reichstag_2.jpg
 is-deck: true
 
