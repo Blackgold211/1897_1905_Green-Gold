@@ -38,10 +38,17 @@ Grand Executor: [+ executor +] ([+ executor_party +])
 Folkshus composition (300 needed for Majority):
 
 {!<span class="tooltip-text" title="Socialist Party">Socialists</span>!}: [+ socs_f +] Seats 
+
 {!<span class="tooltip-text" title="Progressive Party">Progress</span>!}: [+ prog_f +] Seats 
-{!<span class="tooltip-text" title="Socialist Party">Others</span>!}: [+ other_f +] Seats 
-{!<span class="tooltip-text" title="Rust Party">Rustiks</span>!}: [+ rust_f +] Seats 
+
+{!<span class="tooltip-text" title="Populist or People's Party">Populists</span>!}: [+ pop_f +] Seats 
+
+{!<span class="tooltip-text" title="Others">Others</span>!}: [+ other_f +] Seats 
+
+{!<span class="tooltip-text" title="Rustik Greens Party">Rustiks</span>!}: [+ rust_f +] Seats 
+
 {!<span class="tooltip-text" title="Patriotic Party">Paternalists</span>!}: [+ pat_f +] Seats 
+
 {!<span class="tooltip-text" title="Statist Party">Statists</span>!}: [+ stats_f +] Seats 
 
 [? if pop_in_government = 1 : Budget: [+ budget +] ?]
@@ -171,7 +178,7 @@ Among the General Population, we are [+ pop_votes : poll +]
 
 **Detailed results for each demographic**
 
-Among Workers, we are [+ workers_pop_display : poll +]
+Among the Urban Working Class, we are [+ workers_pop_display : poll +]
 
 Among the New Middle Class, we are [+ new_middle_pop_display : poll +]
 
@@ -181,8 +188,17 @@ Among Rural Voters, we are [+ rural_pop_display : poll +]
 
 Among The Unemployed, we are [+ unemployed_pop_display : poll +]
 
-Support for democracy: [+ pro_democracy_disp +]%
+socs, we are [+ socs_votes +]
 
-Nationalism: [+ nationalism_disp +]%
+pop, we are [+ pop_votes +]
 
-Socialism: [+ socialism_disp +]%
+prog, we are [+ prog_votes +]
+
+others, we are [+ other_votes +]
+
+rust, we are [+ rust_votes +]
+
+pat, we are [+ pat_votes +]
+
+stats, we are [+ stats_votes +]
+
