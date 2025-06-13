@@ -26,7 +26,9 @@ Q.month_actions = 0;
 // party resources
 Q.resources = 2;
 // party dues
-Q.dues = 2;
+Q.dues = 0;
+//Has introduced dues
+Q.dues_introduced = 0;
 
 // the state of the party
 // overall dissent reduces every increase in party support.

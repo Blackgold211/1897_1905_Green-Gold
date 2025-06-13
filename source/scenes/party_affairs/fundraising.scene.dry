@@ -1,19 +1,28 @@
 title: Fundraising
 new-page: true
-view-if: fundraising_timer <= 0 and resources = 0
-on-arrival: fundraising_timer = 6; month_actions += 1
+view-if: fundraising_timer <= 0 
+on-arrival: fundraising_timer = 6; month_actions += 1; resources += 1 if dues_introduced = 1 ;
 frequency: 300
 is-card: true
 card-image: img/poster_2.jpg
 tags: party_affairs
 
-= Fundraising
+= Membership Dues
+
+[? if dues_introduced = 1 : We have gained [+ dues +] resources ? ] 
+
+Due to our current spending, the party has ran out of funding and resources, while traditionally the party has survived off direct funding from unions and donations from the Young AEnglunders we do have other options available to us.
 
 For better or for worse, the party cannot exist without money.
 
 - @maintain: Maintain our current dues.
 - @reduce: Reduce dues.
 - @increase: Increase dues.
+
+#- @ask_unions: Maintain our current dues.
+#- @ask_aenglunders: Reduce dues.
+#- @insitute_membership_dues: Increase dues.
+
 
 @maintain
 subtitle: [+ dues +] resources gained.

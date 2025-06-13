@@ -46,7 +46,7 @@ Folkshus composition (300 needed for Majority):
 
 {!<span class="tooltip-text" title="Patriotic Party">Paternalists</span>!}: [+ pat_f +] Seats
 
-{!<span class="tooltip-text" title="Statist Party">Statists</span>!}: [+ stat_f +] Seats
+{!<span class="tooltip-text" title="Statist Party">Statists</span>!}: [+ stats_f +] Seats
 
 [? if pop_in_government = 1 : Budget: [+ budget +] ?]
 

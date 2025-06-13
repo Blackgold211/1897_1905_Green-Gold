@@ -2,6 +2,7 @@ title: Colloquium Dismissed
 subtitle: The old Scottish legislature has been dismissed indefinitely. 
 tags: event  
 view-if: year = 1897 and month = 2  
+max-visits: 1
 priority: -1
 new-page: true  
 on-arrival: new_middle_pat -= 3; old_middle_pat += 4; rural_pat -= 3; rural_rust += 3; new_middle_prog += 3;
@@ -9,7 +10,9 @@ on-arrival: new_middle_pat -= 3; old_middle_pat += 4; rural_pat -= 3; rural_rust
 
 = Ceaserin Dismisses the Scottish Colloquium  
 
-The Scottish Colloquium, the archaic and practically defunct old Scottish legislature, has—since the election of Eumann Ruadh MacDomhnaill (husband of Lúca MacDomhnaill)—become the mouthpiece of the Young Scotland movement. Railing against the newly passed and upcoming Amtmoot regional councils, it has passed bills and petitioned for the restoration of its powers. However, this brief resurgence has now ended abruptly, with the Colloquium unilaterally appointing Eumann Ruadh MacDomhnaill as "First Earl of Scotland," granting him the authority to "negotiate directly with the imperial government for Scotch autonomy." The Ceaserin has responded by dismissing the Colloquium, declaring it will remain uncalled "until necessary"—de facto, indefinitely.  
+The Scottish Colloquium, the archaic and practically defunct old Scottish legislature, has—since the election of Eumann Ruadh MacDomhnaill (husband of Lúca MacDomhnaill)—become the mouthpiece of the Young Scotland movement. 
+
+Railing against the newly passed and upcoming Amtmoot regional councils, it has passed bills and petitioned for the restoration of its powers. However, this brief resurgence has now ended abruptly, with the Colloquium unilaterally appointing Eumann Ruadh MacDomhnaill as "First Earl of Scotland," granting him the authority to "negotiate directly with the imperial government for Scotch autonomy." The Ceaserin has responded by dismissing the Colloquium, declaring it will remain uncalled "until necessary"—de facto, indefinitely.  
 
 While the Populists theoretically support Home Rule across the Isles, we have struggled to expand this beyond the Young AEnglunders. This could be our opportunity—though the conservative nature of the Young Scotland movement may complicate cooperation.  
 
@@ -20,7 +23,7 @@ While the Populists theoretically support Home Rule across the Isles, we have st
 
 @praise  
 title: Praise the dismissal.  
-subtitle: This will confuse our base and strain ties with the Young AEnglunders but improve relations with rightist parties.  
+subtitle: This will confuse our base and strain ties with the Young AEnglunders but improve relations with the rightist parties.  
 on-arrival: new_middle_pop -= 6; workers_pop -= 2; pat_relation += 6; prog_relation += 3; rust_relation += 3; socs_relation -= 5; aenglunders_strength -= 10; aenglunders_dissent += 25;
 
 We've publicly supported the Ceaserin's move along with all the other parties excepting the Socialists. The Young AEnglunders call this as a betrayal of Populist principals with some walking out, while this has improved relations with the other parties, it's hard to say it was worth it.
