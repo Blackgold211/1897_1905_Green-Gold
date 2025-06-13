@@ -36,17 +36,13 @@ Internal dissent: [+ dissent_percent : dissent +]
 Grand Executor: [+ executor +] ([+ executor_party +])
 
 Folkshus composition (300 needed for Majority):
-{!<span class="tooltip-text" title="Socialist Party">Socialists</span>!}: [+ socs_f +] Seats
 
-{!<span class="tooltip-text" title="Progressive Party">Progress</span>!}: [+ prog_f +] Seats
-
-{!<span class="tooltip-text" title="Socialist Party">Others</span>!}: [+ other_f +] Seats
-
-{!<span class="tooltip-text" title="Rust Party">Rustiks</span>!}: [+ rust_f +] Seats
-
-{!<span class="tooltip-text" title="Patriotic Party">Paternalists</span>!}: [+ pat_f +] Seats
-
-{!<span class="tooltip-text" title="Statist Party">Statists</span>!}: [+ stats_f +] Seats
+{!<span class="tooltip-text" title="Socialist Party">Socialists</span>!}: [+ socs_f +] Seats 
+{!<span class="tooltip-text" title="Progressive Party">Progress</span>!}: [+ prog_f +] Seats 
+{!<span class="tooltip-text" title="Socialist Party">Others</span>!}: [+ other_f +] Seats 
+{!<span class="tooltip-text" title="Rust Party">Rustiks</span>!}: [+ rust_f +] Seats 
+{!<span class="tooltip-text" title="Patriotic Party">Paternalists</span>!}: [+ pat_f +] Seats 
+{!<span class="tooltip-text" title="Statist Party">Statists</span>!}: [+ stats_f +] Seats 
 
 [? if pop_in_government = 1 : Budget: [+ budget +] ?]
 
