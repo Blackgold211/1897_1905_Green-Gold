@@ -49,7 +49,7 @@ on-arrival: young_scotland_electoral_accepted += 1; new_middle_pop += 0.5; worke
 We’ve accepted the deal. Let us hope the cost proves worthwhile.  
 
 @no_deal  
-on-arrival: Q.home_rule_movements_relations -= 1; new_middle_pop += 0.5; pat_relation -= 4; prog_relation -= 3; rust_relation -= 3; socs_relation += 2;
+on-arrival: home_rule_movements_relations -= 1; new_middle_pop += 0.5; pat_relation -= 4; prog_relation -= 3; rust_relation -= 3; socs_relation += 2;
 
 While disappointed, they are not surprised. Given how this turned out, perhaps it would've been best had we not approached them at all.  
 
