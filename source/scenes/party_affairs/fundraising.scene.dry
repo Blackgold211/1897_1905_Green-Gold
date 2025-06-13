@@ -9,7 +9,7 @@ tags: party_affairs
 
 = Membership Dues
 
-[? if dues_introduced = 1 : We have gained [+ dues +] resources ? ] 
+[? if dues_introduced = 1 : We have gained [+ dues +] resources ?] 
 
 Due to our current spending, the party has ran out of funding and resources, while traditionally the party has survived off direct funding from unions and donations from the Young AEnglunders we do have other options available to us.
 
