@@ -1,0 +1,133 @@
+title: Amtmoot Elections
+new-page: true
+tags: event
+priority: -1
+view-if: (year = 1897 and month = 4) or (year = 1902 and month = 4)
+on-arrival: {! 
+for (var party of Q.parties) { Q['old_' + party + '_f'] = Q[party + '_f']; }
+!}
+on-departure: month_actions += 1; in_election = 1; 
+set-jump: post_first_round_results
+face-image: img/Rothe_Wahlen_1903.jpg
+
+# the low priority means that this event is only seen after all other events are resolved for the month.
+
+
+//Default poll values at this point.
+//socs, we are 3    
+//pop, we are 21    Winning Mercia, Wales Minority
+//prog, we are 25     Winning Galloway, Kernow & lSoder & Nodor Prog-Rust, Northumbria GC
+//others, we are 1
+//rust, we are 10      Winning Moray, Fife, Island, Wessex Green-Progressive
+//pat, we are 35      Winning Strathclyde, Lothian, Austlonds, Northumbria GC
+//stats, we are 6
+
+= Elections - Amtmoot Results, [+ month : month +] [+ year +]
+
+The elections to the Amtmoots are due to be held now. 
+
+- @amter_election_algorithm: May we do our best...
+
+@amter_election_algorithm
+on-arrival: {!
+  // Clear previous government assignments
+  Q.mercia_government = "";
+  Q.wessex_government = "";
+  Q.northumbria_government = "";
+  Q.austlonds_government = "";
+  Q.kernow_government = "";
+  Q.strathclyde_government = "";
+  Q.lothian_government = "";
+  Q.galloway_government = "";
+  Q.soder_n_noder_government = "";
+  Q.wales_government = "";
+  Q.moray_government = "";
+  Q.fife_government = "";
+  Q.island_government = "";
+
+  // Regional thresholds with biases baked in
+  // Mercia - Populist stronghold (lower threshold)
+  if (pop_votes >= 15) { // Base threshold lowered due to regional bias
+    Q.mercia_government = "Populist - Progress Coalition";
+    Q.pop_mercia = 1;
+    if (pop_votes >= 25) Q.mercia_government = "Populist Majority";
+  } 
+  else if (prog_votes >= 20 and pop_votes <= 15) {
+    Q.mercia_government = "Progress - Populist Minority";
+  }
+
+  // Wales - Progressive-leaning but open to Populist minority
+  if (prog_votes >= 20) {
+    Q.wales_government = "Progess - Populist Coalition";
+  }
+  if (pop_votes > prog_votes) {
+    Q.wales_government = "Populist - Progress Coalition";
+    Q.pop_wales = 1;
+  }
+  if (prog_relation > 25)
+  {
+    Q.wales_government = "Progress - Paternalist Coalition"
+    if (pat_votes > (prog_votes + 8))
+    {
+      Q.wales_government = "Paternalist - Progress Coalition"
+    }
+  }
+
+  // Paternalist strongholds (higher thresholds for others)
+  if (pat_votes >= 25) { // Normal threshold
+    Q.strathclyde_government = "Paternalist Majority";
+    
+    Q.lothian_government = "Paternalist Majority";
+    if (young_scotland_electoral_accepted = 1 and pat_votes <= 32 and pop_votes >= 24 and rust_votes >= 9)
+    {
+      Q.lothian_government = "Young Scots - Rustik Coalition";
+    }
+    Q.austlonds_government = "Paternalist Majority";
+    Q.northumbria_government = "Paternalist - Progress Grand Coalition"
+    if (pat_votes >= 38 and (prog_votes + pop_votes < 45)) {
+      Q.northumbria_government = "Paternalist Majority";
+    } 
+    if (prog_votes >= 30 and pop_votes >= 28) {
+      Q.northumbria_government = "Progress - Populist coalition";
+    }
+  }
+
+  // Progressive strongholds
+  Q.galloway_government = "Progressive Majority";
+  if (prog_votes >= 24) {
+    Q.kernow_government = "Progressive Majority";
+    Q.soder_n_noder_government = "Progressive Majority";
+  }
+  else {
+    Q.kernow_government = "Progress - Rustik Coalition";
+    Q.soder_n_noder_government = "Progress - Rustik Coalition";
+  }
+  if (rust_votes >= 7) {
+      Q.kernow_government = "Progress - Rustik Coalition";
+      Q.soder_n_noder_government = "Progress - Rustik Coalition";
+  }
+
+  // Rustik regions
+  if (rust_votes >= 8) {
+    Q.moray_government = "Rustik Majority";
+    Q.fife_government = "Rustik Majority";
+    Q.island_government = "Rustik Majority";
+    Q.wessex_government = "Rustik - Progress Coalition";
+    if (rust_votes >= 12) {
+      Q.wessex_government = "Rustik Majority";
+      Q.kernow_government = "Rustik - Progress Coalition";
+    }
+    if (young_scotland_electoral_accepted = 1 and rust_votes <= 6 and pop_votes >= 26)
+    {
+      Q.moray_government = "Young Scots - Rustik Coalition";
+      Q.fife_government = "Rustik - Young Scots Coalition";
+    }
+  }
+
+!}
+= Amtmoot Elections Results
+
+
+
+- @campaign_rural: Focus our campaign on rural constituencies.
+

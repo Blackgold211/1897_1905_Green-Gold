@@ -10,11 +10,11 @@ on-arrival: new_middle_pat -= 3; old_middle_pat += 4; rural_pat -= 3; rural_rust
 
 = Ceaserin Dismisses the Scottish Colloquium  
 
-The Scottish Colloquium, the archaic and practically defunct old Scottish legislature, has—since the election of Eumann Ruadh MacDomhnaill (husband of Lúca MacDomhnaill)—become the mouthpiece of the Young Scotland movement. 
+The Scottish Colloquium, the archaic and practically defunct old Scottish legislature, has—since the election of Eumann Ruadh MacDomhnaill (husband of Lúca MacDomhnaill)—become the mouthpiece of the Young Scots movement. 
 
 Railing against the newly passed and upcoming Amtmoot regional councils, it has passed bills and petitioned for the restoration of its powers. However, this brief resurgence has now ended abruptly, with the Colloquium unilaterally appointing Eumann Ruadh MacDomhnaill as "First Earl of Scotland," granting him the authority to "negotiate directly with the imperial government for Scotch autonomy." The Ceaserin has responded by dismissing the Colloquium, declaring it will remain uncalled "until necessary"—de facto, indefinitely.  
 
-While the Populists theoretically support Home Rule across the Isles, we have struggled to expand this beyond the Young AEnglunders. This could be our opportunity—though the conservative nature of the Young Scotland movement may complicate cooperation.  
+While the Populists theoretically support Home Rule across the Isles, we have struggled to expand this beyond the Young AEnglunders. This could be our opportunity—though the conservative nature of the Young Scots movement may complicate cooperation.  
 
 - @praise  
 - @condemn  
@@ -36,11 +36,11 @@ on-arrival: new_middle_pop += 1.5; pat_relation -= 6; prog_relation -= 3; rust_r
 We condemn the dismissal in the Folkshus and in the papers. While expected perhaps this will galvanise some Scottish support, though the other parties to our right are annoyed at our antics.  
 
 @make_deal  
-title: Explore cooperation with the Young Scotland movement.  
-unavailable-subtitle: We lack sufficient rapport with the Young Scotland movement.  
+title: Explore cooperation with the Young Scots movement.  
+unavailable-subtitle: We lack sufficient rapport with the Young Scots movement.  
 choose-if: home_rule_movements_relations >= 1 
 
-A proposal has reached us: the Young Scotlanders want our support in the upcoming Amtmoot elections (at the expense of our own candidates) while backing their leadership in the Scottish Amtmoots unconditionally in exchange for backing some of our Thingmen in the upcoming general election—where they deem their own victory unlikely.  
+A proposal has reached us: the Young Scots want our support in the upcoming Amtmoot elections (at the expense of our own candidates) while backing their leadership in the Scottish Amtmoots unconditionally in exchange for backing some of our Thingmen in the upcoming general election—where they deem their own victory unlikely.  
 
 The deal in it's current state is appalling to much of our membership, as we share little in common beyond Home Rule.  
 

@@ -129,16 +129,11 @@ We craft our message for suburban professionals and the middle class, emphasizin
 title: Reach out to other parties for tactical arrangements
 subtitle: Negotiate with potential allies for the second round
 on-arrival: {!
-if (Q.socs_relation >= 50) {
-    Q.socs_relation += 5;
-    Q.workers_prog += 2;
-    Q.unemployed_prog += 2;
-}
-if (Q.rust_relation >= 45) {
-    Q.rust_relation += 3;
-    Q.rural_prog += 2;
-}
-Q.resources -= 2;
+Q.socs_relation += 5;
+Q.prog_relation += 5;
+Q.unemployed_prog += 2;
+Q.rust_relation += 3;
+
 Q.first_round_complete = 1;
 !}
 

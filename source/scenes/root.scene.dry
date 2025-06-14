@@ -100,7 +100,7 @@ Q.is_republic = 0;
 
 // inter-party relations
 Q.pat_relation = 25;
-Q.prog_relation = 39;
+Q.prog_relation = 45;
 Q.rust_relation = 50;
 Q.socs_relation = 65;
 // Statists are invariably hostile
@@ -124,20 +124,25 @@ Q.socs_leader = "Temp";
 // Where does the populists lead in the Amters?
 Q.pop_mercia = 0;
 Q.pop_lunden = 0;
-Q.pop_weald = 0;
 Q.pop_wessex = 0;
 Q.pop_northumbria = 0;
 Q.pop_austlonds = 0;
 Q.pop_kernow = 0;
 
-// Options: pop, pat, rust, prog,
+// Options: pop, pat, rust, prog, + all diff types of minority
 Q.mercia_government = "";
-Q.lunden_government = "";
-Q.weald_government = "";
 Q.wessex_government = "";
 Q.northumbria_government = "";
 Q.austlonds_government = "";
 Q.kernow_government = "";
+Q.strathclyde_government = "";
+Q.lothian_government = "";
+Q.galloway_government = "";
+Q.soder_n_noder_government = "";
+Q.wales_government = "";
+Q.moray_government = "";
+Q.fife_government = "";
+Q.island_government = "";
 
 
 // The array of forces - paramilitary groups
@@ -245,9 +250,9 @@ Q.new_middle_socs = 2;
 Q.new_middle_other = 0;  
 
 Q.rural_pop = 4;      
-Q.rural_pat = 38;
+Q.rural_pat = 36;
 Q.rural_prog = 8;       
-Q.rural_rust = 42;   
+Q.rural_rust = 44;   
 Q.rural_stats = 3;       
 Q.rural_socs = 0;        
 Q.rural_other = 6;       
