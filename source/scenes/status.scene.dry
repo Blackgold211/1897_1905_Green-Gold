@@ -79,7 +79,7 @@ Public opinion on government: [+ public_opinion_on_gov +]
 
 {!<span class="tooltip-text" title="The main centre right Brytisk party."> Paternalist Party </span>!}: [+ pat_relation : relationships +]
 
-{!<span class="tooltip-text" title="The middle of Brytisk politics, traditionally in competition with the Paternalists."> Progress Party  </span>!}: [+ prog_relation : relationships +]
+{!<span class="tooltip-text" title="The middle of Brytisk politics, traditionally in competition with the Paternalists." span style="color: #2969B0;">**Progress** </span>!} Party: [+ prog_relation : relationships +]
 
 {!<span class="tooltip-text" title="The greens splitter from the old order party, rural interests."> Rustiks Party  </span>!}: [+ rust_relation : relationships +]
 
