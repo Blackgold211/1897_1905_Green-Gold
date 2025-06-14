@@ -1,17 +1,13 @@
 title: Amtmoot Elections
 new-page: true
 tags: event
-priority: -1
+priority: 1
 view-if: (year = 1897 and month = 4) or (year = 1902 and month = 4)
-on-arrival: {! 
-for (var party of Q.parties) { Q['old_' + party + '_f'] = Q[party + '_f']; }
-!}
-on-departure: month_actions += 1; in_election = 1; 
-set-jump: post_first_round_results
+on-departure: month_actions += 1;
+set-jump: amter_election_algorithm
 face-image: img/Rothe_Wahlen_1903.jpg
 
 # the low priority means that this event is only seen after all other events are resolved for the month.
-
 
 //Default poll values at this point.
 //socs, we are 3    
@@ -47,30 +43,30 @@ on-arrival: {!
 
   // Mercia - Populist stronghold
   if (pop_votes >= 25) {
-    Q.mercia_government = "Populist Majority";
+    Q.mercia_government = "<span style="color: #9365B8;">**Populist**</span> Majority";
     Q.pop_mercia = 1;
   } 
   else if (pop_votes >= 15) {
-    Q.mercia_government = "Populist - Progress Coalition";
+    Q.mercia_government = "<span style="color: #9365B8;">**Populist**</span> - <span style="color: #2969B0;">**Progress**</span> Coalition";
     Q.pop_mercia = 1;
   }
   else if (prog_votes >= 20) {
-    Q.mercia_government = "Progress - Populist Minority";
+    Q.mercia_government = "<span style="color: #2969B0;">**Progress**</span> - Populist Minority";
   }
 
   // Wales - Progressive-leaning
   if (prog_relation > 25 && pat_votes > (prog_votes + 8)) {
-    Q.wales_government = "Paternalist - Progress Coalition";
+    Q.wales_government = "Paternalist - <span style="color: #2969B0;">**Progress**</span> Coalition";
   }
   else if (prog_relation > 25) {
-    Q.wales_government = "Progress - Paternalist Coalition";
+    Q.wales_government = "<span style="color: #2969B0;">**Progress**</span> - Paternalist Coalition";
   }
   else if (pop_votes > prog_votes) {
-    Q.wales_government = "Populist - Progress Coalition";
+    Q.wales_government = "<span style="color: #9365B8;">**Populist**</span> - <span style="color: #2969B0;">**Progress**</span> Coalition";
     Q.pop_wales = 1;
   }
   else if (prog_votes >= 20) {
-    Q.wales_government = "Progress - Populist Coalition";
+    Q.wales_government = "<span style="color: #2969B0;">**Progress**</span> - <span style="color: #9365B8;">**Populist**</span> Coalition";
   }
 
   // Paternalist strongholds
@@ -90,23 +86,23 @@ on-arrival: {!
       Q.northumbria_government = "Paternalist Majority";
     }
     else if (prog_votes >= 30 && pop_votes >= 28) {
-      Q.northumbria_government = "Progress - Populist Coalition";
+      Q.northumbria_government = "<span style="color: #2969B0;">**Progress**</span> - <span style="color: #9365B8;">**Populist**</span> Coalition";
     }
     else {
-      Q.northumbria_government = "Paternalist - Progress Grand Coalition";
+      Q.northumbria_government = "Paternalist - <span style="color: #2969B0;">**Progress**</span> Grand Coalition";
     }
   }
 
   // Progressive regions
-  Q.galloway_government = "Progressive Majority";
+  Q.galloway_government = "<span style="color: #2969B0;">**Progressive**</span> Majority";
   
   if (prog_votes >= 24 && rust_votes < 7) {
-    Q.kernow_government = "Progressive Majority";
-    Q.soder_n_noder_government = "Progressive Majority";
+    Q.kernow_government = "<span style="color: #2969B0;">**Progressive**</span> Majority";
+    Q.soder_n_noder_government = "<span style="color: #2969B0;">**Progressive**</span> Majority";
   }
   else {
-    Q.kernow_government = "Progress - Rustik Coalition";
-    Q.soder_n_noder_government = "Progress - Rustik Coalition";
+    Q.kernow_government = "<span style="color: #2969B0;">**Progress**</span> - Rustik Coalition";
+    Q.soder_n_noder_government = "<span style="color: #2969B0;">**Progress**</span> - Rustik Coalition";
   }
 
   // Rustik regions
@@ -133,6 +129,87 @@ on-arrival: {!
 
 = Amtmoot Elections Results
 
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;">
+  <div class="region-result">
+    <h3>Mercia</h3>
+    <p>[+ Q.mercia_government ? Q.mercia_government : "No Government Formed" +]</p>
+  </div>
+  
+  <div class="region-result">
+    <h3>Wales</h3>
+    <p>[+ Q.wales_government ? Q.wales_government : "No Government Formed" +]</p>
+  </div>
+  
+  <div class="region-result">
+    <h3>Northumbria</h3>
+    <p>[+ Q.northumbria_government ? Q.northumbria_government : "No Government Formed" +]</p>
+  </div>
+  
+  <div class="region-result">
+    <h3>Strathclyde</h3>
+    <p>[+ Q.strathclyde_government ? Q.strathclyde_government : "No Government Formed" +]</p>
+  </div>
+  
+  <div class="region-result">
+    <h3>Lothian</h3>
+    <p>[+ Q.lothian_government ? Q.lothian_government : "No Government Formed" +]</p>
+  </div>
+  
+  <div class="region-result">
+    <h3>Galloway</h3>
+    <p>[+ Q.galloway_government ? Q.galloway_government : "No Government Formed" +]</p>
+  </div>
+  
+  <div class="region-result">
+    <h3>Kernow</h3>
+    <p>[+ Q.kernow_government ? Q.kernow_government : "No Government Formed" +]</p>
+  </div>
+  
+  <div class="region-result">
+    <h3>Soder & Noder</h3>
+    <p>[+ Q.soder_n_noder_government ? Q.soder_n_noder_government : "No Government Formed" +]</p>
+  </div>
+  
+  <div class="region-result">
+    <h3>Wessex</h3>
+    <p>[+ Q.wessex_government ? Q.wessex_government : "No Government Formed" +]</p>
+  </div>
+  
+  <div class="region-result">
+    <h3>Austlonds</h3>
+    <p>[+ Q.austlonds_government ? Q.austlonds_government : "No Government Formed" +]</p>
+  </div>
+  
+  <div class="region-result">
+    <h3>Moray</h3>
+    <p>[+ Q.moray_government ? Q.moray_government : "No Government Formed" +]</p>
+  </div>
+  
+  <div class="region-result">
+    <h3>Fife</h3>
+    <p>[+ Q.fife_government ? Q.fife_government : "No Government Formed" +]</p>
+  </div>
+  
+  <div class="region-result">
+    <h3>Islands</h3>
+    <p>[+ Q.island_government ? Q.island_government : "No Government Formed" +]</p>
+  </div>
+</div>
 
-- @campaign_rural: Focus our campaign on rural constituencies.
+<style>
+.region-result {
+  background: #f8f8f8;
+  padding: 0.8rem;
+  border-radius: 4px;
+  border-left: 3px solid #9365B8;
+}
+.region-result h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+.region-result p {
+  margin: 0;
+}
+</style>
+
 
