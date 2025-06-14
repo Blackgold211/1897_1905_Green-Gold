@@ -164,7 +164,8 @@ The regional governments have been formed following the elections:
 
 **Wessex:** [+ wessex_government +]
 
+- @continue: So be it.
+
+@continue
+
 This will be the makeup of the Amtmoots for the next 5 years.
-
-- @So be it.  
-
