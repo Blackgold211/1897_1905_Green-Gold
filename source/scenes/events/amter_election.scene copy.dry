@@ -2,7 +2,7 @@ title: Amtmoot Elections
 subtitle: The old Scottish legislature has been dismissed indefinitely. 
 new-page: true
 tags: event  
-view-if: year = 1897 or 1902 and month = 4
+view-if: (year = 1897 or year = 1902) and month = 4
 max-visits: 2
 priority: -1
 
