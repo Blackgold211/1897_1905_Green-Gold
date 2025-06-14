@@ -45,66 +45,68 @@ on-arrival: {!
   Q.fife_government = "";
   Q.island_government = "";
 
-  // Regional thresholds with biases baked in
-  // Mercia - Populist stronghold (lower threshold)
-  if (pop_votes >= 15) { // Base threshold lowered due to regional bias
+  // Mercia - Populist stronghold
+  if (pop_votes >= 25) {
+    Q.mercia_government = "Populist Majority";
+    Q.pop_mercia = 1;
+  } 
+  else if (pop_votes >= 15) {
     Q.mercia_government = "Populist - Progress Coalition";
     Q.pop_mercia = 1;
-    if (pop_votes >= 25) Q.mercia_government = "Populist Majority";
-  } 
-  else if (prog_votes >= 20 and pop_votes <= 15) {
+  }
+  else if (prog_votes >= 20) {
     Q.mercia_government = "Progress - Populist Minority";
   }
 
-  // Wales - Progressive-leaning but open to Populist minority
-  if (prog_votes >= 20) {
-    Q.wales_government = "Progess - Populist Coalition";
+  // Wales - Progressive-leaning
+  if (prog_relation > 25 && pat_votes > (prog_votes + 8)) {
+    Q.wales_government = "Paternalist - Progress Coalition";
   }
-  if (pop_votes > prog_votes) {
+  else if (prog_relation > 25) {
+    Q.wales_government = "Progress - Paternalist Coalition";
+  }
+  else if (pop_votes > prog_votes) {
     Q.wales_government = "Populist - Progress Coalition";
     Q.pop_wales = 1;
   }
-  if (prog_relation > 25)
-  {
-    Q.wales_government = "Progress - Paternalist Coalition"
-    if (pat_votes > (prog_votes + 8))
-    {
-      Q.wales_government = "Paternalist - Progress Coalition"
-    }
+  else if (prog_votes >= 20) {
+    Q.wales_government = "Progress - Populist Coalition";
   }
 
-  // Paternalist strongholds (higher thresholds for others)
-  if (pat_votes >= 25) { // Normal threshold
+  // Paternalist strongholds
+  if (pat_votes >= 25) {
     Q.strathclyde_government = "Paternalist Majority";
-    
-    Q.lothian_government = "Paternalist Majority";
-    if (young_scotland_electoral_accepted = 1 and pat_votes <= 32 and pop_votes >= 24 and rust_votes >= 9)
-    {
-      Q.lothian_government = "Young Scots - Rustik Coalition";
-    }
     Q.austlonds_government = "Paternalist Majority";
-    Q.northumbria_government = "Paternalist - Progress Grand Coalition"
-    if (pat_votes >= 38 and (prog_votes + pop_votes < 45)) {
+    
+    // Lothian special case
+    if (young_scotland_electoral_accepted == 1 && pat_votes <= 32 && pop_votes >= 24 && rust_votes >= 9) {
+      Q.lothian_government = "Young Scots - Rustik Coalition";
+    } else {
+      Q.lothian_government = "Paternalist Majority";
+    }
+    
+    // Northumbria variations
+    if (pat_votes >= 38 && (prog_votes + pop_votes < 45)) {
       Q.northumbria_government = "Paternalist Majority";
-    } 
-    if (prog_votes >= 30 and pop_votes >= 28) {
-      Q.northumbria_government = "Progress - Populist coalition";
+    }
+    else if (prog_votes >= 30 && pop_votes >= 28) {
+      Q.northumbria_government = "Progress - Populist Coalition";
+    }
+    else {
+      Q.northumbria_government = "Paternalist - Progress Grand Coalition";
     }
   }
 
-  // Progressive strongholds
+  // Progressive regions
   Q.galloway_government = "Progressive Majority";
-  if (prog_votes >= 24) {
+  
+  if (prog_votes >= 24 && rust_votes < 7) {
     Q.kernow_government = "Progressive Majority";
     Q.soder_n_noder_government = "Progressive Majority";
   }
   else {
     Q.kernow_government = "Progress - Rustik Coalition";
     Q.soder_n_noder_government = "Progress - Rustik Coalition";
-  }
-  if (rust_votes >= 7) {
-      Q.kernow_government = "Progress - Rustik Coalition";
-      Q.soder_n_noder_government = "Progress - Rustik Coalition";
   }
 
   // Rustik regions
@@ -113,20 +115,23 @@ on-arrival: {!
     Q.fife_government = "Rustik Majority";
     Q.island_government = "Rustik Majority";
     Q.wessex_government = "Rustik - Progress Coalition";
+    
     if (rust_votes >= 12) {
       Q.wessex_government = "Rustik Majority";
-      Q.kernow_government = "Rustik - Progress Coalition";
+      if (prog_votes >= 20) {
+        Q.kernow_government = "Rustik - <span style="color: #2969B0;">**Progress**</span> Coalition";
+      }
     }
-    if (young_scotland_electoral_accepted = 1 and rust_votes <= 6 and pop_votes >= 26)
-    {
+    
+    // Young Scots special cases
+    if (young_scotland_electoral_accepted == 1 && rust_votes <= 6 && pop_votes >= 26) {
       Q.moray_government = "Young Scots - Rustik Coalition";
       Q.fife_government = "Rustik - Young Scots Coalition";
     }
   }
-
 !}
-= Amtmoot Elections Results
 
+= Amtmoot Elections Results
 
 
 - @campaign_rural: Focus our campaign on rural constituencies.

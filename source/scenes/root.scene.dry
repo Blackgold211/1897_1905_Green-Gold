@@ -310,8 +310,8 @@ Q.no_majority_elections = 0;
 // elections are not on a timer, but rather there is an indicator for whether you're in an electoral cycle.
 Q.in_election = 0;
 Q.next_election_year = 1897;
-Q.next_election_month = 4;
-Q.next_election_time = 4;
+Q.next_election_month = 6;
+Q.next_election_time = 6;
 
 // government affairs timers
 
