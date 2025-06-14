@@ -26,109 +26,109 @@ The elections to the Amtmoots are due to be held now.
 @amter_election_algorithm
 on-arrival: {!
   // Clear previous government assignments
-  Q.mercia_government = "";
-  Q.wessex_government = "";
-  Q.northumbria_government = "";
-  Q.austlonds_government = "";
-  Q.kernow_government = "";
-  Q.strathclyde_government = "";
-  Q.lothian_government = "";
-  Q.galloway_government = "";
-  Q.soder_n_noder_government = "";
-  Q.wales_government = "";
-  Q.moray_government = "";
-  Q.fife_government = "";
-  Q.island_government = "";
+  mercia_government = "";
+  wessex_government = "";
+  northumbria_government = "";
+  austlonds_government = "";
+  kernow_government = "";
+  strathclyde_government = "";
+  lothian_government = "";
+  galloway_government = "";
+  soder_n_noder_government = "";
+  wales_government = "";
+  moray_government = "";
+  fife_government = "";
+  island_government = "";
 
   // Mercia - Populist stronghold
   if (pop_votes >= 25) {
-    Q.mercia_government = "Populist Majority";
-    Q.pop_mercia = 1;
+    mercia_government = "Populist Majority";
+    pop_mercia = 1;
   } 
   else if (pop_votes >= 15) {
-    Q.mercia_government = "Populist - Progress Coalition";
-    Q.pop_mercia = 1;
+    mercia_government = "Populist - Progress Coalition";
+    pop_mercia = 1;
   }
   else if (prog_votes >= 20) {
-    Q.mercia_government = "Progress - Populist Minority";
+    mercia_government = "Progress - Populist Minority";
   }
 
   // Wales - Progressive-leaning
   if (prog_relation > 25 && pat_votes > (prog_votes + 8)) {
-    Q.wales_government = "Paternalist - Progress Coalition";
+    wales_government = "Paternalist - Progress Coalition";
   }
   else if (prog_relation > 25) {
-    Q.wales_government = "Progress - Paternalist Coalition";
+    wales_government = "Progress - Paternalist Coalition";
   }
   else if (pop_votes > prog_votes) {
-    Q.wales_government = "Populist - Progress Coalition";
-    Q.pop_wales = 1;
+    wales_government = "Populist - Progress Coalition";
+    pop_wales = 1;
   }
   else if (prog_votes >= 20) {
-    Q.wales_government = "Progress - Populist Coalition";
+    wales_government = "Progress - Populist Coalition";
   }
 
   // Paternalist strongholds
   if (pat_votes >= 25) {
-    Q.strathclyde_government = "Paternalist Majority";
-    Q.austlonds_government = "Paternalist Majority";
+    strathclyde_government = "Paternalist Majority";
+    austlonds_government = "Paternalist Majority";
     
     // Lothian special case
     if (young_scotland_electoral_accepted == 1 && pat_votes <= 32 && pop_votes >= 24 && rust_votes >= 9) {
-      Q.lothian_government = "Young Scots - Rustik Coalition";
+      lothian_government = "Young Scots - Rustik Coalition";
     } else {
-      Q.lothian_government = "Paternalist Majority";
+      lothian_government = "Paternalist Majority";
     }
     
     // Northumbria variations
     if (pat_votes >= 38 && (prog_votes + pop_votes < 45)) {
-      Q.northumbria_government = "Paternalist Majority";
+      northumbria_government = "Paternalist Majority";
     }
     else if (prog_votes >= 30 && pop_votes >= 28) {
-      Q.northumbria_government = "Progress - Populist Coalition";
+      northumbria_government = "Progress - Populist Coalition";
     }
     else {
-      Q.northumbria_government = "Paternalist - Progress Grand Coalition";
+      northumbria_government = "Paternalist - Progress Grand Coalition";
     }
   }
 
   // Progressive regions
-  Q.galloway_government = "Progressive Majority";
+  galloway_government = "Progressive Majority";
   
   if (prog_votes >= 24 && rust_votes < 7) {
-    Q.kernow_government = "Progressive Majority";
-    Q.soder_n_noder_government = "Progressive Majority";
+    kernow_government = "Progressive Majority";
+    soder_n_noder_government = "Progressive Majority";
   }
   else {
-    Q.kernow_government = "Progress - Rustik Coalition";
-    Q.soder_n_noder_government = "Progress - Rustik Coalition";
+    kernow_government = "Progress - Rustik Coalition";
+    soder_n_noder_government = "Progress - Rustik Coalition";
   }
 
   // Rustik regions
   if (rust_votes >= 8) {
-    Q.moray_government = "Rustik Majority";
-    Q.fife_government = "Rustik Majority";
-    Q.island_government = "Rustik Majority";
-    Q.wessex_government = "Rustik - Progress Coalition";
+    moray_government = "Rustik Majority";
+    fife_government = "Rustik Majority";
+    island_government = "Rustik Majority";
+    wessex_government = "Rustik - Progress Coalition";
     
     if (rust_votes >= 12) {
-      Q.wessex_government = "Rustik Majority";
+      wessex_government = "Rustik Majority";
       if (prog_votes >= 20) {
-        Q.kernow_government = "Rustik - Progress Coalition";
+        kernow_government = "Rustik - Progress Coalition";
       }
     }
 
     if (rust_votes < 8) {
-      Q.moray_government = "Rustik - Young Scots Coalition";
-      Q.fife_government = "Rustik - Paternalist Coalition";
-      Q.island_government = "Rustik - Progress Coalition";
-      Q.wessex_government = "Rustik - Progress Coalition";
+      moray_government = "Rustik - Young Scots Coalition";
+      fife_government = "Rustik - Paternalist Coalition";
+      island_government = "Rustik - Progress Coalition";
+      wessex_government = "Rustik - Progress Coalition";
     }
     
     // Young Scots special cases
     if (young_scotland_electoral_accepted == 1 && rust_votes <= 6 && pop_votes >= 26) {
-      Q.moray_government = "Young Scots - Rustik Coalition";
-      Q.fife_government = "Rustik - Young Scots Coalition";
+      moray_government = "Young Scots - Rustik Coalition";
+      fife_government = "Rustik - Young Scots Coalition";
     }
   }
 !}
@@ -138,31 +138,31 @@ on-arrival: {!
 
 The regional governments have been formed following the elections:
 
-**Mercia:** [+ Q.mercia_government +]
+**Mercia:** [+ mercia_government +]
 
-**Wales:** [+ Q.wales_government +]
+**Wales:** [+ wales_government +]
 
-**Northumbria:** [+ Q.northumbria_government +]
+**Northumbria:** [+ northumbria_government +]
 
-**Strathclyde:** [+ Q.strathclyde_government +]
+**Strathclyde:** [+ strathclyde_government +]
 
-**Lothian:** [+ Q.lothian_government +]
+**Lothian:** [+ lothian_government +]
 
-**Austlonds:** [+ Q.austlonds_government +]
+**Austlonds:** [+ austlonds_government +]
 
-**Galloway:** [+ Q.galloway_government +]
+**Galloway:** [+ galloway_government +]
 
-**Kernow:** [+ Q.kernow_government +]
+**Kernow:** [+ kernow_government +]
 
-**Soder & Noder:** [+ Q.soder_n_noder_government +]
+**Soder & Noder:** [+ soder_n_noder_government +]
 
-**Moray:** [+ Q.moray_government +]
+**Moray:** [+ moray_government +]
 
-**Fife:** [+ Q.fife_government +]
+**Fife:** [+ fife_government +]
 
-**Island:** [+ Q.island_government +]
+**Island:** [+ island_government +]
 
-**Wessex:** [+ Q.wessex_government +]
+**Wessex:** [+ wessex_government +]
 
 - @continue  
 
