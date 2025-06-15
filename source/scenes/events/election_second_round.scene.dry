@@ -167,7 +167,7 @@ go-to: coalition_menu
   <tr><td>Party</td><td>Seats Won</td><td>Change</td></tr>
 
   <tr>
-    <td><div class="box" style='background-color:#F37934'></div> Socialist Workers:</td>
+    <td><div class="box" style='background-color:#FAC51C'></div> Socialist Workers:</td>
     <td>[+ socs_seats +]</td>
     <td>[+ str_change_socs_seats +]</td>
   </tr>

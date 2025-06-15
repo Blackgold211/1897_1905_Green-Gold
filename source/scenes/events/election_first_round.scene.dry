@@ -43,7 +43,7 @@ Q.first_round_complete = 0;
   <tr><td>Party</td><td>Seats Won (First Round)</td><td>Change from Last Election</td></tr>
 
   <tr>
-    <td><div class="box" style='background-color:#F37934'></div> Socialist Workers:</td>
+    <td><div class="box" style='background-color:#FAC51C'></div> Socialist Workers:</td>
     <td>[+ socs_seats_first +]</td>
     <td>[+ str_change_socs_seats_first +]</td>
   </tr>

@@ -87,21 +87,33 @@ Public opinion on government: [+ public_opinion_on_gov +]
 
 {!<span class="tooltip-text" title="The political arm of the far-right Styriande,"> Statist Party </span>!}: [+ stats_relation : relationships +]
 
-= Regional Control
+= Amtmoots
 
-Mercia: [+ mercia_government +] controlled
+Mercia: [+ mercia_government +] 
 
-Lunden: [+ lunden_government +] controlled
+Wessex: [+ wessex_government +] 
 
-Weald: [+ weald_government +] controlled
+Northumbria: [+ northumbria_government +]  
 
-Wessex: [+ wessex_government +] controlled
+Austlonds: [+ austlonds_government +]  
 
-Northumbria: [+ northumbria_government +] controlled 
+Kernow: [+ kernow_government +] 
 
-Austlonds: [+ austlonds_government +] controlled 
+Strathclyde: [+ strathclyde_government +]
 
-Kernow: [+ kernow_government +] controlled
+Lothian: [+ lothian_government +]
+
+Galloway: [+ galloway_government +]
+
+Soder and Noder: [+ soder_n_noder_government +]
+
+Wales: [+ wales_government +]
+
+Moray: [+ moray_government +]
+
+Fife: [+ fife_government +]
+
+Island: [+ island_government +]
 
 = Internal Factions of the Werudforeng
 

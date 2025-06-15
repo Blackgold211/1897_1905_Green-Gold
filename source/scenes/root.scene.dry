@@ -130,19 +130,19 @@ Q.pop_austlonds = 0;
 Q.pop_kernow = 0;
 
 // Options: pop, pat, rust, prog, + all diff types of minority
-Q.mercia_government = "";
-Q.wessex_government = "";
-Q.northumbria_government = "";
-Q.austlonds_government = "";
-Q.kernow_government = "";
-Q.strathclyde_government = "";
-Q.lothian_government = "";
-Q.galloway_government = "";
-Q.soder_n_noder_government = "";
-Q.wales_government = "";
-Q.moray_government = "";
-Q.fife_government = "";
-Q.island_government = "";
+Q.mercia_government = "To Be Elected";
+Q.wessex_government = "To Be Elected";
+Q.northumbria_government = "To Be Elected";
+Q.austlonds_government = "To Be Elected";
+Q.kernow_government = "To Be Elected";
+Q.strathclyde_government = "To Be Elected";
+Q.lothian_government = "To Be Elected";
+Q.galloway_government = "To Be Elected";
+Q.soder_n_noder_government = "To Be Elected";
+Q.wales_government = "To Be Elected";
+Q.moray_government = "To Be Elected";
+Q.fife_government = "To Be Elected";
+Q.island_government = "To Be Elected";
 
 
 // The array of forces - paramilitary groups
