@@ -180,6 +180,7 @@ Cynnred Gangs: [+ cynnred_gangs_strength +] thousand members.
 on-arrival: {!
 
 !}
+
 = Public Opinion
 
 Public opinion on the Government: [+ public_opinion_on_gov : poll +]

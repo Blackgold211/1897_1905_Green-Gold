@@ -354,7 +354,7 @@ data = data.concat([
         "name": "Others", 
         "seats": Q.other_f,
         "color": "#a0a0a0"
-    }];
+    }]);
 if (Q.patriot_pat_formed && Q.patriot_pat_f) {
     data.push({
             "id": "patriot_pat",

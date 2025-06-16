@@ -58,7 +58,7 @@ on-arrival: temp_dues_var = 0; temp_dues_var += 3 if aenglunders_strength >= 40;
 @insitute_membership_dues
 subtitle: 1 resource will be gained each time we fundraise. Many have gotten used to our parties lack of dues, and many members could not afford even a modest due, forcing some to leave the party. 
 on-arrival: dues += 1; resources += dues; dues_introduced = 1;
-choose-if: dues_introduced = 0;
+choose-if: dues_introduced = 0
 unavailable_subtitle: We have already introduced dues to the party.
 
 Many of our members grumble at this, and some of the less fortunate or committed members will leave. But now, we have access to additional resources. 
