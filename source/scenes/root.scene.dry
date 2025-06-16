@@ -29,6 +29,11 @@ Q.resources = 2;
 Q.dues = 0;
 //Has introduced dues
 Q.dues_introduced = 0;
+//Union Control and resources
+Q.union_resources = 2;
+Q.union_control = 3;
+//temp dues var
+Q.temp_dues_var = 0;
 
 // the state of the party
 // overall dissent reduces every increase in party support.
@@ -87,6 +92,10 @@ Q.minority_government = 1;
 
 Q.classes = ['workers', 'old_middle', 'new_middle', 'rural', 'unemployed'];
 Q.parties = ['pop', 'pat', 'prog', 'rust', 'stats', 'socs', 'other'];
+
+Q.true_prog_formed = 0;
+Q.patriot_pat_formed = 0;
+
 
 //government state
 Q.is_empire = 1;
@@ -274,6 +283,9 @@ Q.rust_f = 44;
 Q.stats_f = 14;
 Q.socs_f = 1;
 Q.other_f = 5;
+Q.true_prog_f = 0;
+Q.patriot_pat_f = 0;
+
 
 // diff from prev
 Q.old_pat_f = 298;
@@ -283,6 +295,8 @@ Q.old_rust_f = 44;
 Q.old_stats_f = 14;
 Q.old_socs_f = 1;
 Q.old_other_f = 5;
+Q.old_true_prog_f = 0;
+Q.old_patriot_pat_f = 0;
 
 
 // array of objects of the form {date: Date(), spd: 10, kpd: 12, ...} for each election

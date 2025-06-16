@@ -39,17 +39,22 @@ Folkshus composition (300 needed for Majority):
 
 {!<span class="tooltip-text" title="Socialist Party">Socialists</span>!}: [+ socs_f +] Seats 
 
+{!<span class="tooltip-text" title="Populist or People's Party">Populists</span>!}: [+ pop_f +] Seats 
+
 {!<span class="tooltip-text" title="Progressive Party">Progress</span>!}: [+ prog_f +] Seats 
 
-{!<span class="tooltip-text" title="Populist or People's Party">Populists</span>!}: [+ pop_f +] Seats 
+[? if true_prog_formed = 1 : {!<span class="tooltip-text" title="True Progressive Party">True Progressives</span>!}: [+ true_prog_f +] Seats ?]
 
 {!<span class="tooltip-text" title="Others">Others</span>!}: [+ other_f +] Seats 
 
 {!<span class="tooltip-text" title="Rustik Greens Party">Rustiks</span>!}: [+ rust_f +] Seats 
 
+[? if patriot_pat_formed = 1 : {!<span class="tooltip-text" title="Patriotic Paternalist Party">Patriotic Paternalists</span>!}: [+ patriot_pat_f +] Seats ?]
+
 {!<span class="tooltip-text" title="Patriotic Party">Paternalists</span>!}: [+ pat_f +] Seats 
 
 {!<span class="tooltip-text" title="Statist Party">Statists</span>!}: [+ stats_f +] Seats 
+
 
 [? if pop_in_government = 1 : Budget: [+ budget +] ?]
 
@@ -63,29 +68,33 @@ Unemployment: [+ unemployed_2 +]%
 
 Economic growth: [+ economic_growth_2 +]%
 
-= Public Opinion
-
-Support for the Republic: [+ pro_democracy +]%
-
-Nationalism: [+ nationalism +]%
-
-Socialism: [+ socialism +]%
-
-Public opinion on government: [+ public_opinion_on_gov +]
-
 @politics
 
 = Inter-party Relations
 
-{!<span class="tooltip-text" title="The main centre right Brytisk party."> Paternalist Party </span>!}: [+ pat_relation : relationships +]
-
-{!<span class="tooltip-text" title="The middle of Brytisk politics, traditionally in competition with the Paternalists." span style="color: #2969B0;">**Progress** </span>!} Party: [+ prog_relation : relationships +]
-
-{!<span class="tooltip-text" title="The greens splitter from the old order party, rural interests."> Rustiks Party  </span>!}: [+ rust_relation : relationships +]
-
 {!<span class="tooltip-text" title="Populist splitters from our left flank."> Socialist Worker's Party </span>!}: [+ socs_relation : relationships +]
 
+{!<span class="tooltip-text" title="The middle of Brytisk politics, traditionally in competition with the Paternalists." style="color: #2969B0; font-weight: bold;">Progress</span>!} Party: [+ prog_relation : relationships +]
+
+[? if true_prog_formed = 1 : {!<span class="tooltip-text" title="True Progressive Party"> True Progressive Party </span>!}: [+ true_prog_relation : relationships +] ?]
+
+{!<span class="tooltip-text" title="The Greens, a splitter from the old Order party, rural interests."> Rustiks Party  </span>!}: [+ rust_relation : relationships +]
+
+[? if patriot_pat_formed = 1 : {!<span class="tooltip-text" title="Patriotic Paternalist Party"> Patriotic Paternalist Party </span>!}: [+ patriot_pat_relation : relationships +] ?]
+
+{!<span class="tooltip-text" title="The main centre right Brytisk party."> Paternalist Party </span>!}: [+ pat_relation : relationships +]
+
 {!<span class="tooltip-text" title="The political arm of the far-right Styriande,"> Statist Party </span>!}: [+ stats_relation : relationships +]
+
+= Internal Factions of the Werudforeng
+
+{!<span class="tooltip-text" title="The Left is interested in radical, transformative policies and cooperation with socialists.">Left</span>!} strength: [+ left_strength : strength +], dissent: [+ left_dissent : dissent +]
+
+{!<span class="tooltip-text" title="The Center represents moderate populist policies.">Center</span>!} strength: [+ center_strength : strength +], dissent: [+ center_dissent : dissent +]
+
+{!<span class="tooltip-text" title="Young Aenglunders represent nationalist and cultural identity politics.">Young Aenglunders</span>!} strength: [+ aenglunders_strength : strength +], dissent: [+ aenglunders_dissent : dissent +]
+
+{!<span class="tooltip-text" title="Reformists are pragmatic participants in government who seek gradual change.">Reformist</span>!} strength: [+ reformist_strength : strength +], dissent: [+ reformist_dissent : dissent +]
 
 = Amtmoots
 
@@ -114,16 +123,6 @@ Moray: [+ moray_government +]
 Fife: [+ fife_government +]
 
 Island: [+ island_government +]
-
-= Internal Factions of the Werudforeng
-
-{!<span class="tooltip-text" title="The Left is interested in radical, transformative policies and cooperation with socialists.">Left</span>!} strength: [+ left_strength : strength +], dissent: [+ left_dissent : dissent +]
-
-{!<span class="tooltip-text" title="The Center represents moderate populist policies.">Center</span>!} strength: [+ center_strength : strength +], dissent: [+ center_dissent : dissent +]
-
-{!<span class="tooltip-text" title="Young Aenglunders represent nationalist and cultural identity politics.">Young Aenglunders</span>!} strength: [+ aenglunders_strength : strength +], dissent: [+ aenglunders_dissent : dissent +]
-
-{!<span class="tooltip-text" title="Reformists are pragmatic participants in government who seek gradual change.">Reformist</span>!} strength: [+ reformist_strength : strength +], dissent: [+ reformist_dissent : dissent +]
 
 @paramilitaries
 on-arrival: {!
@@ -181,6 +180,9 @@ Cynnred Gangs: [+ cynnred_gangs_strength +] thousand members.
 on-arrival: {!
 
 !}
+= Public Opinion
+
+Public opinion on the Government: [+ public_opinion_on_gov : poll +]
 
 = Projected election results
 
@@ -213,4 +215,3 @@ rust, we are [+ rust_votes +]
 pat, we are [+ pat_votes +]
 
 stats, we are [+ stats_votes +]
-

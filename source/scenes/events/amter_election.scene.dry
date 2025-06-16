@@ -93,11 +93,11 @@ on-arrival: {!
   }
 
   // Progressive regions
-  Q.galloway_government = "<span style=\"color: #2969B0; font-weight: bold;\">Progress</span>ive Majority";
+  Q.galloway_government = "<span style=\"color: #2969B0; font-weight: bold;\">Progress</span> Majority";
   
   if (Q.prog_votes >= 24 && Q.rust_votes < 7) {
-    Q.kernow_government = "<span style=\"color: #2969B0; font-weight: bold;\">Progress</span>ive Majority";
-    Q.soder_n_noder_government = "<span style=\"color: #2969B0; font-weight: bold;\">Progress</span>ive Majority";
+    Q.kernow_government = "<span style=\"color: #2969B0; font-weight: bold;\">Progress</span> Majority";
+    Q.soder_n_noder_government = "<span style=\"color: #2969B0; font-weight: bold;\">Progress</span> Majority";
   }
   else {
     Q.kernow_government = "<span style=\"color: #2969B0; font-weight: bold;\">Progress</span> - <span style=\"color: #1ABC9C; font-weight: bold;\">Rustiks</span> Coalition";

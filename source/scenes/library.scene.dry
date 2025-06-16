@@ -331,7 +331,16 @@ data = [
         "name": "Progress",
         "seats": Q.prog_f,
         "color": "#2969B0"
-    },
+    }];
+if (Q.true_prog_formed && Q.true_prog_f) {
+    data.push({
+            "id": "true_prog",
+            "legend": "True Progressives",
+            "name": "True Progressives",
+            "seats": Q.true_prog_f,
+            });
+}
+data = data.concat([
     {
         "id": "rust", 
         "legend": "Rustiks",
@@ -345,7 +354,16 @@ data = [
         "name": "Others", 
         "seats": Q.other_f,
         "color": "#a0a0a0"
-    },
+    }];
+if (Q.patriot_pat_formed && Q.patriot_pat_f) {
+    data.push({
+            "id": "patriot_pat",
+            "legend": "Patriotic Paternalists",
+            "name": "Patriotic Paternalists",
+            "seats": Q.patriot_pat_f,
+            });
+}
+data = data.concat([
     {
         "id": "pat",
         "legend": "Paternalists",
@@ -360,7 +378,7 @@ data = [
         "seats": Q.stats_f,
         "color": "#475577"
     }
-];
+]);
 
 if (window && d3) {
     var width = 500; 

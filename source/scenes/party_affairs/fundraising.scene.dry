@@ -11,38 +11,59 @@ tags: party_affairs
 
 [? if dues_introduced = 1 : We have gained [+ dues +] resources ?] 
 
-Due to our current spending, the party has ran out of funding and resources, while traditionally the party has survived off direct funding from unions and donations from the Young AEnglunders we do have other options available to us.
+[? if dues_introduced = 0 and resources = 0 : Due to our current spending, the party has ran out of funding and resources, while traditionally the party has survived off direct funding from the TSG and donations from the Young AEnglunders we do have other options available to us. ?]
 
 For better or for worse, the party cannot exist without money.
 
-- @maintain: Maintain our current dues.
-- @reduce: Reduce dues.
-- @increase: Increase dues.
+- @ask_unions: Ask the TheodiskSwinkersGemot for further funding.
+- @ask_aenglunders: Appeal to the Young AEnglunders for donations.
+- @insitute_membership_dues: Insitute membership dues.
+- @continue: We are fine on resources. 
 
-#- @ask_unions: Maintain our current dues.
-#- @ask_aenglunders: Reduce dues.
-#- @insitute_membership_dues: Increase dues.
+@ask_unions
+subtitle: [? if union_resources >= 3 and union_control >= 3 : 3 resources gained. ?][? if union_resources == 2 and union_control >= 2 : 2 resources gained. ?][? if union_resources >= 2 and union_control <= 1 : 1 resource gained. ?]
+choose-if: union_resources >= 2
+unavailable_subtitle: The TSG has no funding left to spare.
+
+on-arrival: resources += 3 if union_resources >= 3 and union_control >= 3; resources += 2 if union_resources == 2 and union_control >= 2; resources += 1 if union_resources >= 2 and union_control <= 1;
+
+[? if union_resources >= 3 and union_control >= 3 : The TheodiskSwinkersGemot has provided substantialy more funding than in previous years, our recent actions have greatly increased the resources available to the unions. ?]
+
+[? if union_resources == 2 and union_control >= 2 : The TSG provides their standard level of funding. While not extravagant, their well-managed treasury provides reliable support for political activities. ?]
+
+[? if union_resources >= 2 and union_control <= 1 : The TSG struggles to provide meaningful financial support. Legal troubles and investigations severely restrict their ability to funnel money to the party. ?]
+
+[? if union_resources == 3 and union_control == 2 : The TSG has more resources to spare thanks to our recent actions, though organizational challenges prevent us taking full advantage of this windfall. ?]
 
 
-@maintain
-subtitle: [+ dues +] resources gained.
-on-arrival: resources += dues;
+@ask_aenglunders
+subtitle: [? if aenglunders_strength >= 40 and aenglunders_dissent < 30 : 3 resources gained. ?][? if aenglunders_strength >= 25 and aenglunders_dissent < 50 : 2 resources gained. ?][? if aenglunders_strength >= 15 or aenglunders_dissent >= 30 : 1 resource gained. ?][? if aenglunders_dissent >= 50 or aenglunders_strength < 15 : No resources gained. ?]
+choose-if: aenglunders_dissent < 70
+unavailable-subtitle: The Young AEnglunders are too dissatisfied to donate to the party.
+on-arrival: temp_dues_var = 0; temp_dues_var += 3 if aenglunders_strength >= 40; temp_dues_var += 2 if aenglunders_strength >= 25 and aenglunders_strength < 40; temp_dues_var += 1 if aenglunders_strength >= 15 and aenglunders_strength < 25; temp_dues_var -= 2 if aenglunders_dissent >= 50; temp_dues_var -= 1 if aenglunders_dissent >= 30 and aenglunders_dissent < 50; resources += temp_dues_var if temp_dues_var > 0;
 
-We maintain our current dues.
+[? if temp_dues_var == 3 : The Young AEnglunders respond with exceptional generosity. Donations pour in from enthusiastic supporters who believe in the AEnglisk cause. ?]
 
-@reduce
-subtitle: [+ dues - 1 +] resources gained.
-choose-if: dues > 1
-on-arrival: dues -= 1; resources += dues; left_dissent -= 8; center_dissent -= 8; reformist_dissent -= 8; labor_dissent -= 8
+[? if temp_dues_var == 2 : The Young AEnglunders provide solid funding through personal donations and small fundraising events. They continue to demonstrate reliable financial support for our agenda. ?]
 
-Our current members appreciate this, but no one decides to join a party because of the low dues.
+[? if temp_dues_var == 1 and aenglunders_dissent >= 30 : We only receive limited contributions from the Young AEnglunders. Many potential donors are hesitant to give, questioning our recent decisions and debating among themselves whether we still represent their values. ?]
 
-@increase
-subtitle: [+ dues + 1 +] resources gained. [? if unemployed >= 15 : Given the present economic situation, this may be painful. ?][? if dues >= 4 : Dues are already rather high; increasing them might reduce our membership. ?]
-on-arrival: dues += 1; resources += dues; workers_spd -= 3; unemployed_spd -= 3; workers_spd -= 10 if unemployed >= 15; unemployed_spd -= 10 if unemployed >= 15; workers_spd -= 3*dues if dues >= 5; unemployed_spd -= 3*dues if dues >= 5
-view-if: dues <= 4
+[? if temp_dues_var == 1 and aenglunders_strength < 25 : The Young AEnglunders offer what little they can. With fewer active supporters in their circles, the informal networks that usually generate donations have weakened considerably. ?]
 
-Our members grumble at this, and some of the less committed members leave. But now, we have access to additional resources. 
+[? if temp_dues_var <= 0 and aenglunders_dissent >= 50 : The Young AEnglunders have largely stopped donating. Deep dissatisfaction with our recent decisions has spread, with many former supporters actively discouraging others from contributing. ?]
 
-[? if unemployed >= 15 : Because of the presently high unemployment, our members are feeling the extra burden hard. ?]
+[? if temp_dues_var <= 0 and aenglunders_strength < 15 : The Young AEnglunders cannot provide meaningful funding. Their informal networks have largely dissolved, leaving too few committed supporters to generate significant donations through personal appeals. ?]
 
+
+@insitute_membership_dues
+subtitle: 1 resource will be gained each time we fundraise. Many have gotten used to our parties lack of dues, and many members could not afford even a modest due, forcing some to leave the party. 
+on-arrival: dues += 1; resources += dues; dues_introduced = 1;
+choose-if: dues_introduced = 0;
+unavailable_subtitle: We have already introduced dues to the party.
+
+Many of our members grumble at this, and some of the less fortunate or committed members will leave. But now, we have access to additional resources. 
+
+@continue
+subtitle: No resources will be gained from this action.
+
+We will carry on with what we have.
