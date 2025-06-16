@@ -407,43 +407,43 @@ if (window && d3) {
 
   <tr>
     <td><div class="box" style='background-color:#F37934'></div> Socialist Workers:</td>
-    <td>[+ socs_seats +]</td>
-    <td>[+ str_change_socs_seats +]</td>
+    <td>[+ socs_f +]</td>
+    <td>[+ old_socs_f +]</td>
   </tr>
 
   <tr>
     <td><div class="box" style='background-color:#9365B8; outline: 2px solid;'></div> <strong>Populists:</strong></td>
-    <td><strong>[+ pop_seats +]</strong></td>
-    <td><strong>[+ str_change_pop_seats +]</strong></td>
+    <td><strong>[+ pop_f +]</strong></td>
+    <td><strong>[+ old_pop_f +]</strong></td>
   </tr>
 
   <tr>
     <td><div class="box" style='background-color:#2969B0'></div> Progress:</td>
-    <td>[+ prog_seats +]</td>
-    <td>[+ str_change_prog_seats +]</td>
+    <td>[+ prog_f +]</td>
+    <td>[+ old_prog_f +]</td>
   </tr>
 
   <tr>
     <td><div class="box" style='background-color:#1ABC9C'></div> Rustiks:</td>
-    <td>[+ rust_seats +]</td>
-    <td>[+ str_change_rust_seats +]</td>
+    <td>[+ rust_f +]</td>
+    <td>[+ old_rust_f +]</td>
   </tr>
 
   <tr>
     <td><div class="box" style='background-color:#a0a0a0'></div> Others:</td>
-    <td>[+ other_seats +]</td>
-    <td>[+ str_change_other_seats +]</td>
+    <td>[+ other_f +]</td>
+    <td>[+ old_other_f +]</td>
   </tr>
 
   <tr>
     <td><div class="box" style='background-color:#B8312F'></div> Paternalists:</td>
-    <td>[+ pat_seats +]</td>
-    <td>[+ str_change_pat_seats +]</td>
+    <td>[+ pat_f +]</td>
+    <td>[+ old_pat_f +]</td>
   </tr>
 
   <tr>
     <td><div class="box" style='background-color:#475577'></div> Statists:</td>
-    <td>[+ stats_seats +]</td>
-    <td>[+ str_change_stats_seats +]</td>
+    <td>[+ stats_f +]</td>
+    <td>[+ old_stats_f +]</td>
   </tr>
 </table>
