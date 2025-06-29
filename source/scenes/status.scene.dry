@@ -20,7 +20,7 @@ if (Q.economic_growth) {
 
 Resources available: [+ resources +]
 
-Populists position: [? if pop_toleration : toleration ?][? if pop_in_government : in government - ?][? if pop_toleration == 0 and pop_in_government == 0 : opposition ?]
+<span style="color: #9365B8; font-weight: bold;">Populists</span> position: [? if pop_toleration : toleration ?][? if pop_in_government : in government - ?][? if pop_toleration == 0 and pop_in_government == 0 : opposition ?]
 [? if in_pop_prog_coalition and pop_in_government: POP-PROG Coalition ?][? if in_pop_rust_coalition and pop_in_government: POP-RUST Coalition ?][? if in_pop_prog_rust_coalition and pop_in_government: POP-PROG-RUST Coalition ?][? if in_pop_socs_coalition and pop_in_government: POP-SOCS Coalition ?][? if in_pop_majority and pop_in_government: POP majority ?][? if in_minority_government and pop_in_government: minority government ?][? if in_emergency_government and pop_in_government: emergency government ?][? if in_national_unity_government and pop_in_government: national unity government ?]
 
 Internal dissent: [+ dissent_percent : dissent +]
@@ -37,28 +37,30 @@ Grand Executor: [+ executor +] ([+ executor_party +])
 
 Folkshus composition (300 needed for Majority):
 
-{!<span class="tooltip-text" title="Socialist Party">Socialists</span>!}: [+ socs_f +] Seats 
+{!<span style="color: #FAC51C; font-weight: bold;">Socialist Workers</span>!}: [+ socs_f +] Seats 
 
-{!<span class="tooltip-text" title="Populist or People's Party">Populists</span>!}: [+ pop_f +] Seats 
+{!<span style="color: #9365B8; font-weight: bold;">Populist</span>!}: [+ pop_f +] Seats 
 
-{!<span class="tooltip-text" title="Progressive Party">Progress</span>!}: [+ prog_f +] Seats 
+{!<span style="color: #2969B0; font-weight: bold;">Progress</span>!}: [+ prog_f +] Seats 
 
-[? if true_prog_formed = 1 : {!<span class="tooltip-text" title="True Progressive Party">True Progressives</span>!}: [+ true_prog_f +] Seats ?]
+[? if true_prog_formed = 1 : {!<span style="color: #292db0; font-weight: bold;">True Progressives</span>!}: [+ true_prog_f +] Seats ?]
 
-{!<span class="tooltip-text" title="Others">Others</span>!}: [+ other_f +] Seats 
+{!<span style="color: #a0a0a0; font-weight: bold;">Others</span>!}: [+ other_f +] Seats 
 
-{!<span class="tooltip-text" title="Rustik Greens Party">Rustiks</span>!}: [+ rust_f +] Seats 
+{!<span style="color: #1ABC9C; font-weight: bold;">Rustiks</span>!}: [+ rust_f +] Seats 
 
-[? if patriot_pat_formed = 1 : {!<span class="tooltip-text" title="Patriotic Paternalist Party">Patriotic Paternalists</span>!}: [+ patriot_pat_f +] Seats ?]
+[? if patriot_pat_formed = 1 : {!<span style="color: #e6504e; font-weight: bold;">Patriotic Paternalists</span>!}: [+ patriot_pat_f +] Seats ?]
 
-{!<span class="tooltip-text" title="Patriotic Party">Paternalists</span>!}: [+ pat_f +] Seats 
+{!<span style="color: #B8312F; font-weight: bold;">Paternalists</span>!}: [+ pat_f +] Seats 
 
-{!<span class="tooltip-text" title="Statist Party">Statists</span>!}: [+ stats_f +] Seats 
+{!<span style="color: #475577; font-weight: bold;">Statists</span>!}: [+ stats_f +] Seats 
 
 
 [? if pop_in_government = 1 : Budget: [+ budget +] ?]
 
-Next election: [+ next_election_month : month +] [+ next_election_year +]
+Next General election: [+ next_election_month : month +] [+ next_election_year +]
+
+Next Amtmoot elections: [? if amtmoot_1897_done = 0 : April 1897 ?] [? if amtmoot_1897_done = 1 : April 1902 ?] [? if amtmoot_1902_done = 1 : April 1907 ?] [? if in_emergency_government = 1 : Currently Postponed ?]
 
 = Economics
 
@@ -88,10 +90,25 @@ Economic growth: [+ economic_growth_2 +]%
 
 = Party Ideology
 
-{!<span class="tooltip-text" title="Progress" style="color: #2969B0; font-weight: bold;">Progress</span>!} [+ prog_ideology +]. ([+ prog_leader +])
+{!<span class="tooltip-text" title="Progress" style="color: #2969B0; font-weight: bold;">Progress</span>!}: [+ prog_ideology +]. ([+ prog_leader +])
 
+{!<span style="color: #FAC51C; font-weight: bold;">Socialist Workers</span>!}: [+ prog_ideology +]. ([+ prog_leader +])
 
-[? if dnef_formed: <span class="tooltip-text" title="German National Unity Front" style="color: #BFC8CC;">**DNEF**</span>: [? if dnef_ideology == "Left": Syncretic?][? if dnef_ideology == "Moderate": Syncretic?][? if dnef_ideology == "Right": Syncretic?] ([+ dnef_leader +])?]
+{!<span style="color: #9365B8; font-weight: bold;">Populist</span>!}: [+ prog_ideology +]. ([+ prog_leader +])
+
+{!<span style="color: #2969B0; font-weight: bold;">Progress</span>!}: [+ prog_ideology +]. ([+ prog_leader +])
+
+[? if true_prog_formed = 1 : {!<span style="color: #292db0; font-weight: bold;">True Progressives</span>!}: [+ prog_ideology +]. ([+ prog_leader +]) ?]
+
+{!<span style="color: #a0a0a0; font-weight: bold;">Others</span>!}: [+ prog_ideology +]. ([+ prog_leader +])
+
+{!<span style="color: #1ABC9C; font-weight: bold;">Rustiks</span>!}: [+ rust_ideology +]. ([+ rust_leader +])
+
+[? if patriot_pat_formed = 1 : {!<span style="color: #e6504e; font-weight: bold;">Patriotic Paternalists</span>!}[+ patriot_pat_ideology +]. ([+ patriot_pat_leader +]) ?]
+
+{!<span style="color: #B8312F; font-weight: bold;">Paternalists</span>!}: [+ pat_ideology +]. ([+ pat_leader +]) 
+
+{!<span style="color: #475577; font-weight: bold;">Statists</span>!}: [+ stats_ideology +]. ([+ stats_leader +])
 
 
 = Internal Factions of the Werudforeng
@@ -150,27 +167,37 @@ if (Q.rg_strength) {
 
 = Paramilitaries
 
-{!<span class="tooltip-text" title="The Freifolksbund is a populist paramilitary organization.">Freifolksbund</span>!} Strength: [+ ffb_strength_2 +] thousand
+{!<span class="tooltip-text" title="Progress" style="color: #2969B0; font-weight: bold;">Progress</span>!}: [+ prog_ideology +]. ([+ prog_leader +])
+
+{!<span class="tooltip-text" title="The Freifolksbund is a populist paramilitary organization." style="color: #177314; font-weight: bold;">Freifolksbund</span>!} Strength: [+ ffb_strength_2 +] thousand
 [? if ffb_banned = 1 : (BANNED) ?]
 
 Freifolksbund Militarization: [+ ffb_militancy : militancy +]
 
-{!<span class="tooltip-text" title="Vigilance Societies are conservative paramilitary groups.">Vigilance Societies</span>!} Strength: [+ vs_strength_2 +] thousand
+Freifolksbund Ideology: [+ ffb_ideology +]
+
+{!<span class="tooltip-text" title="Vigilance Societies are conservative paramilitary groups." style="color: #292629; font-weight: bold;">Vigilance Societies</span>!} Strength: [+ vs_strength_2 +] thousand
 [? if vs_banned = 1 : (BANNED) ?]
 
 Vigilance Societies Militarization: [+ vs_militancy : militancy +]
 
 [? if lc_formed = 1 :
-{!<span class="tooltip-text" title="Lind Clubs are progressive paramilitary organizations.">Lind Clubs</span>!} Strength: [+ lc_strength_2 +] thousand
+{!<span class="tooltip-text" title="Lind Clubs are progressive paramilitary organizations." style="color: #ba22b5; font-weight: bold;">Lind Clubs</span>!} Strength: [+ lc_strength_2 +] thousand
 [? if lc_banned = 1 : (BANNED) ?]
 Lind Clubs Militarization: [+ lc_militancy : militancy +]
 ?]
 
 [? if rg_formed = 1 :
-{!<span class="tooltip-text" title="Red Gold Militias are socialist paramilitary groups.">Red Gold Militias</span>!} Strength: [+ rg_strength_2 +] thousand
+{!<span class="tooltip-text" title="Red Gold Militias are socialist paramilitary groups." style="color: #660c29; font-weight: bold;">Red Gold Militias</span>!} Strength: [+ rg_strength_2 +] thousand
 [? if rg_banned = 1 : (BANNED) ?]
 Red Gold Militias Militarization: [+ rg_militancy : militancy +]
 ?]
+
+= Internal Policing
+
+Interior Police: [+ interior_police_strength +] thousand members.
+
+Cynnred Gangs: [+ cynnred_gangs_strength +] thousand members.
 
 = Official military/security forces
 
@@ -178,22 +205,15 @@ Folkshaer: [+ folkshaer_strength +] thousand troops.
 
 Folkshaer Loyalty: [+ folkshaer_loyalty : loyalty +]
 
-Interior Police: [+ interior_police_strength +] thousand members.
-
-Union Council Loyalty: [+ union_council_loyalty : loyalty +]
-
-Cynnred Gangs: [+ cynnred_gangs_strength +] thousand members.
+[? if in_emergency_government = 1 : Union Council Outlook: [+ union_council_loyalty : loyalty +] ?]
 
 @polls
-on-arrival: {!
-
-!}
 
 = Public Opinion
 
 Public opinion on the Government: [+ public_opinion_on_gov : poll +]
 
-= Projected election results
+= Our Projected Popularity
 
 (if the election were to be held now):
 

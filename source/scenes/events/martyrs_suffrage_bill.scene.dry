@@ -23,10 +23,7 @@ title: Campaign against the bill as inadequate.
 subtitle: Oppose this half-measure while calling for full suffrage.
 on-arrival: new_middle_pop += 3; workers_pop += 1; pat_relation -= 4; prog_relation += 1; socs_relation += 3; left_dissent -= 3; center_dissent -= 3; aenglunders_dissent -= 3; reformist_dissent -= 3;
 
-
-
 The party’s official position is adopted a few days after first hearing of the bill, condemning the bill to the same tune of our previously outspoken Thingmen, arguing that suffrage should not be allocated by personal tragedy. A comparatively easy win, this has eased some tensions in the party and won some support with the Progressives and Socialists. Though our already poor relations with the Paternalists have deteriorated even further.
-
 
 @signal_support
 title: Signal cautious support for the measure.

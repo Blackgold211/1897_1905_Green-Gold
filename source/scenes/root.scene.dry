@@ -56,8 +56,8 @@ Q.reformist_dissent = 10;
 // State of the government
 Q.headofstate = "Zelda";
 // starting chancellor: Ludvig Richmondson
-Q.executor = "Richmondson";
-Q.executor_party = "Beowaranforeng";
+Q.executor = "<span style="color: #B8312F">Richmondson</span>";
+Q.executor_party = "<span style="color: #B8312F; font-weight: bold;">Beowaranforeng</span>";
 Q.pop_in_government = 0;
 Q.pat_in_government = 1;
 Q.prog_in_government = 0;
@@ -121,11 +121,16 @@ rust_ideology = "";
 socs_ideology = "";
 stats_ideology = "";
 
-pat_leader = "";
-prog_leader = "";
-rust_leader = "";
-socs_leader = "";
-stats_leader = "";
+Q.socs_leader = "Temp";
+Q.pop_leader = "Oakes";
+Q.prog_party_leader = "Temp";
+Q.patriot_pat_leader = "Not here yet";
+Q.rust_leader = "Temp";
+Q.true_prog_leader = "not here yet";
+Q.pat_leader = "Richmondson";
+Q.stats_leader = "Temp";
+
+
 
 
 Q.home_rule_movements_relations = 0;
@@ -137,11 +142,6 @@ Q.pat_styriande_influence = 30;
 Q.rust_styriande_influence = 10;
 
 
-Q.pat_leader = "Richmondson";
-Q.pop_leader = "Oakes";
-Q.prog_party_leader = "Temp";
-Q.rust_leader = "Temp";
-Q.socs_leader = "Temp";
 
 // Where does the populists lead in the Amters?
 Q.pop_mercia = 0;
@@ -172,7 +172,8 @@ Q.island_government = "To Be Elected";
 // Freifolksbund, vigiliance societies, lind clubs, red gold militias, jewish-brytisk league
 Q.ffb_strength = 680;
 Q.ffb_militancy = 0.3;
-Q.rb_banned = 0;
+Q.ffb_ideology = "<span style="color: #157314; font-weight: bold;">Folkist Popular Front</span>";
+Q.ffb_banned = 0;
 
 Q.vs_strength = 560;
 Q.vs_militancy = 0.3;
@@ -336,9 +337,9 @@ Q.n_elections = 0;
 Q.no_majority_elections = 0;
 // elections are not on a timer, but rather there is an indicator for whether you're in an electoral cycle.
 Q.in_election = 0;
-Q.next_election_year = 1897;
-Q.next_election_month = 6;
-Q.next_election_time = 6;
+Q.next_election_year = 1898;
+Q.next_election_month = 2;
+Q.next_election_time = 14;
 
 Q.amtmoot_1897_done = false;
 Q.amtmoot_1902_done = false;

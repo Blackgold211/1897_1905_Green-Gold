@@ -14,7 +14,13 @@ max-cards: 3
 
 #Here, the main deck will be displayed. Clicking on the deck draws a card into your hand. Clicking on a card activates that card.
 
-[? if year = 1897 and month = 10 : The Paternalists five year term is nearly up. New elections will most like take place in January of next year. ?]
+#NEWS
+#NEWS
+#NEWS
+
+# 1897
+
+
 
 - @party
 - @govt
