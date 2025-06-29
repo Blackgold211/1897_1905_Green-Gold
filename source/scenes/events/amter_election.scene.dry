@@ -2,9 +2,16 @@ title: Amtmoot Elections
 subtitle: The old Scottish legislature has been dismissed indefinitely. 
 new-page: true
 tags: event  
-view-if: (year = 1897 or year = 1902) and month = 4
+view-if: (year = 1897 and month = 4 and not amtmoot_1897_done) or (year = 1902 and month = 4 and not amtmoot_1902_done)
 max-visits: 2
 priority: -1
+on-arrival: {!
+  if (Q.year == 1897) {
+    Q.amtmoot_1897_done = true;
+  } else if (Q.year == 1902) {
+    Q.amtmoot_1902_done = true;
+  }
+!}
 
 # the low priority means that this event is only seen after all other events are resolved for the month.
 
@@ -167,5 +174,8 @@ The regional governments have been formed following the elections:
 - @continue: So be it.
 
 @continue
+on-arrival: prog_relation += 5; rust_relation += 5;
+
+The necessity of forming coalitions across the various Amtmoots has forced the parties to work more closely together than ever before. Despite our ideological differences, the practical realities of regional governance have created new channels of communication and cooperation between ourselves, the Progressives, and the Rustiks. 
 
 This will be the makeup of the Amtmoots for the next 5 years.

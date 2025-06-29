@@ -1,0 +1,32 @@
+title: Popular Elections Act of 1897  
+subtitle: Given the Paternalists strong Amtmoot election results, the Executor seeks to further reform the electoral system. 
+tags: event  
+view-if: year = 1897 and month = 5
+max-visits: 1
+priority: -1
+new-page: true  
+
+= Popular Elections Act of 1897  
+
+Given the <span style="color: #B8312F; font-weight: bold;">Paternalist</span>'s recent success in the Amtmoots, Executor Richmondson has announced a new bill, the Popular Elections Act of 1897, a sweeping electoral reform that would govern all future general elections. Under the proposed system, any candidate who fails to secure at least 40% of the vote in the first round would face a second-round runoff one week later, contested among all remaining candidates.
+
+Within the <span style="color: #B8312F; font-weight: bold;">Paternalist</span> ranks, the bill has met mixed reception, with a few old conservatives expected to vote against. Many in our ranks have dismissed the reforms as inadequate. The <span style="color: #2969B0; font-weight: bold;">Progressives</span> are wary of losing traditionally safe seats to our growing influence. Despite this the <span style="color: #2969B0; font-weight: bold;">Progressives</span> have proposed an amendment to the bill that would abolish the half a century old religious restriction, which currently leaves the vote to Christians alone. The <span style="color: #B8312F; font-weight: bold;">Paternalists</span> seem unable to effectively oppose nor support such an amendment.
+
+The bill is set to come before the Caeserthing, with the new electoral system potentially coming into force for 1898. If the religious amendment passes, it would restore the right to vote to Bryten's religious minorities for the first time in 50 years. With nearly one million potential new voters, most significantly Bryten's Sefardisk population, it remains to be seen how this could affect the political landscape.
+
+- @vote_yes  
+- @vote_no  
+
+@vote_yes  
+title: Vote in favor of the bill.  
+subtitle: Support electoral reform and religious enfranchisement.  
+on-arrival: new_middle_prog += 1; old_middle_pat += 2; rural_rust += 3; new_middle_pop += 1; workers_pop += 2; workers_socs += 1; workers_prog += 1; pat_relation += 2; prog_relation += 3; 
+
+We vote in favour of the Popular Elections Act. Despite all the public opposition, the bill passes easily, with or without our support. Despite the inadequacies of the bill, this new system will undoubtedly benefit us, and many of the newly enfranchised will vote <span style="color: #9365B8; font-weight: bold;">Populist</span> in the upcoming election.
+
+@vote_no  
+title: Vote against the bill.  
+subtitle: Oppose the reforms as inadequate.  
+on-arrival: new_middle_prog += 1; old_middle_pat += 2; rural_rust += 3; new_middle_pop += 1; workers_prog += 2; workers_socs += 2; pat_relation -= 2; prog_relation -= 3; 
+
+We vote against the bill, citing its inadequacies in proper reform of the electoral system. Despite all of the public opposition the bill still passes the Folkshus without issue and many of our Thingmen disobey the party line to vote in favour. While the new system does benefit us, this has hurt our relations with the other parties and many of our Sefardisk supporters feel betrayed by this.

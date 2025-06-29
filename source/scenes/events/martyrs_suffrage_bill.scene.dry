@@ -1,0 +1,38 @@
+title: Martyrs Suffrage Bill
+subtitle: A controversial suffrage proposal has been proposed by the Executor.
+tags: event  
+view-if: year = 1897 and month = 7
+max-visits: 1
+priority: -1
+on-arrival: 
+new-page: true  
+
+= Martyrs Suffrage Bill
+
+While originally intended as part of the Popular Elections Act this particular bill has been spun off due to internal opposition, Executor Richmondson has introduced the "Martyrs Suffrage Bill." A limited form of women’s suffrage, which would only grant the right to vote to the widows of men killed in the Alcrieg.
+
+While it’s said a good compromise satisfies none however it seems this bill has gone beyond the pale. Within our ranks and among the left it has been decried as a useless half measure and false promise, and within his own ranks many have accused Richmondson of suffrage through a backdoor, even his traditional allies within the party have called the bill too complex for it’s own good. Due to this news it seems the Suffragist movement has further organised forming the Theodiskceosanbund, or National Suffrage Union, for now aiming to organise a petition to the government.
+
+Still, despite this, the Executor has not given up on the bill and the atmosphere in the Folkshus has grown increasingly heated. While the bill is despised by the party we could still signal support to the bill as a first step.
+
+- @campaign_against
+- @signal_support
+
+@campaign_against
+title: Campaign against the bill as inadequate.
+subtitle: Oppose this half-measure while calling for full suffrage.
+on-arrival: new_middle_pop += 3; workers_pop += 1; pat_relation -= 4; prog_relation += 1; socs_relation += 3; left_dissent -= 3; center_dissent -= 3; aenglunders_dissent -= 3; reformist_dissent -= 3;
+
+
+
+The party’s official position is adopted a few days after first hearing of the bill, condemning the bill to the same tune of our previously outspoken Thingmen, arguing that suffrage should not be allocated by personal tragedy. A comparatively easy win, this has eased some tensions in the party and won some support with the Progressives and Socialists. Though our already poor relations with the Paternalists have deteriorated even further.
+
+
+@signal_support
+title: Signal cautious support for the measure.
+subtitle: Back the bill as better than nothing while calling for further reforms.
+on-arrival: new_middle_pop -= 4; workers_pop -= 1; pat_relation += 2; prog_relation -= 1; socs_relation -= 3; left_dissent += 8; center_dissent -= 1; aenglunders_dissent += 6; reformist_dissent -= 2;
+
+Despite our previously public opposition to the bill we’ve privately signaled to the Paternalists that we will support the bill. This position is particularly unpopular with the Leftists and the Young AEnglunders, not that it is particularly popular with anybody. But perhaps this will hasten the advance of women’s rights?
+
+

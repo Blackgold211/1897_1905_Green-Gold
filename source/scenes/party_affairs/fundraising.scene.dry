@@ -22,7 +22,7 @@ For better or for worse, the party cannot exist without money.
 
 @ask_unions
 subtitle: [? if union_resources >= 3 and union_control >= 3 : 3 resources gained. ?][? if union_resources == 2 and union_control >= 2 : 2 resources gained. ?][? if union_resources >= 2 and union_control <= 1 : 1 resource gained. ?]
-choose-if: union_resources >= 2
+choose-if: union_resources >= 2 and fundraising_unions_timer = 0
 unavailable_subtitle: The TSG has no funding left to spare.
 
 on-arrival: resources += 3 if union_resources >= 3 and union_control >= 3; resources += 2 if union_resources == 2 and union_control >= 2; resources += 1 if union_resources >= 2 and union_control <= 1;
@@ -38,7 +38,7 @@ on-arrival: resources += 3 if union_resources >= 3 and union_control >= 3; resou
 
 @ask_aenglunders
 subtitle: [? if aenglunders_strength >= 40 and aenglunders_dissent < 30 : 3 resources gained. ?][? if aenglunders_strength >= 40 and aenglunders_dissent >= 30 and aenglunders_dissent < 50 : 2 resources gained. ?][? if aenglunders_strength >= 25 and aenglunders_strength < 40 and aenglunders_dissent < 30 : 2 resources gained. ?][? if aenglunders_strength >= 25 and aenglunders_strength < 40 and aenglunders_dissent >= 30 and aenglunders_dissent < 50 : 1 resource gained. ?][? if aenglunders_strength >= 15 and aenglunders_strength < 25 and aenglunders_dissent < 30 : 1 resource gained. ?][? if aenglunders_strength >= 15 and aenglunders_dissent >= 50 : No resources gained. ?][? if aenglunders_strength < 15 : No resources gained. ?]
-choose-if: aenglunders_dissent < 70
+choose-if: aenglunders_dissent < 50 and fundraising_youngae_timer
 unavailable-subtitle: The Young AEnglunders are too dissatisfied to donate to the party.
 
 on-arrival: 
@@ -47,7 +47,7 @@ on-arrival:
     temp_dues_var += 3 if aenglunders_strength >= 40; 
     temp_dues_var += 2 if aenglunders_strength >= 25 and aenglunders_strength < 40; 
     temp_dues_var += 1 if aenglunders_strength >= 15 and aenglunders_strength < 25; 
-    temp_dues_var -= 2 if aenglunders_dissent >= 50; 
+    temp_dues_var -= 2 if aenglunders_dissent >= 40; 
     temp_dues_var -= 1 if aenglunders_dissent >= 30 and aenglunders_dissent < 50; 
     resources += temp_dues_var if temp_dues_var > 0;
 }

@@ -115,6 +115,19 @@ Q.socs_relation = 65;
 // Statists are invariably hostile
 Q.stats_relation = 0;
 
+pat_ideology = "";
+prog_ideology = "";
+rust_ideology = "";
+socs_ideology = "";
+stats_ideology = "";
+
+pat_leader = "";
+prog_leader = "";
+rust_leader = "";
+socs_leader = "";
+stats_leader = "";
+
+
 Q.home_rule_movements_relations = 0;
 Q.young_scotland_electoral_accepted = 0;
 
@@ -189,6 +202,14 @@ Q.union_council_loyalty = 1;
 
 // The state of the country
 
+//ecoonomics
+Q.inflation = 2.9;
+// economic growth
+Q.economic_growth = .5;
+
+// economic expansion timer
+Q.economic_expansion = 0;
+
 // popular opinion
 // national ideology - on a binary scale
 //public opinion on the government.
@@ -218,18 +239,6 @@ Q.new_middle = 20; // professional classes
 Q.rural = 18; // agriculture and forestry employment
 
 Q.unemployed = 3;
-
-
-// inflation (in %; 1928: 2.9; 1929: 0; 1930: -5%; 1931: -10%; 1932: -10%) - source: https://en.wikipedia.org/wiki/File:BSPDRWeltkriseEngl.PNG, derived from https://www.destatis.de/DE/Methoden/WISTA-Wirtschaft-und-Statistik/2009/03/rezession-betrachtung-032009.pdf?__blob=publicationFile
-Q.inflation = 2.9;
-
-// economic growth
-Q.economic_growth = .5;
-
-// economic expansion timer
-Q.economic_expansion = 0;
-
-
 
 // Support for party by social group
 // Adjusted support values to match target first-round results
@@ -312,9 +321,13 @@ Q.n_advisors = 3;
 // timer - this decrements by 1 every turn, and is set to 5 whenever an advisor action is used, so that you can only use one advisor action every 5 months.
 // let's just put all of the timers here...
 // most party affairs and government affairs cards are on a timer.
-Q.timers = ['advisor_action'];
+Q.timers = ['advisor_action', 'fundraising', 'fundraising_unions', 'fundraising_youngae'];
 
 Q.advisor_action_timer = 0;
+Q.fundraising_timer = 0;
+Q.fundraising_unions_timer = 0;
+Q.fundraising_youngae_timer = 0;
+
 // party affairs timers
 
 // n_elections is the number of elections that have happened since the start of the game.
@@ -326,6 +339,9 @@ Q.in_election = 0;
 Q.next_election_year = 1897;
 Q.next_election_month = 6;
 Q.next_election_time = 6;
+
+Q.amtmoot_1897_done = false;
+Q.amtmoot_1902_done = false;
 
 // government affairs timers
 
