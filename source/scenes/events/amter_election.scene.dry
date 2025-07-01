@@ -47,7 +47,7 @@ on-arrival: {!
   Q.fife_government = "";
   Q.island_government = "";
 !}
-// Mercia - Populist stronghold
+# Mercia - Populist stronghold
 if (Q.pop_votes >= 25) {
   Q.mercia_government = "<span style=\"color: #9365B8; font-weight: bold;\">Populist</span> Majority";
   Q.pop_mercia = 1;
@@ -60,7 +60,7 @@ else if (Q.prog_votes >= 20 or Q.prog_votes - Q.pop_votes > 10) {
   Q.mercia_government = "<span style=\"color: #2969B0; font-weight: bold;\">Progress</span> - <span style=\"color: #9365B8; font-weight: bold;\">Populist</span> Minority";
 }
 
-// Wales - Progressive-leaning
+# Wales - Progressive-leaning
 if (Q.prog_relation > 25 && Q.pat_votes > (Q.prog_votes + 8)) {
   Q.wales_government = "<span style=\"color: #B8312F; font-weight: bold;\">Paternalists</span> - <span style=\"color: #2969B0; font-weight: bold;\">Progress</span> Coalition";
 }
@@ -75,19 +75,19 @@ else if (Q.prog_votes >= 20) {
   Q.wales_government = "<span style=\"color: #2969B0; font-weight: bold;\">Progress</span> - <span style=\"color: #9365B8; font-weight: bold;\">Populist</span> Coalition";
 }
 
-// Paternalist strongholds
+# Paternalist strongholds
 if (Q.pat_votes >= 25) {
   Q.strathclyde_government = "<span style=\"color: #B8312F; font-weight: bold;\">Paternalists</span> Majority";
   Q.austlonds_government = "<span style=\"color: #B8312F; font-weight: bold;\">Paternalists</span> Majority";
   
-  // Lothian special case
+  # Lothian special case
   if (Q.young_scotland_electoral_accepted == 1 && Q.pat_votes <= 32 && Q.pop_votes >= 24 && Q.rust_votes >= 9) {
     Q.lothian_government = "<span style=\"color: #FBA026; font-weight: bold;\">Young Scots</span> - <span style=\"color: #1ABC9C; font-weight: bold;\">Rustiks</span> Coalition";
   } else {
     Q.lothian_government = "<span style=\"color: #B8312F; font-weight: bold;\">Paternalists</span> Majority";
   }
   
-  // Northumbria variations
+  # Northumbria variations
   if (Q.pat_votes >= 38 && (Q.prog_votes + Q.pop_votes < 45)) {
     Q.northumbria_government = "<span style=\"color: #B8312F; font-weight: bold;\">Paternalists</span> Majority";
   }
@@ -99,7 +99,7 @@ if (Q.pat_votes >= 25) {
   }
 }
 
-// Progressive regions
+# Progressive regions
 Q.galloway_government = "<span style=\"color: #2969B0; font-weight: bold;\">Progress</span> Majority";
 
 if (Q.prog_votes >= 24 && Q.rust_votes < 7) {
@@ -111,7 +111,7 @@ else {
   Q.soder_n_noder_government = "<span style=\"color: #2969B0; font-weight: bold;\">Progress</span> - <span style=\"color: #1ABC9C; font-weight: bold;\">Rustiks</span> Coalition";
 }
 
-// Rustik regions
+# Rustik regions
 if (Q.rust_votes >= 8) {
   Q.moray_government = "<span style=\"color: #1ABC9C; font-weight: bold;\">Rustiks</span> Majority";
   Q.fife_government = "<span style=\"color: #1ABC9C; font-weight: bold;\">Rustiks</span> Majority";
@@ -132,7 +132,7 @@ if (Q.rust_votes >= 8) {
     Q.wessex_government = "<span style=\"color: #1ABC9C; font-weight: bold;\">Rustiks</span> - <span style=\"color: #2969B0; font-weight: bold;\">Progress</span> Coalition";
   }
   
-  // Young Scots special cases
+  # Young Scots special cases
   if (Q.young_scotland_electoral_accepted == 1 && Q.rust_votes <= 6 && Q.pop_votes >= 26) {
     Q.moray_government = "<span style=\"color: #FBA026; font-weight: bold;\">Young Scots</span> - <span style=\"color: #1ABC9C; font-weight: bold;\">Rustiks</span> Coalition";
     Q.fife_government = "<span style=\"color: #1ABC9C; font-weight: bold;\">Rustiks</span> - <span style=\"color: #FBA026; font-weight: bold;\">Young Scots</span> Coalition";
