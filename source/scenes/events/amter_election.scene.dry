@@ -136,17 +136,29 @@ on-arrival: {!
 The regional governments have been formed following the elections:
 
 **Northumbria:** [+ northumbria_government +]
+
 **Mercia:** [+ mercia_government +]
+
 **Wales:** [+ wales_government +]
+
 **Strathclyde:** [+ strathclyde_government +]
+
 **Lothian:** [+ lothian_government +]
+
 **Austlonds:** [+ austlonds_government +]
+
 **Galloway:** [+ galloway_government +]
+
 **Kernow:** [+ kernow_government +]
+
 **Soder & Noder:** [+ soder_n_noder_government +]
+
 **Moray:** [+ moray_government +]
+
 **Fife:** [+ fife_government +]
+
 **Island:** [+ island_government +]
+
 **Wessex:** [+ wessex_government +]
 
 - @continue: So be it.
