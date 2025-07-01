@@ -159,31 +159,69 @@ Q.total_abstain = Q.socs_abstain + Q.pop_abstain + Q.prog_abstain + Q.rust_absta
 
 // Determine if bill passes (needs majority of those voting)
 Q.bill_passed = Q.total_yes > Q.total_no;
+
+var vote_data = [
+    {
+        "id": "yes",
+        "legend": "Yes", 
+        "name": "Yes",
+        "seats": Q.total_yes,
+        "color": "#28a745"
+    },
+    {
+        "id": "abstain",
+        "legend": "Abstention",
+        "name": "Abstention", 
+        "seats": Q.total_abstain,
+        "color": "#ffc107"
+    },
+    {
+        "id": "no",
+        "legend": "No",
+        "name": "No",
+        "seats": Q.total_no,
+        "color": "#dc3545"
+    }
+];
+
+if (window && d3) {
+    var width = 500; 
+    var height = 500;
+    var screenWidth = document.getElementById('content').offsetWidth;
+    if (screenWidth < width - 50) {
+        width = screenWidth - 50; 
+        height = width;
+        document.getElementById("martyrs_vote").style.height = screenWidth/2 + "px";
+    } 
+
+    var parliament = d3.parliament();
+    parliament.width(width).innerRadiusCoef(0.4);
+    parliament.enter.fromCenter(true).smallToBig(true);
+    parliament.exit.toCenter(false).bigToSmall(true);
+    d3.select("#martyrs_vote").datum(vote_data).call(parliament);
+}
 !}
 
 = The Martyrs Suffrage Bill Vote
 
-[if martyrs_suff_bill_acted_support >= 3]
-The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our efforts - swaying progressives, running lobbying campaigns, and other support actions - we have maximized our chances of success.
-[else if martyrs_suff_bill_acted_support = 2]
-The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our moderate efforts to support the bill may have improved its chances, though the outcome remains uncertain.
-[else if martyrs_suff_bill_acted_support = 1]
-The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our limited support efforts may help, but the bill faces an uphill battle.
-[else]
-The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Without our active support, the bill's chances look very dim indeed.
-[endif]
+[if martyrs_suff_bill_acted_support >= 3: The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Thanks to our comprehensive efforts - swaying progressives, running lobbying campaigns, and other support actions - we have maximized our chances of success.]
+
+[if martyrs_suff_bill_acted_support = 2: The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our moderate efforts to support the bill may have improved its chances, though the outcome remains uncertain.]
+
+[if martyrs_suff_bill_acted_support = 1: The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our limited support efforts may help, but the bill faces an uphill battle.]
+
+[if martyrs_suff_bill_acted_support = 0: The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Without our active support, the bill's chances look very dim indeed.]
 
 The vote begins...
+
+{!<svg id="martyrs_vote" style="width: 500px; height: 250px;"> </svg>!}
+
 
 ## Final Vote Results
 
 **Total Votes:** [+ total_yes +] Yes, [+ total_no +] No, [+ total_abstain +] Abstentions
 
-[if bill_passed]
-**The bill passes,** achieving a narrow majority in the Folkshus.
-[else]
 **The bill fails to pass,** lacking sufficient support in the Folkshus.
-[endif]
 
 ## Voting Breakdown by Party
 
@@ -240,8 +278,4 @@ The vote begins...
   </tr>
 </table>
 
-[if bill_passed]
-The passage of the bill delights suffragette activists but angers conservative forces. The political ramifications will be significant.
-[else]
 The failure of the bill disappoints suffragette activists and may damage the Executor's standing, but conservative forces are relieved. The political ramifications will be felt for months to come.
-[endif]

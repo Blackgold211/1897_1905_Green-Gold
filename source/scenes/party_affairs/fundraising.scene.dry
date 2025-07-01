@@ -1,7 +1,11 @@
 title: Fundraising
 new-page: true
 view-if: fundraising_timer <= 0 
-on-arrival: fundraising_timer = 6; month_actions += 1; resources += 1 if dues_introduced = 1 ;
+on-arrival: {!
+  fundraising_timer = 6; 
+  month_actions += 1; 
+  if (Q.dues_introduced == 1) { Q.resources += 1; }
+!}
 frequency: 300
 is-card: true
 card-image: img/poster_2.jpg
@@ -9,15 +13,15 @@ tags: party_affairs
 
 = Membership Dues
 
-[? if dues_introduced = 1 : We have gained [+ dues +] resources ?] 
+[? if dues_introduced == 1 : We have gained [+ dues +] resources ?] 
 
-[? if dues_introduced = 0 and resources = 0 : Due to our current spending, the party has ran out of funding and resources, while traditionally the party has survived off direct funding from the TSG and donations from the Young AEnglunders we do have other options available to us. ?]
+[? if dues_introduced == 0 and resources == 0 : Due to our current spending, the party has run out of funding and resources, while traditionally the party has survived off direct funding from the TSG and donations from the Young AEnglunders we do have other options available to us. ?]
 
 For better or for worse, the party cannot exist without money.
 
 - @ask_unions: Ask the TheodiskSwinkersGemot for further funding.
 - @ask_aenglunders: Appeal to the Young AEnglunders for donations.
-- @insitute_membership_dues: Insitute membership dues.
+- @insitute_membership_dues: Institute membership dues.
 - @continue: We are fine on resources. 
 
 @ask_unions
@@ -25,12 +29,17 @@ subtitle: [? if union_resources >= 3 and union_control >= 3 : 3 resources gained
 choose-if: union_resources >= 2 and fundraising_unions_timer == 0
 unavailable-subtitle: The TSG has no funding left to spare.
 on-arrival: {!
-  if (union_resources >= 3 && union_control >= 3) resources += 3;
-  else if (union_resources == 2 && union_control >= 2) resources += 2;
-  else if (union_resources >= 2 && union_control <= 1) resources += 1;
+  if (Q.union_resources >= 3 && Q.union_control >= 3) {
+    Q.resources += 3;
+  } else if (Q.union_resources == 2 && Q.union_control >= 2) {
+    Q.resources += 2;
+  } else if (Q.union_resources >= 2 && Q.union_control <= 1) {
+    Q.resources += 1;
+  }
+  Q.fundraising_unions_timer = 6;
 !}
 
-[? if union_resources >= 3 and union_control >= 3 : The TheodiskSwinkersGemot has provided substantialy more funding than in previous years, our recent actions have greatly increased the resources available to the unions. ?]
+[? if union_resources >= 3 and union_control >= 3 : The TheodiskSwinkersGemot has provided substantially more funding than in previous years, our recent actions have greatly increased the resources available to the unions. ?]
 
 [? if union_resources == 2 and union_control >= 2 : The TSG provides their standard level of funding. While not extravagant, their well-managed treasury provides reliable support for political activities. ?]
 
@@ -38,21 +47,23 @@ on-arrival: {!
 
 [? if union_resources == 3 and union_control == 2 : The TSG has more resources to spare thanks to our recent actions, though organizational challenges prevent us taking full advantage of this windfall. ?]
 
+- @continue_fundraising: Continue
 
 @ask_aenglunders
 subtitle: [? if aenglunders_strength >= 40 and aenglunders_dissent < 30 : 3 resources gained. ?][? if aenglunders_strength >= 40 and aenglunders_dissent >= 30 and aenglunders_dissent < 50 : 2 resources gained. ?][? if aenglunders_strength >= 25 and aenglunders_strength < 40 and aenglunders_dissent < 30 : 2 resources gained. ?][? if aenglunders_strength >= 25 and aenglunders_strength < 40 and aenglunders_dissent >= 30 and aenglunders_dissent < 50 : 1 resource gained. ?][? if aenglunders_strength >= 15 and aenglunders_strength < 25 and aenglunders_dissent < 30 : 1 resource gained. ?][? if aenglunders_strength >= 15 and aenglunders_dissent >= 50 : No resources gained. ?][? if aenglunders_strength < 15 : No resources gained. ?]
 choose-if: aenglunders_dissent < 50 and fundraising_youngae_timer == 0
 unavailable-subtitle: The Young AEnglunders are too dissatisfied to donate to the party.
 on-arrival: {!
-  temp_dues_var = 0; 
-  if (aenglunders_strength >= 40) temp_dues_var += 3; 
-  else if (aenglunders_strength >= 25) temp_dues_var += 2; 
-  else if (aenglunders_strength >= 15) temp_dues_var += 1; 
+  Q.temp_dues_var = 0; 
+  if (Q.aenglunders_strength >= 40) { Q.temp_dues_var += 3; } 
+  else if (Q.aenglunders_strength >= 25) { Q.temp_dues_var += 2; } 
+  else if (Q.aenglunders_strength >= 15) { Q.temp_dues_var += 1; } 
   
-  if (aenglunders_dissent >= 40) temp_dues_var -= 2; 
-  else if (aenglunders_dissent >= 30) temp_dues_var -= 1; 
+  if (Q.aenglunders_dissent >= 40) { Q.temp_dues_var -= 2; } 
+  else if (Q.aenglunders_dissent >= 30) { Q.temp_dues_var -= 1; } 
   
-  if (temp_dues_var > 0) resources += temp_dues_var;
+  if (Q.temp_dues_var > 0) { Q.resources += Q.temp_dues_var; }
+  Q.fundraising_youngae_timer = 6;
 !}
 
 [? if temp_dues_var == 3 : The Young AEnglunders respond with exceptional generosity. Donations pour in from enthusiastic supporters who believe in the AEnglisk cause. ?]
@@ -67,20 +78,25 @@ on-arrival: {!
 
 [? if temp_dues_var <= 0 and aenglunders_strength < 15 : The Young AEnglunders cannot provide meaningful funding. Their informal networks have largely dissolved, leaving too few committed supporters to generate significant donations through personal appeals. ?]
 
+- @continue_fundraising: Continue
 
 @insitute_membership_dues
 subtitle: We will gain 1 resource. 1 resource will be gained automatically each time we fundraise.  
 choose-if: dues_introduced == 0
 unavailable-subtitle: We have already introduced dues to the party.
 on-arrival: {!
-  dues += 1; 
-  resources += dues; 
-  dues_introduced = 1;
+  Q.dues += 1; 
+  Q.resources += Q.dues; 
+  Q.dues_introduced = 1;
 !}
 
 Many of our members grumble at this, and some of the less fortunate or committed members will leave. But now, we have access to additional resources. 
+
+- @continue_fundraising: Continue
 
 @continue
 subtitle: No resources will be gained from this action.
 
 We will carry on with what we have.
+
+@continue_fundraising
