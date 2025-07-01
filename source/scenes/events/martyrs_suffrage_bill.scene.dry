@@ -173,7 +173,7 @@ var vote_data = [
         "legend": "Abstention",
         "name": "Abstention", 
         "seats": Q.total_abstain,
-        "color": "#ffc107"
+        "color": "#7a7a7a"
     },
     {
         "id": "no",

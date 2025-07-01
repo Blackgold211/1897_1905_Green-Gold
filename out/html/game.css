@@ -557,6 +557,16 @@ table {
 .seat.stats {
     fill: #475577;
 }
+.seat.yes {
+    fill: #28a745
+    ;
+}
+.seat.abstain {
+    fill: #7a7a7a;
+}
+.seat.no {
+    fill: #dc3545;
+}
 
 .tooltip-text {
     text-decoration: underline;

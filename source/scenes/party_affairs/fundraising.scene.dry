@@ -47,8 +47,6 @@ on-arrival: {!
 
 [? if union_resources == 3 and union_control == 2 : The TSG has more resources to spare thanks to our recent actions, though organizational challenges prevent us taking full advantage of this windfall. ?]
 
-- @continue_fundraising: Continue
-
 @ask_aenglunders
 subtitle: [? if aenglunders_strength >= 40 and aenglunders_dissent < 30 : 3 resources gained. ?][? if aenglunders_strength >= 40 and aenglunders_dissent >= 30 and aenglunders_dissent < 50 : 2 resources gained. ?][? if aenglunders_strength >= 25 and aenglunders_strength < 40 and aenglunders_dissent < 30 : 2 resources gained. ?][? if aenglunders_strength >= 25 and aenglunders_strength < 40 and aenglunders_dissent >= 30 and aenglunders_dissent < 50 : 1 resource gained. ?][? if aenglunders_strength >= 15 and aenglunders_strength < 25 and aenglunders_dissent < 30 : 1 resource gained. ?][? if aenglunders_strength >= 15 and aenglunders_dissent >= 50 : No resources gained. ?][? if aenglunders_strength < 15 : No resources gained. ?]
 choose-if: aenglunders_dissent < 50 and fundraising_youngae_timer == 0
@@ -78,8 +76,6 @@ on-arrival: {!
 
 [? if temp_dues_var <= 0 and aenglunders_strength < 15 : The Young AEnglunders cannot provide meaningful funding. Their informal networks have largely dissolved, leaving too few committed supporters to generate significant donations through personal appeals. ?]
 
-- @continue_fundraising: Continue
-
 @insitute_membership_dues
 subtitle: We will gain 1 resource. 1 resource will be gained automatically each time we fundraise.  
 choose-if: dues_introduced == 0
@@ -92,11 +88,8 @@ on-arrival: {!
 
 Many of our members grumble at this, and some of the less fortunate or committed members will leave. But now, we have access to additional resources. 
 
-- @continue_fundraising: Continue
 
 @continue
 subtitle: No resources will be gained from this action.
 
 We will carry on with what we have.
-
-@continue_fundraising
