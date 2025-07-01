@@ -65,6 +65,12 @@ Q.stats_in_government = 0;
 Q.rust_in_government = 1;
 Q.socs_in_government = 0;
 
+//government state
+Q.is_empire = 1;
+Q.zelda_abdicated = 0;
+Q.is_perm_regency = 0;
+Q.is_republic = 0;
+
 //possible coaltiions
 Q.in_pop_prog_coalition = 0;
 Q.in_pop_rust_coalition = 0;
@@ -96,13 +102,50 @@ Q.parties = ['pop', 'pat', 'prog', 'rust', 'stats', 'socs', 'other'];
 Q.true_prog_formed = 0;
 Q.patriot_pat_formed = 0;
 
+//bills passed / support
+// Vote results by party - Yes votes
+Q.socs_yes = 0;
+Q.pop_yes = 0;
+Q.prog_yes = 0;
+Q.rust_yes = 0;
+Q.pat_yes = 0;
+Q.stats_yes = 0;
+Q.other_yes = 0;
 
-//government state
-Q.is_empire = 1;
-Q.zelda_abdicated = 0;
-Q.is_perm_regency = 0;
-Q.is_republic = 0;
+// Vote results by party - No votes
+Q.socs_no = 0;
+Q.pop_no = 0;
+Q.prog_no = 0;
+Q.rust_no = 0;
+Q.pat_no = 0;
+Q.stats_no = 0;
+Q.other_no = 0;
 
+// Vote results by party - Abstentions
+Q.socs_abstain = 0;
+Q.pop_abstain = 0;
+Q.prog_abstain = 0;
+Q.rust_abstain = 0;
+Q.pat_abstain = 0;
+Q.stats_abstain = 0;
+Q.other_abstain = 0;
+
+// Total vote counts
+Q.total_yes = 0;
+Q.total_no = 0;
+Q.total_abstain = 0;
+
+// Bill outcome
+Q.bill_passed = 0;
+
+//Martyrs
+Q.martyrs_suff_bill_support = 0;
+Q.martyrs_suff_bill_acted_support = 0;
+
+Q.sway_progressives_used = 0;
+Q.lobbying_campaign_used = 0;
+Q.placeholder_used = 0;
+Q.let_it_die_chosen = 0;
 
 
 // organizations
@@ -203,7 +246,7 @@ Q.union_council_loyalty = 1;
 
 // The state of the country
 
-//ecoonomics
+//economics
 Q.inflation = 2.9;
 // economic growth
 Q.economic_growth = .5;
@@ -221,6 +264,10 @@ Q.nationalism = 60;
 Q.socialism = 40;
 // pro-republic vs anti-republic
 Q.pro_democracy = 65;
+
+//Tensions tracker
+Q.suffragette_anger = 0;
+Q.tension = 0;
 
 Q.emergency_rule = 0;
 

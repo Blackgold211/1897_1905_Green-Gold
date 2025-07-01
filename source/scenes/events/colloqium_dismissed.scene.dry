@@ -21,13 +21,6 @@ While the Populists support Home Rule across the Isles, we have struggled to exp
 - @make_deal  
 - @no_comment  
 
-@praise  
-title: Praise the dismissal.  
-subtitle: This will utterly confuse our base and strain ties with the Young AEnglunders.  
-on-arrival: new_middle_pop -= 6; workers_pop -= 2; pat_relation += 6; prog_relation += 3; rust_relation += 3; socs_relation -= 5; aenglunders_strength -= 10; aenglunders_dissent += 25;
-
-We've publicly supported the Ceaserin's move along with all the other parties excepting the Socialists. The Young AEnglunders call this as a betrayal of Populist principals with some walking out, while this has improved relations with the other parties, it's hard to say it was worth it.
-
 @condemn  
 title: Condemn the dismissal.  
 subtitle: What's expected from us, pleases our base and the Young AEnglunders but will anger the rightist parties.  
@@ -56,6 +49,13 @@ We’ve accepted the deal. Let us hope the cost proves worthwhile.
 on-arrival: home_rule_movements_relations -= 1; new_middle_pop += 0.5; pat_relation -= 4; prog_relation -= 3; rust_relation -= 3; socs_relation += 2;
 
 While disappointed, they are not surprised. Given how this turned out, perhaps it would've been best had we not approached them at all.  
+
+@praise  
+title: Praise the dismissal.  
+subtitle: This will utterly confuse our base and strain ties with the Young AEnglunders.  
+on-arrival: new_middle_pop -= 6; workers_pop -= 2; pat_relation += 6; prog_relation += 3; rust_relation += 3; socs_relation -= 5; aenglunders_strength -= 10; aenglunders_dissent += 25;
+
+We've publicly supported the Ceaserin's move along with all the other parties excepting the Socialists. The Young AEnglunders call this as a betrayal of Populist principals with some walking out, while this has improved relations with the other parties, it's hard to say it was worth it.
 
 @no_comment  
 title: Remain silent.  

@@ -56,7 +56,7 @@ on-arrival: {!
     Q.mercia_government = "<span style=\"color: #9365B8; font-weight: bold;\">Populist</span> - <span style=\"color: #2969B0; font-weight: bold;\">Progress</span> Coalition";
     Q.pop_mercia = 1;
   }
-  else if (Q.prog_votes >= 20) {
+  else if (Q.prog_votes >= 20 or Q.prog_votes - Q.pop_votes > 10) {
     Q.mercia_government = "<span style=\"color: #2969B0; font-weight: bold;\">Progress</span> - <span style=\"color: #9365B8; font-weight: bold;\">Populist</span> Minority";
   }
 
