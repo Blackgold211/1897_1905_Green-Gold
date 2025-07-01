@@ -8,155 +8,240 @@ new-page: true
 
 = Martyrs Suffrage Bill
 
-Since its introduction, tensions around the Martyr's Suffrage bill have only grown more intense. Despite this, Executor Richmondson has not been deterred. Given the rapidly approaching election, the Executor can no longer afford to delay the bill any longer. 
+Since it's introduction tensions around the Martyr's Suffrage bill have only grown more intense. Despite this Executor Richmondson has not been deterred, given the rapidly approaching election, the Executor can no longer afford to delay the bill any longer. Given our previous support, he has decided to put it to a vote rather than to completely withdraw the bill. As it is now, it is extremely unlikely for the bill to pass without heavy intervention.
 
 - @sway_progressives
-- @lobbying_campaign 
+- @lobbying_campaign
 - @placeholder
-- @let_it_die
+- @let_it_die: 
 - @proceed_to_vote
+
+@sway_progressives
+title: Use our good relations with the Progressive to sway some to our side.
+subtitle: We've already done this action.
+unavailable-subtitle: We've already done this action.
+view-if: sway_progressives_used = 0
+max-visits: 1
+on-arrival: martyrs_suff_bill_acted_support += 1; sway_progressives_used = 1;
+
+Our arguments have swayed some progressives to vote yes for the bill. However the majority of the progressives still refuse to back the bill on principle.
+
+- @continue_actions
+
+@lobbying_campaign
+title: Use some of our resources to campaign for the bill.
+subtitle: -1 resource. We've already done this action.
+unavailable-subtitle: We've already done this action.
+view-if: lobbying_campaign_used = 0
+max-visits: 1
+on-arrival: martyrs_suff_bill_acted_support += 1; resources -= 1; lobbying_campaign_used = 1;
+
+We've spent some of our resources, donating to suffragette groups and sympathetic newspapers in order to pressure Thingmen to vote yes.
+
+- @continue_actions
+
+@placeholder
+title: Dunno yet. Something else?
+subtitle: We've already done this action.
+unavailable-subtitle: We've already done this action.
+view-if: placeholder_used = 0
+max-visits: 1
+on-arrival: martyrs_suff_bill_acted_support += 1; placeholder_used = 1;
+
+You do… something.
+
+- @continue_actions
+
+@let_it_die
+title: The bill is a lost cause, let it die.
+max-visits: 1
+view-if: martyrs_suff_bill_acted_support = 0
+on-arrival: let_it_die_chosen = 1;
+
+We give up on supporting the bill and withdraw our backing.
+
+- @bill_vote
+
+@continue_actions
+title: Continue with other actions or proceed to vote.
+
+What else should we do regarding the Martyrs Suffrage Bill?
+
+- @sway_progressives: view-if: sway_progressives_used = 0
+- @lobbying_campaign: view-if: lobbying_campaign_used = 0
+- @placeholder: view-if: placeholder_used = 0
+- @proceed_to_vote
+
+@proceed_to_vote
+title: We have done all we can. Proceed to the vote.
+view-if: martyrs_suff_bill_acted_support >= 1
+max-visits: 1
+
+We have taken what actions we could. Now it's time to see how the vote plays out.
+
+- @bill_vote
 
 @bill_vote
 title: The Vote
 on-arrival: {!
-  // Calculate base voting patterns
-  var socs_yes_pct = 0; 
-  var pop_yes_pct = 50;  
-  var prog_yes_pct = 30;
-  var rust_yes_pct = 30;
-  var pat_yes_pct = 25;
-  var stats_yes_pct = 0;
-  var other_yes_pct = 30;
+// First ensure all faction variables exist with proper Q. prefix
+Q.socs_f = Q.socs_f || 1;
+Q.pop_f = Q.pop_f || 57; 
+Q.prog_f = Q.prog_f || 182;
+Q.rust_f = Q.rust_f || 44;
+Q.pat_f = Q.pat_f || 298;
+Q.stats_f = Q.stats_f || 14;
+Q.other_f = Q.other_f || 5;
 
-  // Apply modifiers based on actions taken
-  if (Q.sway_progressives_used == 1) {
-      prog_yes_pct += 15;
-  }
-  if (Q.lobbying_campaign_used == 1) {
-      socs_yes_pct += 15; 
-      pop_yes_pct += 5;  
-      prog_yes_pct += 8;
-      rust_yes_pct += 5;
-      pat_yes_pct += 5;
-      other_yes_pct += 5;
-  }
-  if (Q.placeholder_used == 1) {
-      pop_yes_pct += 1;
-  }
-  if (Q.let_it_die_chosen == 1) { 
-      pop_yes_pct -= 15;  
-      pat_yes_pct -= 5;
-  }
+// Calculate base voting patterns for each party
+// Base percentages for Yes votes (very low since it's a lost cause)
+var socs_yes_pct = 0; 
+var pop_yes_pct = 50;  
+var prog_yes_pct = 30;
+var rust_yes_pct = 30;
+var pat_yes_pct = 25;
+var stats_yes_pct = 0;
+var other_yes_pct = 30;
 
-  // Calculate actual votes for each party
-  Q.socs_yes = Math.floor(Q.socs_f * socs_yes_pct / 100);
-  Q.socs_no = Math.floor(Q.socs_f * (90 - socs_yes_pct) / 100);
-  Q.socs_abstain = Q.socs_f - Q.socs_yes - Q.socs_no;
+if (Q.sway_progressives_used == 1){
+    prog_yes_pct += 15
+}
+if (Q.lobbying_campaign_used == 1){
+    socs_yes_pct += 15; 
+    pop_yes_pct += 5;  
+    prog_yes_pct += 8;
+    rust_yes_pct += 5;
+    pat_yes_pct += 5;
+    other_yes_pct += 5;
+}
+if (Q.placeholder_used == 1){
+    pop_yes_pct += 1;
+}
 
-  Q.pop_yes = Math.floor(Q.pop_f * pop_yes_pct / 100);
-  Q.pop_no = Math.floor(Q.pop_f * (90 - pop_yes_pct) / 100);
-  Q.pop_abstain = Q.pop_f - Q.pop_yes - Q.pop_no;
+if (Q.let_it_die_chosen == 1){ 
+    pop_yes_pct -= 15;  
+    pat_yes_pct -= 5;
+}
 
-  Q.prog_yes = Math.floor(Q.prog_f * prog_yes_pct / 100);
-  Q.prog_no = Math.floor(Q.prog_f * (80 - prog_yes_pct) / 100);
-  Q.prog_abstain = Q.prog_f - Q.prog_yes - Q.prog_no;
+// Calculate actual votes
+Q.socs_yes = Math.floor(Q.socs_f * socs_yes_pct / 100);
+Q.socs_no = Math.floor(Q.socs_f * (90 - socs_yes_pct) / 100);
+Q.socs_abstain = Q.socs_f - Q.socs_yes - Q.socs_no;
 
-  Q.rust_yes = Math.floor(Q.rust_f * rust_yes_pct / 100);
-  Q.rust_no = Math.floor(Q.rust_f * (67 - rust_yes_pct) / 100);
-  Q.rust_abstain = Q.rust_f - Q.rust_yes - Q.rust_no;
+Q.pop_yes = Math.floor(Q.pop_f * pop_yes_pct / 100);
+Q.pop_no = Math.floor(Q.pop_f * (90 - pop_yes_pct) / 100);
+Q.pop_abstain = Q.pop_f - Q.pop_yes - Q.pop_no;
 
-  Q.pat_yes = Math.floor(Q.pat_f * pat_yes_pct / 100);
-  Q.pat_no = Math.floor(Q.pat_f * (87 - pat_yes_pct) / 100);
-  Q.pat_abstain = Q.pat_f - Q.pat_yes - Q.pat_no;
+Q.prog_yes = Math.floor(Q.prog_f * prog_yes_pct / 100);
+Q.prog_no = Math.floor(Q.prog_f * (80 - prog_yes_pct) / 100);
+Q.prog_abstain = Q.prog_f - Q.prog_yes - Q.prog_no;
 
-  Q.stats_yes = 0;
-  Q.stats_no = Q.stats_f;
-  Q.stats_abstain = 0;
+Q.rust_yes = Math.floor(Q.rust_f * rust_yes_pct / 100);
+Q.rust_no = Math.floor(Q.rust_f * (67 - rust_yes_pct) / 100);
+Q.rust_abstain = Q.rust_f - Q.rust_yes - Q.rust_no;
 
-  Q.other_yes = Math.floor(Q.other_f * other_yes_pct / 100);
-  Q.other_no = Math.floor(Q.other_f * (80 - other_yes_pct) / 100);
-  Q.other_abstain = Q.other_f - Q.other_yes - Q.other_no;
+Q.pat_yes = Math.floor(Q.pat_f * pat_yes_pct / 100);
+Q.pat_no = Math.floor(Q.pat_f * (87 - pat_yes_pct) / 100);
+Q.pat_abstain = Q.pat_f - Q.pat_yes - Q.pat_no;
 
-  // Calculate totals
-  Q.total_yes = Q.socs_yes + Q.pop_yes + Q.prog_yes + Q.rust_yes + Q.pat_yes + Q.stats_yes + Q.other_yes;
-  Q.total_no = Q.socs_no + Q.pop_no + Q.prog_no + Q.rust_no + Q.pat_no + Q.stats_no + Q.other_no;
-  Q.total_abstain = Q.socs_abstain + Q.pop_abstain + Q.prog_abstain + Q.rust_abstain + Q.pat_abstain + Q.stats_abstain + Q.other_abstain;
+Q.stats_yes = 0;
+Q.stats_no = Q.stats_f;
+Q.stats_abstain = 0;
 
-  // Determine if bill passes
-  Q.bill_passed = Q.total_yes > Q.total_no;
+Q.other_yes = Math.floor(Q.other_f * other_yes_pct / 100);
+Q.other_no = Math.floor(Q.other_f * (80 - other_yes_pct) / 100);
+Q.other_abstain = Q.other_f - Q.other_yes - Q.other_no;
+
+// Calculate totals
+Q.total_yes = Q.socs_yes + Q.pop_yes + Q.prog_yes + Q.rust_yes + Q.pat_yes + Q.stats_yes + Q.other_yes;
+Q.total_no = Q.socs_no + Q.pop_no + Q.prog_no + Q.rust_no + Q.pat_no + Q.stats_no + Q.other_no;
+Q.total_abstain = Q.socs_abstain + Q.pop_abstain + Q.prog_abstain + Q.rust_abstain + Q.pat_abstain + Q.stats_abstain + Q.other_abstain;
+
+// Determine if bill passes (needs majority of those voting)
+Q.bill_passed = Q.total_yes > Q.total_no;
 !}
 
 = The Martyrs Suffrage Bill Vote
 
 [if martyrs_suff_bill_acted_support >= 3]
-The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our extensive efforts have maximized our chances of success.
-[else if martyrs_suff_bill_acted_support = 2]  
-The Folkshus convenes to vote. Our moderate support efforts may help the bill's chances.
+The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our efforts - swaying progressives, running lobbying campaigns, and other support actions - we have maximized our chances of success.
+[else if martyrs_suff_bill_acted_support = 2]
+The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our moderate efforts to support the bill may have improved its chances, though the outcome remains uncertain.
 [else if martyrs_suff_bill_acted_support = 1]
-The Folkshus convenes to vote. Our limited support leaves the bill's fate uncertain.  
+The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our limited support efforts may help, but the bill faces an uphill battle.
 [else]
-The Folkshus convenes to vote. Without our support, the bill faces long odds.
+The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Without our active support, the bill's chances look very dim indeed.
 [endif]
+
+The vote begins...
 
 ## Final Vote Results
 
 **Total Votes:** [+ total_yes +] Yes, [+ total_no +] No, [+ total_abstain +] Abstentions
 
 [if bill_passed]
-**The bill passes,** achieving a majority in the Folkshus.
-[else]  
-**The bill fails to pass,** lacking sufficient support.
+**The bill passes,** achieving a narrow majority in the Folkshus.
+[else]
+**The bill fails to pass,** lacking sufficient support in the Folkshus.
 [endif]
 
 ## Voting Breakdown by Party
 
 <table>
+  <tr><td>Party</td><td>Yes Votes</td><td>No Votes</td><td>Abstentions</td></tr>
+
   <tr>
-    <td>Socialist Workers:</td>
-    <td>[+ socs_yes +] Yes</td>
-    <td>[+ socs_no +] No</td>
-    <td>[+ socs_abstain +] Abstain</td>
+    <td><div class="box" style='background-color:#F37934'></div> Socialist Workers:</td>
+    <td>[+ socs_yes +]</td>
+    <td>[+ socs_no +]</td>
+    <td>[+ socs_abstain +]</td>
   </tr>
+
   <tr>
-    <td><strong>Populists:</strong></td>
-    <td><strong>[+ pop_yes +] Yes</strong></td>
-    <td><strong>[+ pop_no +] No</strong></td>  
-    <td><strong>[+ pop_abstain +] Abstain</strong></td>
+    <td><div class="box" style='background-color:#9365B8; outline: 2px solid;'></div> <strong>Populists:</strong></td>
+    <td><strong>[+ pop_yes +]</strong></td>
+    <td><strong>[+ pop_no +]</strong></td>
+    <td><strong>[+ pop_abstain +]</strong></td>
   </tr>
+
   <tr>
-    <td>Progress:</td>
-    <td>[+ prog_yes +] Yes</td>
-    <td>[+ prog_no +] No</td>
-    <td>[+ prog_abstain +] Abstain</td>
+    <td><div class="box" style='background-color:#2969B0'></div> Progress:</td>
+    <td>[+ prog_yes +]</td>
+    <td>[+ prog_no +]</td>
+    <td>[+ prog_abstain +]</td>
   </tr>
+
   <tr>
-    <td>Rustiks:</td>
-    <td>[+ rust_yes +] Yes</td>
-    <td>[+ rust_no +] No</td>
-    <td>[+ rust_abstain +] Abstain</td>
+    <td><div class="box" style='background-color:#1ABC9C'></div> Rustiks:</td>
+    <td>[+ rust_yes +]</td>
+    <td>[+ rust_no +]</td>
+    <td>[+ rust_abstain +]</td>
   </tr>
+
   <tr>
-    <td>Paternalists:</td>
-    <td>[+ pat_yes +] Yes</td>
-    <td>[+ pat_no +] No</td>
-    <td>[+ pat_abstain +] Abstain</td>
+    <td><div class="box" style='background-color:#a0a0a0'></div> Others:</td>
+    <td>[+ other_yes +]</td>
+    <td>[+ other_no +]</td>
+    <td>[+ other_abstain +]</td>
   </tr>
+
   <tr>
-    <td>Statists:</td>
-    <td>[+ stats_yes +] Yes</td>
-    <td>[+ stats_no +] No</td>
-    <td>[+ stats_abstain +] Abstain</td>
+    <td><div class="box" style='background-color:#B8312F'></div> Paternalists:</td>
+    <td>[+ pat_yes +]</td>
+    <td>[+ pat_no +]</td>
+    <td>[+ pat_abstain +]</td>
   </tr>
+
   <tr>
-    <td>Others:</td>
-    <td>[+ other_yes +] Yes</td>
-    <td>[+ other_no +] No</td>
-    <td>[+ other_abstain +] Abstain</td>
+    <td><div class="box" style='background-color:#475577'></div> Statists:</td>
+    <td>[+ stats_yes +]</td>
+    <td>[+ stats_no +]</td>
+    <td>[+ stats_abstain +]</td>
   </tr>
 </table>
 
 [if bill_passed]
-The bill's passage represents a major victory for suffragette activists.
+The passage of the bill delights suffragette activists but angers conservative forces. The political ramifications will be significant.
 [else]
-The bill's failure disappoints reformers but relieves conservative forces.  
+The failure of the bill disappoints suffragette activists and may damage the Executor's standing, but conservative forces are relieved. The political ramifications will be felt for months to come.
 [endif]
