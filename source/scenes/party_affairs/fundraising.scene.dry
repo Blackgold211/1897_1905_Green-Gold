@@ -22,7 +22,7 @@ For better or for worse, the party cannot exist without money.
 
 @ask_unions
 subtitle: [? if union_resources >= 3 and union_control >= 3 : 3 resources gained. ?][? if union_resources == 2 and union_control >= 2 : 2 resources gained. ?][? if union_resources >= 2 and union_control <= 1 : 1 resource gained. ?]
-choose-if: union_resources >= 2 and fundraising_unions_timer = 0
+choose-if: union_resources >= 2 and fundraising_unions_timer == 0
 unavailable_subtitle: The TSG has no funding left to spare.
 
 on-arrival: resources += 3 if union_resources >= 3 and union_control >= 3; resources += 2 if union_resources == 2 and union_control >= 2; resources += 1 if union_resources >= 2 and union_control <= 1;
@@ -48,7 +48,7 @@ on-arrival:
     temp_dues_var -= 1 if aenglunders_dissent >= 30 and aenglunders_dissent < 50; 
     resources += temp_dues_var if temp_dues_var > 0;
 }
-choose-if: aenglunders_dissent < 50 and fundraising_youngae_timer = 0
+choose-if: aenglunders_dissent < 50 and fundraising_youngae_timer == 0
 unavailable-subtitle: The Young AEnglunders are too dissatisfied to donate to the party.
 
 [? if temp_dues_var == 3 : The Young AEnglunders respond with exceptional generosity. Donations pour in from enthusiastic supporters who believe in the AEnglisk cause. ?]
@@ -67,7 +67,7 @@ unavailable-subtitle: The Young AEnglunders are too dissatisfied to donate to th
 @insitute_membership_dues
 subtitle: We will gain 1 resource. 1 resource will be gained automatically each time we fundraise.  
 on-arrival: dues += 1; resources += dues; dues_introduced = 1;
-choose-if: dues_introduced = 0
+choose-if: dues_introduced == 0
 unavailable_subtitle: We have already introduced dues to the party.
 
 Many of our members grumble at this, and some of the less fortunate or committed members will leave. But now, we have access to additional resources. 

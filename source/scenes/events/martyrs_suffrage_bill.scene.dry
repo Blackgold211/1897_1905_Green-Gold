@@ -20,9 +20,9 @@ Since it's introduction tensions around the Martyr's Suffrage bill have only gro
 title: Use our good relations with the Progressive to sway some to our side.
 subtitle: We've already done this action.
 unavailable-subtitle: We've already done this action.
-view-if: Q.sway_progressives_used != 1
+view-if: sway_progressives_used = 0
 max-visits: 1
-on-arrival: martyrs_suff_bill_acted_support += 1; Q.sway_progressives_used = 1;
+on-arrival: martyrs_suff_bill_acted_support += 1; sway_progressives_used = 1;
 
 Our arguments have swayed some progressives to vote yes for the bill. However the majority of the progressives still refuse to back the bill on principle.
 
@@ -32,9 +32,9 @@ Our arguments have swayed some progressives to vote yes for the bill. However th
 title: Use some of our resources to campaign for the bill.
 subtitle: -1 resource. We've already done this action.
 unavailable-subtitle: We've already done this action.
-view-if: Q.lobbying_campaign_used != 1
+view-if: lobbying_campaign_used = 0
 max-visits: 1
-on-arrival: martyrs_suff_bill_acted_support += 1; resources -= 1; Q.lobbying_campaign_used = 1;
+on-arrival: martyrs_suff_bill_acted_support += 1; resources -= 1; lobbying_campaign_used = 1;
 
 We've spent some of our resources, donating to suffragette groups and sympathetic newspapers in order to pressure Thingmen to vote yes.
 
@@ -44,9 +44,9 @@ We've spent some of our resources, donating to suffragette groups and sympatheti
 title: Dunno yet. Something else?
 subtitle: We've already done this action.
 unavailable-subtitle: We've already done this action.
-view-if: Q.placeholder_used != 1
+view-if: placeholder_used = 0
 max-visits: 1
-on-arrival: martyrs_suff_bill_acted_support += 1; Q.placeholder_used = 1;
+on-arrival: martyrs_suff_bill_acted_support += 1; placeholder_used = 1;
 
 You do… something.
 
@@ -66,9 +66,9 @@ title: Continue with other actions or proceed to vote.
 
 What else should we do regarding the Martyrs Suffrage Bill?
 
-- @sway_progressives: view-if: Q.sway_progressives_used != 1
-- @lobbying_campaign: view-if: Q.lobbying_campaign_used != 1  
-- @placeholder: view-if: Q.placeholder_used != 1
+- @sway_progressives: view-if: sway_progressives_used = 0
+- @lobbying_campaign: view-if: lobbying_campaign_used = 0
+- @placeholder: view-if: placeholder_used = 0
 - @proceed_to_vote
 
 @proceed_to_vote
@@ -92,10 +92,10 @@ var pat_yes_pct = 25;
 var stats_yes_pct = 0;
 var other_yes_pct = 30;
 
-if (sway_progressives_used = 1){
+if (sway_progressives_used == 1){
     prog_yes_pct += 15
 }
-if (lobbying_campaign_used = 1){
+if (lobbying_campaign_used == 1){
     socs_yes_pct += 15; 
     pop_yes_pct += 5;  
     prog_yes_pct += 8;
@@ -103,11 +103,11 @@ if (lobbying_campaign_used = 1){
     pat_yes_pct += 5;
     other_yes_pct += 5;
 }
-if (placeholder_used = 1){
+if (placeholder_used == 1){
     pop_yes_pct += 1;
 }
 
-if (let_it_die_chosen = 1){ 
+if (let_it_die_chosen == 1){ 
     pop_yes_pct -= 15;  
     pat_yes_pct -= 5;
 }
