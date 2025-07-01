@@ -55,7 +55,7 @@ on-arrival: {!
   if (Q.prog_relation < 25 && Q.pat_votes > (Q.prog_votes + 8)) {
     Q.wales_government = "<span style=\"color: #B8312F; font-weight: bold;\">Paternalists</span> - <span style=\"color: #2969B0; font-weight: bold;\">Progress</span> Coalition";
   }
-  else if (Q.prog_relation > 25) {
+  else if (Q.prog_relation < 25) {
     Q.wales_government = "<span style=\"color: #2969B0; font-weight: bold;\">Progress</span> - <span style=\"color: #B8312F; font-weight: bold;\">Paternalists</span> Coalition";
   }
   else if (Q.pop_votes > Q.prog_votes) {

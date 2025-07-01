@@ -97,7 +97,7 @@ Q.pop_toleration = 0;
 Q.minority_government = 1;
 
 Q.classes = ['workers', 'old_middle', 'new_middle', 'rural', 'unemployed'];
-Q.parties = ['pop', 'pat', 'prog', 'rust', 'stats', 'socs', 'other', 'yes', 'abstain', 'no'];
+Q.parties = ['pop', 'pat', 'prog', 'rust', 'stats', 'socs', 'other'];
 
 Q.true_prog_formed = 0;
 Q.patriot_pat_formed = 0;
