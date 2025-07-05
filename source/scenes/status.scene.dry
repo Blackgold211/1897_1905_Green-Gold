@@ -37,7 +37,7 @@ Grand Executor: [+ executor +] ([+ executor_party +])
 
 Folkshus composition (300 needed for Majority):
 
-{!<span style="color: #FAC51C; font-weight: bold;">Socialist Workers</span>!}: [+ socs_f +] Seat [? if socs_f > 1: s ?]
+{!<span style="color: #FAC51C; font-weight: bold;">Socialist Workers</span>!}: [+ socs_f +] Seat[? if socs_f > 1: s ?]
 
 {!<span style="color: #9365B8; font-weight: bold;">Populist</span>!}: [+ pop_f +] Seats 
 
