@@ -85,13 +85,13 @@ We have taken what actions we could. Now it's time to see how the vote plays out
 title: The Vote
 on-arrival: {!
 // First ensure all faction variables exist with proper Q. prefix
-Q.socs_f = Q.socs_f || 1;
-Q.pop_f = Q.pop_f || 57; 
-Q.prog_f = Q.prog_f || 182;
-Q.rust_f = Q.rust_f || 44;
-Q.pat_f = Q.pat_f || 298;
-Q.stats_f = Q.stats_f || 14;
-Q.other_f = Q.other_f || 5;
+Q.socs_f = Q.socs_f;
+Q.pop_f = Q.pop_f; 
+Q.prog_f = Q.prog_f;
+Q.rust_f = Q.rust_f;
+Q.pat_f = Q.pat_f;
+Q.stats_f = Q.stats_f;
+Q.other_f = Q.other_f;
 
 // Calculate base voting patterns for each party
 // Base percentages for Yes votes (very low since it's a lost cause)
@@ -159,7 +159,9 @@ Q.total_abstain = Q.socs_abstain + Q.pop_abstain + Q.prog_abstain + Q.rust_absta
 
 // Determine if bill passes (needs majority of those voting)
 Q.bill_passed = Q.total_yes > Q.total_no;
-
+!}
+on-display: {!
+// Create vote data array for parliament visualization
 var vote_data = [
     {
         "id": "yes",
@@ -184,33 +186,44 @@ var vote_data = [
     }
 ];
 
-if (window && d3) {
+// Initialize parliament visualization
+if (window && window.d3) {
     var width = 500; 
     var height = 500;
-    var screenWidth = document.getElementById('content').offsetWidth;
-    if (screenWidth < width - 50) {
-        width = screenWidth - 50; 
-        height = width;
-        document.getElementById("martyrs_vote").style.height = screenWidth/2 + "px";
-    } 
+    var contentElement = document.getElementById('content');
+    if (contentElement) {
+        var screenWidth = contentElement.offsetWidth;
+        if (screenWidth < width - 50) {
+            width = screenWidth - 50; 
+            height = width;
+            var martyrsVoteElement = document.getElementById("martyrs_vote");
+            if (martyrsVoteElement) {
+                martyrsVoteElement.style.height = screenWidth/2 + "px";
+            }
+        }
+    }
 
     var parliament = d3.parliament();
     parliament.width(width).innerRadiusCoef(0.4);
     parliament.enter.fromCenter(true).smallToBig(true);
     parliament.exit.toCenter(false).bigToSmall(true);
-    d3.select("#martyrs_vote").datum(vote_data).call(parliament);
+    
+    var martyrsVoteSelection = d3.select("#martyrs_vote");
+    if (!martyrsVoteSelection.empty()) {
+        martyrsVoteSelection.datum(vote_data).call(parliament);
+    }
 }
 !}
 
 = The Martyrs Suffrage Bill Vote
 
-[if martyrs_suff_bill_acted_support >= 3: The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Thanks to our comprehensive efforts - swaying progressives, running lobbying campaigns, and other support actions - we have maximized our chances of success.]
+[if martyrs_suff_bill_acted_support >= 3 : The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Thanks to our comprehensive efforts - swaying progressives, running lobbying campaigns, and other support actions - we have maximized our chances of success.]
 
-[if martyrs_suff_bill_acted_support = 2: The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our moderate efforts to support the bill may have improved its chances, though the outcome remains uncertain.]
+[if martyrs_suff_bill_acted_support = 2 : The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our moderate efforts to support the bill may have improved its chances, though the outcome remains uncertain.]
 
-[if martyrs_suff_bill_acted_support = 1: The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our limited support efforts may help, but the bill faces an uphill battle.]
+[if martyrs_suff_bill_acted_support = 1 : The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our limited support efforts may help, but the bill faces an uphill battle.]
 
-[if martyrs_suff_bill_acted_support = 0: The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Without our active support, the bill's chances look very dim indeed.]
+[if martyrs_suff_bill_acted_support = 0 : The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Without our active support, the bill's chances look very dim indeed.]
 
 The vote begins...
 
