@@ -37,7 +37,7 @@ Grand Executor: [+ executor +] ([+ executor_party +])
 
 Folkshus composition (300 needed for Majority):
 
-{!<span style="color: #FAC51C; font-weight: bold;">Socialist Workers</span>!}: [+ socs_f +] Seats 
+{!<span style="color: #FAC51C; font-weight: bold;">Socialist Workers</span>!}: [+ socs_f +] Seat [? if socs_f > 1: s ?]
 
 {!<span style="color: #9365B8; font-weight: bold;">Populist</span>!}: [+ pop_f +] Seats 
 
@@ -89,8 +89,6 @@ Economic growth: [+ economic_growth_2 +]%
 {!<span class="tooltip-text" title="The political arm of the far-right Styriande,"> Statist Party </span>!}: [+ stats_relation : relationships +]
 
 = Party Ideology
-
-{!<span class="tooltip-text" title="Progress" style="color: #2969B0; font-weight: bold;">Progress</span>!}: [+ prog_ideology +]. ([+ prog_leader +])
 
 {!<span style="color: #FAC51C; font-weight: bold;">Socialist Workers</span>!}: [+ prog_ideology +]. ([+ prog_leader +])
 
@@ -167,19 +165,17 @@ if (Q.rg_strength) {
 
 = Paramilitaries
 
-{!<span class="tooltip-text" title="Progress" style="color: #2969B0; font-weight: bold;">Progress</span>!}: [+ prog_ideology +]. ([+ prog_leader +])
-
 {!<span class="tooltip-text" title="The Freifolksbund is a populist paramilitary organization." style="color: #177314; font-weight: bold;">Freifolksbund</span>!} Strength: [+ ffb_strength_2 +] thousand
 [? if ffb_banned = 1 : (BANNED) ?]
 
-Freifolksbund Militarization: [+ ffb_militancy : militancy +]
+<span style="color: #177314; font-weight: bold;">FFB</span> Militarization: [+ ffb_militancy : militancy +]
 
-Freifolksbund Ideology: [+ ffb_ideology +]
+<span style="color: #177314; font-weight: bold;">FFB</span> Ideology: [+ ffb_ideology +]
 
 {!<span class="tooltip-text" title="Vigilance Societies are conservative paramilitary groups." style="color: #292629; font-weight: bold;">Vigilance Societies</span>!} Strength: [+ vs_strength_2 +] thousand
 [? if vs_banned = 1 : (BANNED) ?]
 
-Vigilance Societies Militarization: [+ vs_militancy : militancy +]
+<span style="color: #292629; font-weight: bold;">VS</span> Militarization: [+ vs_militancy : militancy +]
 
 [? if lc_formed = 1 :
 {!<span class="tooltip-text" title="Lind Clubs are progressive paramilitary organizations." style="color: #ba22b5; font-weight: bold;">Lind Clubs</span>!} Strength: [+ lc_strength_2 +] thousand
@@ -193,19 +189,19 @@ Lind Clubs Militarization: [+ lc_militancy : militancy +]
 Red Gold Militias Militarization: [+ rg_militancy : militancy +]
 ?]
 
-= Internal Policing
+//= Internal Policing
 
-Interior Police: [+ interior_police_strength +] thousand members.
+//Interior Police: [+ interior_police_strength +] thousand members.
 
-Cynnred Gangs: [+ cynnred_gangs_strength +] thousand members.
+//Cynnred Gangs: [+ cynnred_gangs_strength +] thousand members.
 
-= Official military/security forces
+//= Official military/security forces
 
-Folkshaer: [+ folkshaer_strength +] thousand troops.
+//Folkshaer: [+ folkshaer_strength +] thousand troops.
 
-Folkshaer Loyalty: [+ folkshaer_loyalty : loyalty +]
+//Folkshaer Loyalty: [+ folkshaer_loyalty : loyalty +]
 
-[? if in_emergency_government = 1 : Union Council Outlook: [+ union_council_loyalty : loyalty +] ?]
+//[? if in_emergency_government = 1 : Union Council Outlook: [+ union_council_loyalty : loyalty +] ?]
 
 @polls
 
@@ -229,7 +225,7 @@ Among the Upper and Old Middle Classes, we are [+ old_middle_pop_display : poll 
 
 Among Rural Voters, we are [+ rural_pop_display : poll +]
 
-Among The Unemployed, we are [+ unemployed_pop_display : poll +]
+Among the Unemployed, we are [+ unemployed_pop_display : poll +]
 
 socs, we are [+ socs_votes +]
 

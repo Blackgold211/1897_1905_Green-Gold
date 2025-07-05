@@ -8,12 +8,12 @@ new-page: true
 
 = Martyrs Suffrage Bill
 
-Since it's introduction tensions around the Martyr's Suffrage bill have only grown more intense. Despite this Executor Richmondson has not been deterred, given the rapidly approaching election, the Executor can no longer afford to delay the bill any longer. Given our previous support, he has decided to put it to a vote rather than to completely withdraw the bill. As it is now, it is extremely unlikely for the bill to pass without heavy intervention.
+Since its introduction tensions around the Martyr's Suffrage bill have only grown more intense. Despite this Executor Richmondson has not been deterred, given the rapidly approaching election, the Executor can no longer afford to delay the bill any longer. Given our previous support, he has decided to put it to a vote rather than to completely withdraw the bill. As it is now, it is extremely unlikely for the bill to pass without heavy intervention.
 
 - @sway_progressives
 - @lobbying_campaign
 - @placeholder
-- @let_it_die: 
+- @let_it_die
 - @proceed_to_vote
 
 @sway_progressives
@@ -84,15 +84,6 @@ We have taken what actions we could. Now it's time to see how the vote plays out
 @bill_vote
 title: The Vote
 on-arrival: {!
-// First ensure all faction variables exist with proper Q. prefix
-Q.socs_f = Q.socs_f || 1;
-Q.pop_f = Q.pop_f || 57; 
-Q.prog_f = Q.prog_f || 182;
-Q.rust_f = Q.rust_f || 44;
-Q.pat_f = Q.pat_f || 298;
-Q.stats_f = Q.stats_f || 14;
-Q.other_f = Q.other_f || 5;
-
 // Calculate base voting patterns for each party
 // Base percentages for Yes votes (very low since it's a lost cause)
 var socs_yes_pct = 0; 
@@ -104,7 +95,7 @@ var stats_yes_pct = 0;
 var other_yes_pct = 30;
 
 if (Q.sway_progressives_used == 1){
-    prog_yes_pct += 15
+    prog_yes_pct += 15;
 }
 if (Q.lobbying_campaign_used == 1){
     socs_yes_pct += 15; 
@@ -123,33 +114,33 @@ if (Q.let_it_die_chosen == 1){
     pat_yes_pct -= 5;
 }
 
-// Calculate actual votes
-Q.socs_yes = Math.floor(Q.socs_f * socs_yes_pct / 100);
-Q.socs_no = Math.floor(Q.socs_f * (90 - socs_yes_pct) / 100);
-Q.socs_abstain = Q.socs_f - Q.socs_yes - Q.socs_no;
+// Calculate actual votes - Socialist Workers always vote No
+Q.socs_yes = Math.round(Q.socs_f * socs_yes_pct / 100);
+Q.socs_no = Q.socs_f - Q.socs_yes;
+Q.socs_abstain = 0;
 
-Q.pop_yes = Math.floor(Q.pop_f * pop_yes_pct / 100);
-Q.pop_no = Math.floor(Q.pop_f * (90 - pop_yes_pct) / 100);
+Q.pop_yes = Math.round(Q.pop_f * pop_yes_pct / 100);
+Q.pop_no = Math.round(Q.pop_f * (90 - pop_yes_pct) / 100);
 Q.pop_abstain = Q.pop_f - Q.pop_yes - Q.pop_no;
 
-Q.prog_yes = Math.floor(Q.prog_f * prog_yes_pct / 100);
-Q.prog_no = Math.floor(Q.prog_f * (80 - prog_yes_pct) / 100);
+Q.prog_yes = Math.round(Q.prog_f * prog_yes_pct / 100);
+Q.prog_no = Math.round(Q.prog_f * (80 - prog_yes_pct) / 100);
 Q.prog_abstain = Q.prog_f - Q.prog_yes - Q.prog_no;
 
-Q.rust_yes = Math.floor(Q.rust_f * rust_yes_pct / 100);
-Q.rust_no = Math.floor(Q.rust_f * (67 - rust_yes_pct) / 100);
+Q.rust_yes = Math.round(Q.rust_f * rust_yes_pct / 100);
+Q.rust_no = Math.round(Q.rust_f * (67 - rust_yes_pct) / 100);
 Q.rust_abstain = Q.rust_f - Q.rust_yes - Q.rust_no;
 
-Q.pat_yes = Math.floor(Q.pat_f * pat_yes_pct / 100);
-Q.pat_no = Math.floor(Q.pat_f * (87 - pat_yes_pct) / 100);
+Q.pat_yes = Math.round(Q.pat_f * pat_yes_pct / 100);
+Q.pat_no = Math.round(Q.pat_f * (87 - pat_yes_pct) / 100);
 Q.pat_abstain = Q.pat_f - Q.pat_yes - Q.pat_no;
 
 Q.stats_yes = 0;
 Q.stats_no = Q.stats_f;
 Q.stats_abstain = 0;
 
-Q.other_yes = Math.floor(Q.other_f * other_yes_pct / 100);
-Q.other_no = Math.floor(Q.other_f * (80 - other_yes_pct) / 100);
+Q.other_yes = Math.round(Q.other_f * other_yes_pct / 100);
+Q.other_no = Math.round(Q.other_f * (80 - other_yes_pct) / 100);
 Q.other_abstain = Q.other_f - Q.other_yes - Q.other_no;
 
 // Calculate totals
@@ -216,17 +207,19 @@ The vote begins...
 
 {!<svg id="martyrs_vote" style="width: 500px; height: 250px;"> </svg>!}
 
-
 ## Final Vote Results
 
 **Total Votes:** [+ total_yes +] Yes, [+ total_no +] No, [+ total_abstain +] Abstentions
 
-**The bill fails to pass,** lacking sufficient support in the Folkshus.
+[if bill_passed: **The bill passes!** It has gained sufficient support in the Folkshus.]
+
+[if not bill_passed: **The bill fails to pass,** lacking sufficient support in the Folkshus.]
 
 ## Voting Breakdown by Party
 
+{!
 <table>
-  <tr><td>Party</td><td>Yes Votes</td><td>No Votes</td><td>Abstentions</td></tr>
+  <tr><th>Party</th><th>Yes Votes</th><th>No Votes</th><th>Abstentions</th></tr>
 
   <tr>
     <td><div class="box" style='background-color:#F37934'></div> Socialist Workers:</td>
@@ -277,5 +270,8 @@ The vote begins...
     <td>[+ stats_abstain +]</td>
   </tr>
 </table>
+!}
 
-The failure of the bill disappoints suffragette activists and may damage the Executor's standing, but conservative forces are relieved. The political ramifications will be felt for months to come.
+[if bill_passed: The passage of the bill energizes suffragette activists and boosts the Executor's standing, though it angers conservative forces. The political ramifications will be felt for months to come.]
+
+[if not bill_passed: The failure of the bill disappoints suffragette activists and may damage the Executor's standing, but conservative forces are relieved. The political ramifications will be felt for months to come.]

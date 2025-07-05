@@ -1,8 +1,8 @@
 
 # polling popularity
-(0..5) extremely unpopular.
-(06..15) unpopular.
-(16..25) middlingly popular.
-(26..35) popular.
-(36..50) very popular.
-(51..99) completely dominant.
+(0..5) <span style="color:rgb(233, 203, 245);">extremely unpopular</span>.
+(06..15) <span style="color:rgb(209, 152, 237);">unpopular</span>.
+(16..25) <span style="color:rgb(171, 94, 215);">middlingly popular</span>.
+(26..35) <span style="color:rgb(156, 43, 201);">popular</span>.
+(36..50) <span style="color:rgb(111, 10, 183);">very popular</span>.
+(51..99) <span style="color:rgb(62, 5, 84);">utterly dominant</span>.
