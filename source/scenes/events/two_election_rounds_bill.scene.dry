@@ -18,15 +18,195 @@ The bill is set to come before the Caeserthing, with the new electoral system po
 - @vote_no  
 
 @vote_yes  
-title: Vote in favor of the bill.  
+title: The Vote  
 subtitle: Support electoral reform and religious enfranchisement.  
 on-arrival: new_middle_prog += 1; old_middle_pat += 2; rural_rust += 3; new_middle_pop += 1; workers_pop += 2; workers_socs += 1; workers_prog += 1; pat_relation += 2; prog_relation += 3; 
 
 We vote in favour of the Popular Elections Act. Despite all the public opposition, the bill passes easily, with or without our support. Despite the inadequacies of the bill, this new system will undoubtedly benefit us, and many of the newly enfranchised will vote <span style="color: #9365B8; font-weight: bold;">Populist</span> in the upcoming election.
+go-to: bill_vote
 
 @vote_no  
-title: Vote against the bill.  
+title: The Vote
 subtitle: Oppose the reforms as inadequate.  
 on-arrival: new_middle_prog += 1; old_middle_pat += 2; rural_rust += 3; new_middle_pop += 1; workers_prog += 2; workers_socs += 2; pat_relation -= 2; prog_relation -= 3; 
 
 We vote against the bill, citing its inadequacies in proper reform of the electoral system. Despite all of the public opposition the bill still passes the Folkshus without issue and many of our Thingmen disobey the party line to vote in favour. While the new system does benefit us, this has hurt our relations with the other parties and many of our Sefardisk supporters feel betrayed by this.
+go-to: bill_vote
+
+
+@bill_vote
+on-arrival: {!
+var socs_yes_pct = 100; 
+var pop_yes_pct = 80;  
+var prog_yes_pct = 30;
+var rust_yes_pct = 30;
+var pat_yes_pct = 25;
+var stats_yes_pct = 0;
+var other_yes_pct = 30;
+
+if (Q.two_rounds_vote_yn == 1){
+    pop_yes_pct += 15
+}
+if (Q.two_rounds_vote_yn == 0){
+    pop_yes_pct -= 35
+}
+
+// Calculate actual votes
+Q.socs_yes = Math.floor(Q.socs_f * socs_yes_pct / 100);
+Q.socs_no = Math.floor(Q.socs_f * (90 - socs_yes_pct) / 100);
+Q.socs_abstain = Q.socs_f - Q.socs_yes - Q.socs_no;
+
+Q.pop_yes = Math.floor(Q.pop_f * pop_yes_pct / 100);
+Q.pop_no = Math.floor(Q.pop_f * (90 - pop_yes_pct) / 100);
+Q.pop_abstain = Q.pop_f - Q.pop_yes - Q.pop_no;
+
+Q.prog_yes = Math.floor(Q.prog_f * prog_yes_pct / 100);
+Q.prog_no = Math.floor(Q.prog_f * (80 - prog_yes_pct) / 100);
+Q.prog_abstain = Q.prog_f - Q.prog_yes - Q.prog_no;
+
+Q.rust_yes = Math.floor(Q.rust_f * rust_yes_pct / 100);
+Q.rust_no = Math.floor(Q.rust_f * (67 - rust_yes_pct) / 100);
+Q.rust_abstain = Q.rust_f - Q.rust_yes - Q.rust_no;
+
+Q.pat_yes = Math.floor(Q.pat_f * pat_yes_pct / 100);
+Q.pat_no = Math.floor(Q.pat_f * (87 - pat_yes_pct) / 100);
+Q.pat_abstain = Q.pat_f - Q.pat_yes - Q.pat_no;
+
+Q.stats_yes = 0;
+Q.stats_no = Q.stats_f;
+Q.stats_abstain = 0;
+
+Q.other_yes = Math.floor(Q.other_f * other_yes_pct / 100);
+Q.other_no = Math.floor(Q.other_f * (80 - other_yes_pct) / 100);
+Q.other_abstain = Q.other_f - Q.other_yes - Q.other_no;
+
+// Calculate totals
+Q.total_yes = Q.socs_yes + Q.pop_yes + Q.prog_yes + Q.rust_yes + Q.pat_yes + Q.stats_yes + Q.other_yes;
+Q.total_no = Q.socs_no + Q.pop_no + Q.prog_no + Q.rust_no + Q.pat_no + Q.stats_no + Q.other_no;
+Q.total_abstain = Q.socs_abstain + Q.pop_abstain + Q.prog_abstain + Q.rust_abstain + Q.pat_abstain + Q.stats_abstain + Q.other_abstain;
+
+// Determine if bill passes (needs majority of those voting)
+Q.bill_passed = Q.total_yes > Q.total_no;
+!}
+on-display: {!
+// Create vote data array for parliament visualization
+var vote_data = [
+    {
+        "id": "yes",
+        "legend": "Yes", 
+        "name": "Yes",
+        "seats": Q.total_yes,
+        "color": "#28a745"
+    },
+    {
+        "id": "abstain",
+        "legend": "Abstention",
+        "name": "Abstention", 
+        "seats": Q.total_abstain,
+        "color": "#7a7a7a"
+    },
+    {
+        "id": "no",
+        "legend": "No",
+        "name": "No",
+        "seats": Q.total_no,
+        "color": "#dc3545"
+    }
+];
+
+// Initialize parliament visualization
+if (window && window.d3) {
+    var width = 500; 
+    var height = 500;
+    var contentElement = document.getElementById('content');
+    if (contentElement) {
+        var screenWidth = contentElement.offsetWidth;
+        if (screenWidth < width - 50) {
+            width = screenWidth - 50; 
+            height = width;
+            var martyrsVoteElement = document.getElementById("elections_act");
+            if (martyrsVoteElement) {
+                martyrsVoteElement.style.height = screenWidth/2 + "px";
+            }
+        }
+    }
+
+    var parliament = d3.parliament();
+    parliament.width(width).innerRadiusCoef(0.4);
+    parliament.enter.fromCenter(true).smallToBig(true);
+    parliament.exit.toCenter(false).bigToSmall(true);
+    
+    var martyrsVoteSelection = d3.select("#elections_act");
+    if (!martyrsVoteSelection.empty()) {
+        martyrsVoteSelection.datum(vote_data).call(parliament);
+    }
+}
+!}
+
+= The Popular Elections Act is put to a Vote
+
+The vote begins...
+
+{!<svg id="elections_act" style="width: 500px; height: 250px;"> </svg>!}
+
+
+## Final Vote Results
+
+**Total Votes:** [+ total_yes +] Yes, [+ total_no +] No, [+ total_abstain +] Abstentions
+
+**The bill fails to pass,** lacking sufficient support in the Folkshus.
+
+## Voting Breakdown by Party
+
+<table>
+  <tr><td>Party</td><td>Yes Votes</td><td>No Votes</td><td>Abstentions</td></tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#F37934'></div> Socialist Workers:</td>
+    <td>[+ socs_yes +]</td>
+    <td>[+ socs_no +]</td>
+    <td>[+ socs_abstain +]</td>
+  </tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#9365B8; outline: 2px solid;'></div> <strong>Populists:</strong></td>
+    <td><strong>[+ pop_yes +]</strong></td>
+    <td><strong>[+ pop_no +]</strong></td>
+    <td><strong>[+ pop_abstain +]</strong></td>
+  </tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#2969B0'></div> Progress:</td>
+    <td>[+ prog_yes +]</td>
+    <td>[+ prog_no +]</td>
+    <td>[+ prog_abstain +]</td>
+  </tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#1ABC9C'></div> Rustiks:</td>
+    <td>[+ rust_yes +]</td>
+    <td>[+ rust_no +]</td>
+    <td>[+ rust_abstain +]</td>
+  </tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#a0a0a0'></div> Others:</td>
+    <td>[+ other_yes +]</td>
+    <td>[+ other_no +]</td>
+    <td>[+ other_abstain +]</td>
+  </tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#B8312F'></div> Paternalists:</td>
+    <td>[+ pat_yes +]</td>
+    <td>[+ pat_no +]</td>
+    <td>[+ pat_abstain +]</td>
+  </tr>
+
+  <tr>
+    <td><div class="box" style='background-color:#475577'></div> Statists:</td>
+    <td>[+ stats_yes +]</td>
+    <td>[+ stats_no +]</td>
+    <td>[+ stats_abstain +]</td>
+  </tr>
+</table>

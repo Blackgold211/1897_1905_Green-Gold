@@ -138,6 +138,9 @@ Q.total_abstain = 0;
 // Bill outcome
 Q.bill_passed = 0;
 
+//Two rounds
+Q.two_rounds_vote_yn = 0;
+
 //Martyrs
 Q.martyrs_suff_bill_support = 0;
 Q.martyrs_suff_bill_acted_support = 0;

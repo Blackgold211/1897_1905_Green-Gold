@@ -217,13 +217,13 @@ if (window && window.d3) {
 
 = The Martyrs Suffrage Bill Vote
 
-[if martyrs_suff_bill_acted_support >= 3 : The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Thanks to our comprehensive efforts - swaying progressives, running lobbying campaigns, and other support actions - we have maximized our chances of success.]
+[? if martyrs_suff_bill_acted_support >= 3 : The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Thanks to our comprehensive efforts - swaying progressives, running lobbying campaigns, and other support actions - we have maximized our chances of success. ?]
 
-[if martyrs_suff_bill_acted_support = 2 : The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our moderate efforts to support the bill may have improved its chances, though the outcome remains uncertain.]
+[? if martyrs_suff_bill_acted_support = 2 : The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our moderate efforts to support the bill may have improved its chances, though the outcome remains uncertain. ?]
 
-[if martyrs_suff_bill_acted_support = 1 : The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our limited support efforts may help, but the bill faces an uphill battle.]
+[? if martyrs_suff_bill_acted_support = 1 : The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Our limited support efforts may help, but the bill faces an uphill battle. ?]
 
-[if martyrs_suff_bill_acted_support = 0 : The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Without our active support, the bill's chances look very dim indeed.]
+[? if martyrs_suff_bill_acted_support = 0 : The Folkshus convenes to vote on the controversial Martyrs Suffrage Bill. Without our active support, the bill's chances look very dim indeed. ?]
 
 The vote begins...
 
