@@ -37,19 +37,19 @@ We vote against the bill, citing its inadequacies in proper reform of the electo
 @bill_vote
 on-arrival: {!
 // Socs: strongly in favour
-var socs_yes_pct = 90; var socs_no_pct = 5;
+var socs_yes_pct = 100; var socs_no_pct = 0;
 
 // Populists: strongly in favour  
-var pop_yes_pct = 80; var pop_no_pct = 10;
+var pop_yes_pct = 83; var pop_no_pct = 10;
 
 // Progress: mostly in favour, they proposed the amendment
-var prog_yes_pct = 70; var prog_no_pct = 20;
+var prog_yes_pct = 71; var prog_no_pct = 22;
 
 // Rustiks: split, sceptical of reform
-var rust_yes_pct = 50; var rust_no_pct = 40;
+var rust_yes_pct = 50; var rust_no_pct = 37;
 
 // Paternalists: majority in favour but significant opposition
-var pat_yes_pct = 70; var pat_no_pct = 35;
+var pat_yes_pct = 70; var pat_no_pct = 20;
 
 // Statists: solidly against
 var stats_yes_pct = 0; var stats_no_pct = 100;
@@ -60,9 +60,11 @@ var other_yes_pct = 40; var other_no_pct = 30;
 
 if (Q.two_rounds_vote_yn == 1){
     pop_yes_pct += 13
+    pop_no_pct -= 13;
 }
 if (Q.two_rounds_vote_yn == 0){
     pop_yes_pct -= 32
+    pop_no_pct += 28;
 }
 
 // Calculate actual votes
@@ -168,8 +170,8 @@ The vote begins...
 
 **Total Votes:** [+ total_yes +] Yes, [+ total_no +] No, [+ total_abstain +] Abstentions
 
-{two_rounds_vote_yn = 1: **The Popular Elections Act** passes the Folkshus.}
-{two_rounds_vote_yn = 0: **The Popular Elections Act** passes the Folkshus, despite our opposition.}
+[? if two_rounds_vote_yn = 1 : **The Popular Elections Act** passes the Folkshus. ?]
+[? if two_rounds_vote_yn = 0 : **The Popular Elections Act** passes the Folkshus, despite our opposition. ?]
 
 ## Voting Breakdown by Party
 
