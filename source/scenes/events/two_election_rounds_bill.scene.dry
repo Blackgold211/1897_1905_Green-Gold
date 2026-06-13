@@ -21,7 +21,7 @@ The bill is set to come before the Caeserthing, with the new electoral system po
 title: Vote in favour of the bill.  
 subtitle: Support electoral reform and religious enfranchisement.  
 go-to: bill_vote
-on-arrival: new_middle_prog += 1; old_middle_pat += 2; rural_rust += 3; new_middle_pop += 1; workers_pop += 2; workers_socs += 1; workers_prog += 1; pat_relation += 2; prog_relation += 3; 
+on-arrival: two_rounds_vote_yn = 1; new_middle_prog += 1; old_middle_pat += 2; rural_rust += 3; new_middle_pop += 1; workers_pop += 2; workers_socs += 1; workers_prog += 1; pat_relation += 2; prog_relation += 3; 
 
 We vote in favour of the Popular Elections Act. Despite all the public opposition, the bill passes easily, with or without our support. Despite the inadequacies of the bill, this new system will undoubtedly benefit us, and many of the newly enfranchised will vote <span style="color: #9365B8; font-weight: bold;">Populist</span> in the upcoming election.
 
@@ -29,20 +29,34 @@ We vote in favour of the Popular Elections Act. Despite all the public oppositio
 title: Vote against the bill.
 subtitle: Oppose the reforms as inadequate.  
 go-to: bill_vote
-on-arrival: new_middle_prog += 1; old_middle_pat += 2; rural_rust += 3; new_middle_pop += 1; workers_prog += 2; workers_socs += 2; pat_relation -= 2; prog_relation -= 3; 
+on-arrival: two_rounds_vote_yn = 0; new_middle_prog += 1; old_middle_pat += 2; rural_rust += 3; new_middle_pop += 1; workers_prog += 2; workers_socs += 2; pat_relation -= 2; prog_relation -= 3; 
 
 We vote against the bill, citing its inadequacies in proper reform of the electoral system. Despite all of the public opposition the bill still passes the Folkshus without issue and many of our Thingmen disobey the party line to vote in favour. While the new system does benefit us, our opposition has hurt our relations with the other parties and many of our Sefardisk supporters feel betrayed by this.
 
 
 @bill_vote
 on-arrival: {!
-var socs_yes_pct = 100; 
-var pop_yes_pct = 85;  
-var prog_yes_pct = 75;
-var rust_yes_pct = 45;
-var pat_yes_pct = 70;
-var stats_yes_pct = 0;
-var other_yes_pct = 30;
+// Socs: strongly in favour
+var socs_yes_pct = 90; var socs_no_pct = 5;
+
+// Populists: strongly in favour  
+var pop_yes_pct = 80; var pop_no_pct = 10;
+
+// Progress: mostly in favour, they proposed the amendment
+var prog_yes_pct = 70; var prog_no_pct = 20;
+
+// Rustiks: split, sceptical of reform
+var rust_yes_pct = 50; var rust_no_pct = 40;
+
+// Paternalists: majority in favour but significant opposition
+var pat_yes_pct = 70; var pat_no_pct = 35;
+
+// Statists: solidly against
+var stats_yes_pct = 0; var stats_no_pct = 100;
+
+// Others: mixed
+var other_yes_pct = 40; var other_no_pct = 30;
+
 
 if (Q.two_rounds_vote_yn == 1){
     pop_yes_pct += 13
@@ -53,23 +67,23 @@ if (Q.two_rounds_vote_yn == 0){
 
 // Calculate actual votes
 Q.socs_yes = Math.floor(Q.socs_f * socs_yes_pct / 100);
-Q.socs_no = Math.floor(Q.socs_f * (90 - socs_yes_pct) / 100);
+Q.socs_no = Math.floor(Q.socs_f * socs_no_pct / 100);
 Q.socs_abstain = Q.socs_f - Q.socs_yes - Q.socs_no;
 
 Q.pop_yes = Math.floor(Q.pop_f * pop_yes_pct / 100);
-Q.pop_no = Math.floor(Q.pop_f * (90 - pop_yes_pct) / 100);
+Q.pop_no = Math.floor(Q.pop_f * pop_no_pct / 100);
 Q.pop_abstain = Q.pop_f - Q.pop_yes - Q.pop_no;
 
 Q.prog_yes = Math.floor(Q.prog_f * prog_yes_pct / 100);
-Q.prog_no = Math.floor(Q.prog_f * (80 - prog_yes_pct) / 100);
+Q.prog_no = Math.floor(Q.prog_f * prog_no_pct / 100);
 Q.prog_abstain = Q.prog_f - Q.prog_yes - Q.prog_no;
 
 Q.rust_yes = Math.floor(Q.rust_f * rust_yes_pct / 100);
-Q.rust_no = Math.floor(Q.rust_f * (67 - rust_yes_pct) / 100);
+Q.rust_no = Math.floor(Q.rust_f * rust_no_pct / 100);
 Q.rust_abstain = Q.rust_f - Q.rust_yes - Q.rust_no;
 
 Q.pat_yes = Math.floor(Q.pat_f * pat_yes_pct / 100);
-Q.pat_no = Math.floor(Q.pat_f * (87 - pat_yes_pct) / 100);
+Q.pat_no = Math.floor(Q.pat_f * pat_no_pct / 100);
 Q.pat_abstain = Q.pat_f - Q.pat_yes - Q.pat_no;
 
 Q.stats_yes = 0;
@@ -77,7 +91,7 @@ Q.stats_no = Q.stats_f;
 Q.stats_abstain = 0;
 
 Q.other_yes = Math.floor(Q.other_f * other_yes_pct / 100);
-Q.other_no = Math.floor(Q.other_f * (80 - other_yes_pct) / 100);
+Q.other_no = Math.floor(Q.other_f * other_no_pct / 100);
 Q.other_abstain = Q.other_f - Q.other_yes - Q.other_no;
 
 // Calculate totals
@@ -154,7 +168,8 @@ The vote begins...
 
 **Total Votes:** [+ total_yes +] Yes, [+ total_no +] No, [+ total_abstain +] Abstentions
 
-**The bill fails to pass,** lacking sufficient support in the Folkshus.
+{two_rounds_vote_yn = 1: **The Popular Elections Act** passes the Folkshus.}
+{two_rounds_vote_yn = 0: **The Popular Elections Act** passes the Folkshus, despite our opposition.}
 
 ## Voting Breakdown by Party
 
